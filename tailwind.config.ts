@@ -17,6 +17,7 @@ const config: Config = {
         "blue-ish": "#5865f2",
         "gray-ish": "#313338",
         "black-ish": "#1e1f22",
+        "faded-black": "#0000008a",
         "white-1": "#f2f3f5",
         "white-2": "#dbdee1",
         "white-3": "#b5bac1",

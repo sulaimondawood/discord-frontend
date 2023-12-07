@@ -2,8 +2,6 @@
 import Link from "next/link";
 
 import { icon, icon2, icon3 } from "@/utils/svgs";
-
-import { userAgent } from "next/server";
 import { ChangeEvent, FormEvent, useState } from "react";
 export default function Register() {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -43,7 +41,10 @@ export default function Register() {
           <span className="left-0 absolute  bottom-0 w-full">{icon2}</span>
           <span className="bottom-0 right-0 absolute ">{icon3}</span>
         </div>
-        <div className="bg-black-ish py-5 z-50 px-8 w-[500px]">
+        <div
+          className="bg-black-ish rounded-md
+         py-5 z-50 px-8 w-[500px]"
+        >
           <div className="pb-4 text-center">
             <h2 className="text-white-2 text-2xl pb-2 font-medium font-sans">
               Create an account
@@ -63,7 +64,7 @@ export default function Register() {
                 type="email"
                 name="email"
                 id="email"
-                className="bg-black rounded placeholder:text-white-1 h-11 text-white indent-2"
+                className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -79,7 +80,7 @@ export default function Register() {
                 name="displayName"
                 type="text"
                 id="display-name"
-                className="bg-black rounded placeholder:text-white-1 h-11 text-white indent-2"
+                className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -95,7 +96,7 @@ export default function Register() {
                 type="text"
                 name="username"
                 id="username"
-                className="bg-black rounded placeholder:text-white-1 h-11 text-white indent-2"
+                className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -111,7 +112,7 @@ export default function Register() {
                 name="password"
                 type="password"
                 id="password"
-                className="bg-black rounded placeholder:text-white-1 h-11 text-white indent-2"
+                className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
               />
             </div>
 

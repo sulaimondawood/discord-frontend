@@ -9,7 +9,7 @@ export default function Home() {
         <span className="bottom-0 right-0 absolute ">{icon3}</span>
       </div>
 
-      <div className="bg-black-ish py-4 px-8 w-[500px] z-50">
+      <div className="bg-black-ish rounded-md py-4 px-8 w-[500px] z-50">
         <div className="pb-4 text-center">
           <h2 className="text-white-1 text-2xl pb-2 font-medium font-sans">
             Welcome back!
@@ -29,7 +29,7 @@ export default function Home() {
             <input
               type="email"
               id="email"
-              className="bg-black rounded placeholder:text-white-1 h-11 text-white indent-2"
+              className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -42,7 +42,7 @@ export default function Home() {
             <input
               type="password"
               id="password"
-              className="bg-black rounded placeholder:text-white-1 h-11 text-white indent-2"
+              className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
             />
           </div>
           <Link
