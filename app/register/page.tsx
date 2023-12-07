@@ -1,5 +1,8 @@
 "use client";
 import Link from "next/link";
+
+import { icon, icon2, icon3 } from "@/utils/svgs";
+
 import { userAgent } from "next/server";
 import { ChangeEvent, FormEvent, useState } from "react";
 export default function Register() {
@@ -34,8 +37,13 @@ export default function Register() {
   }
   return (
     <>
-      <main className="bg-blue-ish w-screen h-screen flex justify-center items-center">
-        <div className="bg-black-ish py-5 px-8 w-[500px]">
+      <main className="bg-blue-ish relative w-screen h-screen flex justify-center items-center">
+        <div className="">
+          <span className="top-0  left-0 absolute w-full">{icon}</span>
+          <span className="left-0 absolute  bottom-0 w-full">{icon2}</span>
+          <span className="bottom-0 right-0 absolute ">{icon3}</span>
+        </div>
+        <div className="bg-black-ish py-5 z-50 px-8 w-[500px]">
           <div className="pb-4 text-center">
             <h2 className="text-white-2 text-2xl pb-2 font-medium font-sans">
               Create an account
