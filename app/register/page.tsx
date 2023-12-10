@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import { icon, icon2, icon3 } from "@/utils/svgs";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { axiosInstance } from "@/utils/axios";
+import { redirect } from "next/navigation";
 export default function Register() {
   const [isDisabled, setIsDisabled] = useState(true);
   const data = Object.freeze({
@@ -29,8 +31,20 @@ export default function Register() {
     }
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    const res = await axiosInstance.post("user/register/", {
+      email: credentials.email,
+      display_name: credentials.displayName,
+      username: credentials.username,
+      password: credentials.password,
+    });
+
+    if (res.statusText == "Created") {
+      redirect("/");
+    }
+    console.log(res);
+
     console.log(credentials);
   }
   return (
@@ -63,6 +77,7 @@ export default function Register() {
                 value={credentials.email}
                 type="email"
                 name="email"
+                required
                 id="email"
                 className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
               />
@@ -80,6 +95,7 @@ export default function Register() {
                 name="displayName"
                 type="text"
                 id="display-name"
+                required
                 className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
               />
             </div>
@@ -95,6 +111,7 @@ export default function Register() {
                 value={credentials.username}
                 type="text"
                 name="username"
+                required
                 id="username"
                 className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
               />
@@ -111,6 +128,7 @@ export default function Register() {
                 value={credentials.password}
                 name="password"
                 type="password"
+                required
                 id="password"
                 className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
               />

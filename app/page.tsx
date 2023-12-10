@@ -1,6 +1,74 @@
+"use client";
+
 import Link from "next/link";
 import { icon, icon2, icon3 } from "@/utils/svgs";
+import { ChangeEvent, useState } from "react";
+import { axiosInstance } from "@/utils/axios";
+import axios from "axios";
+
+import { redirect, useRouter } from "next/navigation";
 export default function Home() {
+  const router = useRouter();
+  const data = Object.freeze({
+    email: "",
+    password: "",
+  });
+  const [logCredentials, setCredentials] = useState(data);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setCredentials({
+      ...logCredentials,
+      [name]: value.trim(),
+    });
+  };
+
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+
+    console.log(logCredentials);
+    try {
+      const res = await axiosInstance.post(
+        "token/",
+        JSON.stringify({
+          email: logCredentials.email,
+          password: logCredentials.password,
+        }),
+        {
+          withCredentials: true,
+        }
+      );
+      localStorage.setItem("access_token", res.data.access);
+      localStorage?.setItem("refresh_token", res.data.refresh);
+      axiosInstance.defaults.headers[
+        "Authorization"
+      ] = `Bearer ${localStorage?.getItem("access_token")!}`;
+      console.log(res);
+      if (res.status === 200 && res.statusText === "OK") router.push("/rooms");
+    } catch (error) {
+      console.error(error);
+    }
+
+    // axiosInstance
+    //   .post(
+    //     "token/",
+    //     JSON.stringify({
+    //       email: logCredentials.email,
+    //       password: logCredentials.password,
+    //     })
+    //   )
+    //   .then((res) => {
+    //     localStorage.setItem("access-token", res.data.access);
+    //     localStorage.setItem("refresh-token", res.data.refresh);
+    //     axiosInstance.defaults.headers["Authorization"] =
+    //       "Bearer " + localStorage.getItem("access-token");
+    //     console.log(res.data);
+
+    //     redirect("/register");
+    //   });
+  };
+
   return (
     <main className="relative bg-blue-ish w-screen h-screen flex justify-center items-center">
       <div className="">
@@ -18,7 +86,7 @@ export default function Home() {
             We're so excited to see you again!
           </p>
         </div>
-        <form className="flex flex-col gap-4">
+        <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <label
               htmlFor="email"
@@ -28,6 +96,10 @@ export default function Home() {
             </label>
             <input
               type="email"
+              onChange={handleChange}
+              value={logCredentials.email}
+              required
+              name="email"
               id="email"
               className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
             />
@@ -41,6 +113,10 @@ export default function Home() {
             </label>
             <input
               type="password"
+              required
+              onChange={handleChange}
+              value={logCredentials.password}
+              name="password"
               id="password"
               className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
             />
@@ -52,6 +128,7 @@ export default function Home() {
             Forgot your password?
           </Link>
           <button
+            onClick={handleLogin}
             className="bg-blue-ish hover:bg-blue-800 duration-200 transition-all text-white py-3 font-Noto-sans text-sm rounded "
             type="submit"
           >

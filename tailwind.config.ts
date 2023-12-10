@@ -16,6 +16,9 @@ const config: Config = {
       colors: {
         "blue-ish": "#5865f2",
         "gray-ish": "#313338",
+        "room-black-2": "#4E5058",
+        "room-black": "#2B2D31",
+        "room-deep-black": "#1E1F22",
         "black-ish": "#1e1f22",
         "faded-black": "#0000008a",
         "white-1": "#f2f3f5",
@@ -27,6 +30,9 @@ const config: Config = {
       },
       fontFamily: {
         "Noto-sans": ['"Noto Sans"', "sans-serif"],
+      },
+      flex: {
+        "flex-1-1": "3 1 auto",
       },
     },
   },
