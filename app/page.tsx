@@ -2,13 +2,16 @@
 
 import Link from "next/link";
 import { icon, icon2, icon3 } from "@/utils/svgs";
-import { ChangeEvent, useState } from "react";
-import { axiosInstance } from "@/utils/axios";
+import { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 
 import { redirect, useRouter } from "next/navigation";
+import useRefresh from "@/hooks/useRefresh";
+import { axiosInstance } from "@/utils/axios";
+
 export default function Home() {
   const router = useRouter();
+  const refresh = useRefresh();
   const data = Object.freeze({
     email: "",
     password: "",
@@ -24,49 +27,36 @@ export default function Home() {
     });
   };
 
+  // const axiosInstance = useTokens();
   const handleLogin = async (e: any) => {
     e.preventDefault();
 
     console.log(logCredentials);
     try {
       const res = await axiosInstance.post(
-        "token/",
-        JSON.stringify({
+        "user/login/",
+        // "http://127.0.0.1:8000/api/user/login/",
+        {
           email: logCredentials.email,
           password: logCredentials.password,
-        }),
+        },
         {
           withCredentials: true,
         }
       );
-      localStorage.setItem("access_token", res.data.access);
-      localStorage?.setItem("refresh_token", res.data.refresh);
-      axiosInstance.defaults.headers[
-        "Authorization"
-      ] = `Bearer ${localStorage?.getItem("access_token")!}`;
       console.log(res);
-      if (res.status === 200 && res.statusText === "OK") router.push("/rooms");
+
+      if (res.status === 200 && res.statusText === "OK") {
+        localStorage.setItem("access_token", res.data.access);
+        localStorage?.setItem("refresh_token", res.data.refresh);
+        axiosInstance.defaults.headers[
+          "Authorization"
+        ] = `Bearer ${localStorage?.getItem("access_token")!}`;
+        router.push("/rooms");
+      }
     } catch (error) {
       console.error(error);
     }
-
-    // axiosInstance
-    //   .post(
-    //     "token/",
-    //     JSON.stringify({
-    //       email: logCredentials.email,
-    //       password: logCredentials.password,
-    //     })
-    //   )
-    //   .then((res) => {
-    //     localStorage.setItem("access-token", res.data.access);
-    //     localStorage.setItem("refresh-token", res.data.refresh);
-    //     axiosInstance.defaults.headers["Authorization"] =
-    //       "Bearer " + localStorage.getItem("access-token");
-    //     console.log(res.data);
-
-    //     redirect("/register");
-    //   });
   };
 
   return (

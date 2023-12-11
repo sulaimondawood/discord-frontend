@@ -1,10 +1,7 @@
 "use client";
-import { useState, createContext } from "react";
+import { useState, createContext, Dispatch, SetStateAction } from "react";
 
-export const AuthContext = createContext<{ auth: any; setAuth: any }>({
-  auth: "",
-  setAuth: "",
-});
+export const AuthContext = createContext<any>({});
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [auth, setAuth] = useState(null);
