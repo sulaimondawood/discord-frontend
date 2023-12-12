@@ -109,7 +109,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { TokeneExpired } from "./token-expired";
 
-export const baseURL = "http://127.0.0.1:8000/api/";
+export const baseURL = "http://localhost:8000/api/";
 export const clientBaseUrl = "http://localhost:3000/";
 
 export const axiosInstance = axios.create({
@@ -162,23 +162,28 @@ axiosInstance.interceptors.response.use(
         console.log(refreshToken);
         console.log(refreshTokenValidity);
         const dateNow = Date.now();
-        // const dateNow = Math.ceil(Date.now() / 1000);
 
         if (TokeneExpired(refreshTokenValidity.exp) > dateNow) {
           try {
             const refreshResponse = await axiosInstance.post("token/refresh/", {
               refresh: refreshToken,
             });
+            console.log(refreshResponse);
 
-            localStorage.setItem("access_token", refreshResponse.data.access);
-            localStorage.setItem("refresh_token", refreshResponse.data.refresh);
+            if (refreshResponse) {
+              localStorage.setItem("access_token", refreshResponse.data.access);
+              localStorage.setItem(
+                "refresh_token",
+                refreshResponse.data.refresh
+              );
 
-            axiosInstance.defaults.headers["Authorization"] =
-              refreshResponse.data.access;
-            originalRequest.headers["Authorization"] =
-              refreshResponse.data.access;
+              axiosInstance.defaults.headers["Authorization"] =
+                refreshResponse.data.access;
+              originalRequest.headers["Authorization"] =
+                refreshResponse.data.access;
 
-            return axiosInstance(originalRequest);
+              return axiosInstance(originalRequest);
+            }
           } catch (refreshError) {
             console.log("Refresh token request failed", refreshError);
             // Handle refresh token request failure, e.g., show an error message
@@ -187,33 +192,14 @@ axiosInstance.interceptors.response.use(
           }
         } else {
           console.log("Refresh token expired");
-          window.location.href = "/";
+          // window.location.href = "/";
         }
       } else {
         console.log("No refresh token found");
-        window.location.href = "/";
+        // window.location.href = "/";
       }
     }
 
     return Promise.reject(error);
   }
 );
-
-// if (originalConfig.url !== "/auth/signin" && err.response) {
-//     // Access Token was expired
-//     if (err.response.status === 401 && !originalConfig._retry) {
-//       originalConfig._retry = true;
-
-//       try {
-//         const rs = await instance.post("/auth/refreshtoken", {
-//           refreshToken: TokenService.getLocalRefreshToken(),
-//         });
-
-//         const { accessToken } = rs.data;
-//         TokenService.updateLocalAccessToken(accessToken);
-
-//         return instance(originalConfig);
-//       } catch (_error) {
-//         return Promise.reject(_error);
-//       }
-//     }

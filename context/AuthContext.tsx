@@ -1,13 +1,36 @@
 "use client";
-import { useState, createContext, Dispatch, SetStateAction } from "react";
+import {
+  useState,
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+} from "react";
 
-export const AuthContext = createContext<any>({});
+interface AuthContextType {
+  auth: string;
+  setAuth: Dispatch<SetStateAction<string>>;
+}
+
+// export const AuthContext = createContext<{
+//   auth: string;
+//   setAuth: Dispatch<SetStateAction<string>>;
+// }>({ auth: "", setAuth:"" });
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [auth, setAuth] = useState(null);
+  const [auth, setAuth] = useState("");
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };

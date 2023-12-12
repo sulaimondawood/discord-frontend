@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { icon, icon2, icon3 } from "@/utils/svgs";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 import { redirect, useRouter } from "next/navigation";
 import useRefresh from "@/hooks/useRefresh";
 import { axiosInstance } from "@/utils/axios";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
   const router = useRouter();
@@ -16,6 +17,8 @@ export default function Home() {
     email: "",
     password: "",
   });
+  const { auth, setAuth } = useAuth();
+  const [men, setMen] = useState("");
   const [logCredentials, setCredentials] = useState(data);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,12 +33,15 @@ export default function Home() {
   // const axiosInstance = useTokens();
   const handleLogin = async (e: any) => {
     e.preventDefault();
-
+    // setMen("myself");
     console.log(logCredentials);
+    console.log(men);
+    console.log("men");
+
     try {
-      const res = await axiosInstance.post(
-        "user/login/",
-        // "http://127.0.0.1:8000/api/user/login/",
+      const res = await axios.post(
+        // "user/login/",
+        "http://127.0.0.1:8000/api/user/login/",
         {
           email: logCredentials.email,
           password: logCredentials.password,
@@ -44,14 +50,25 @@ export default function Home() {
           withCredentials: true,
         }
       );
+      // setMen(res.data.access);
+      // console.log(men);
+
       console.log(res);
 
       if (res.status === 200 && res.statusText === "OK") {
-        localStorage.setItem("access_token", res.data.access);
-        localStorage?.setItem("refresh_token", res.data.refresh);
+        // localStorage.setItem("access_token", res.data.access);
+        // localStorage?.setItem("refresh_token", res.data.refresh);
+        setAuth(res.data.data.access);
+
+        console.log("auth");
+        console.log(auth);
+
         axiosInstance.defaults.headers[
           "Authorization"
-        ] = `Bearer ${localStorage?.getItem("access_token")!}`;
+        ] = `Bearer ${res.data.data.access}`;
+        // axiosInstance.defaults.headers[
+        //   "Authorization"
+        // ] = `Bearer ${localStorage?.getItem("access_token")!}`;
         router.push("/rooms");
       }
     } catch (error) {
