@@ -12,10 +12,6 @@ interface AuthContextType {
   setAuth: Dispatch<SetStateAction<string>>;
 }
 
-// export const AuthContext = createContext<{
-//   auth: string;
-//   setAuth: Dispatch<SetStateAction<string>>;
-// }>({ auth: "", setAuth:"" });
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {

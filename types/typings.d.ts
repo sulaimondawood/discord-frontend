@@ -9,3 +9,10 @@ interface RoomList {
   topic: number;
   updated: string;
 }
+
+interface NavType {
+  id: number;
+  name: string;
+  url: string;
+  icon: IconType;
+}
