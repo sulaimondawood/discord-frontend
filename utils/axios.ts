@@ -120,7 +120,15 @@ export const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use(
+export const axiosInstancePrivate = axios.create({
+  baseURL,
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+});
+
+axiosInstancePrivate.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("access_token");
     if (!config.headers["Authorization"] && accessToken) {
@@ -131,7 +139,7 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-axiosInstance.interceptors.response.use(
+axiosInstancePrivate.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -161,23 +169,28 @@ axiosInstance.interceptors.response.use(
         const refreshTokenValidity = jwtDecode(refreshToken);
         console.log(refreshToken);
         console.log(refreshTokenValidity);
-        const dateNow = Date.now();
+        const dateNow = Math.floor(Date.now() / 1000);
+        console.log(dateNow);
+        console.log(refreshTokenValidity.exp);
 
-        if (TokeneExpired(refreshTokenValidity.exp) > dateNow) {
+        if (TokeneExpired(refreshTokenValidity) > dateNow) {
           try {
-            const refreshResponse = await axiosInstance.post("token/refresh/", {
-              refresh: refreshToken,
-            });
+            const refreshResponse = await axiosInstancePrivate.post(
+              "token/refresh/",
+              {
+                refresh: refreshToken,
+              }
+            );
             console.log(refreshResponse);
 
             if (refreshResponse) {
-              localStorage.setItem("access_token", refreshResponse.data.access);
+              // localStorage.setItem("access_token", refreshResponse.data.access);
               localStorage.setItem(
                 "refresh_token",
                 refreshResponse.data.refresh
               );
 
-              axiosInstance.defaults.headers["Authorization"] =
+              axiosInstancePrivate.defaults.headers["Authorization"] =
                 refreshResponse.data.access;
               originalRequest.headers["Authorization"] =
                 refreshResponse.data.access;

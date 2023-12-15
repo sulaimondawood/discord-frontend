@@ -1,12 +1,12 @@
 "use client";
 import Modal from "@/components/modal/Modal";
+import RoomModal from "@/components/modal/RoomModal";
 import { useModalState } from "@/context/StateContext";
 import { FaUserFriends } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 
 const page = () => {
-  const { isModalOpen } = useModalState();
-  console.log(isModalOpen);
+  const { isModalOpen, roomModalOpen, setRoomModalOpen } = useModalState();
 
   return (
     // <div className="bg-gray-ish h-screen overflow-auto ml-[330px] w-[calc(100vw-330px)]">
@@ -19,9 +19,17 @@ const page = () => {
             </span>
             <p className="text-white-1 font-semibold">Friends</p>
           </div>
-          <p className="text-white-2  hover:text-white-1 hover:bg-white/5 rounded  px-3 py-1 bg-white/10 backdrop-blur-md">
-            All
-          </p>
+          <div className="flex gap-5 items-center">
+            <button
+              onClick={() => setRoomModalOpen(true)}
+              className="text-white-2  hover:text-white-1 hover:bg-white/5 rounded  px-3 py-1 bg-white/10 backdrop-blur-md"
+            >
+              Create Server
+            </button>
+            <p className="text-white-2  hover:text-white-1 hover:bg-white/5 rounded  px-3 py-1 bg-white/10 backdrop-blur-md">
+              All
+            </p>
+          </div>
         </div>
         <div className="flex mt-12 ">
           <div className="mx-6 pt-4  w-[600px] ">
@@ -55,6 +63,7 @@ const page = () => {
         </div>
       </div>
       {isModalOpen && <Modal />}
+      {roomModalOpen && <RoomModal />}
     </main>
   );
 };

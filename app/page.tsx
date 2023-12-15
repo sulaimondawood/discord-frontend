@@ -7,7 +7,7 @@ import axios from "axios";
 
 import { redirect, useRouter } from "next/navigation";
 import useRefresh from "@/hooks/useRefresh";
-import { axiosInstance } from "@/utils/axios";
+import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
 import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
@@ -39,9 +39,8 @@ export default function Home() {
     console.log("men");
 
     try {
-      const res = await axios.post(
-        // "user/login/",
-        "http://127.0.0.1:8000/api/user/login/",
+      const res = await axiosInstancePrivate.post(
+        "user/login/",
         {
           email: logCredentials.email,
           password: logCredentials.password,
@@ -50,25 +49,12 @@ export default function Home() {
           withCredentials: true,
         }
       );
-      // setMen(res.data.access);
-      // console.log(men);
-
       console.log(res);
-
       if (res.status === 200 && res.statusText === "OK") {
-        // localStorage.setItem("access_token", res.data.access);
-        // localStorage?.setItem("refresh_token", res.data.refresh);
-        setAuth(res.data.data.access);
-
-        console.log("auth");
-        console.log(auth);
-
-        axiosInstance.defaults.headers[
+        localStorage?.setItem("refresh_token", res.data.data.refresh);
+        axiosInstancePrivate.defaults.headers[
           "Authorization"
         ] = `Bearer ${res.data.data.access}`;
-        // axiosInstance.defaults.headers[
-        //   "Authorization"
-        // ] = `Bearer ${localStorage?.getItem("access_token")!}`;
         router.push("/rooms");
       }
     } catch (error) {

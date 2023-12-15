@@ -3,6 +3,6 @@ export function isTokeneExpired(decodedToken: any) {
   return Date.now() > expiryDate;
 }
 export function TokeneExpired(decodedToken: any) {
-  const expiryDate = decodedToken.exp * 1000;
+  const expiryDate = decodedToken.exp;
   return expiryDate;
 }

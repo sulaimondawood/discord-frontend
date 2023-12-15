@@ -1,5 +1,5 @@
 "use client";
-import { axiosInstance } from "@/utils/axios";
+import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -16,7 +16,9 @@ const SideBar = () => {
   const { setModalOpen } = useModalState();
   useEffect(() => {
     async function getRoomLists() {
-      const res = await axiosInstance.get("room/all-rooms");
+      const res = await axiosInstancePrivate.get("room/all-rooms", {
+        withCredentials: true,
+      });
       const data = res.data;
       if (data) {
         setData(data);
