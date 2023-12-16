@@ -1,22 +1,25 @@
 "use client";
-import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
+// import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { IconType } from "react-icons";
 import navList from "@/utils/nav";
 import { useModalState } from "@/context/StateContext";
+import { useTokens } from "@/hooks/useTokensConfig";
+import useRefresh from "@/hooks/useRefresh";
 
 const SideBar = () => {
   const path = usePathname();
   console.log(path);
-
+  const axiosInstancePrivate = useTokens();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { setModalOpen } = useModalState();
+
   useEffect(() => {
     async function getRoomLists() {
-      const res = await axiosInstancePrivate.get("room/all-rooms", {
+      const res = await axiosInstancePrivate.get("room/all-rooms/", {
         withCredentials: true,
       });
       const data = res.data;

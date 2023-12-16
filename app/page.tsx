@@ -2,23 +2,21 @@
 
 import Link from "next/link";
 import { icon, icon2, icon3 } from "@/utils/svgs";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
-import axios from "axios";
+import { ChangeEvent, FormEvent, useState } from "react";
 
-import { redirect, useRouter } from "next/navigation";
-import useRefresh from "@/hooks/useRefresh";
-import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
+import { useRouter } from "next/navigation";
+import { axiosInstance } from "@/utils/axios";
 import { useAuth } from "@/context/AuthContext";
+import useRefresh from "@/hooks/useRefresh";
 
 export default function Home() {
   const router = useRouter();
-  const refresh = useRefresh();
+
   const data = Object.freeze({
     email: "",
     password: "",
   });
   const { auth, setAuth } = useAuth();
-  const [men, setMen] = useState("");
   const [logCredentials, setCredentials] = useState(data);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,16 +28,12 @@ export default function Home() {
     });
   };
 
-  // const axiosInstance = useTokens();
-  const handleLogin = async (e: any) => {
+  const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
-    // setMen("myself");
-    console.log(logCredentials);
-    console.log(men);
-    console.log("men");
+    // console.log(logCredentials);
 
     try {
-      const res = await axiosInstancePrivate.post(
+      const res = await axiosInstance.post(
         "user/login/",
         {
           email: logCredentials.email,
@@ -51,16 +45,18 @@ export default function Home() {
       );
       console.log(res);
       if (res.status === 200 && res.statusText === "OK") {
-        localStorage?.setItem("refresh_token", res.data.data.refresh);
-        axiosInstancePrivate.defaults.headers[
-          "Authorization"
-        ] = `Bearer ${res.data.data.access}`;
+        localStorage?.setItem("token", res.data.data.refresh);
+        setAuth(res.data.data.access);
+        console.log("auth");
+        console.log(auth);
         router.push("/rooms");
       }
     } catch (error) {
       console.error(error);
     }
   };
+
+  const refresh = useRefresh();
 
   return (
     <main className="relative bg-blue-ish w-screen h-screen flex justify-center items-center">
@@ -78,6 +74,7 @@ export default function Home() {
           <p className="text-white-3 text-sm ">
             We're so excited to see you again!
           </p>
+          <button onClick={() => refresh()}>Refresh</button>
         </div>
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">

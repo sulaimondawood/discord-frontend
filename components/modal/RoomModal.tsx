@@ -1,5 +1,6 @@
 import { useModalState } from "@/context/StateContext";
-import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
+import { useTokens } from "@/hooks/useTokensConfig";
+// import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 const RoomModal = () => {
@@ -10,6 +11,8 @@ const RoomModal = () => {
     name: "",
     description: "",
   });
+
+  const axiosInstancePrivate = useTokens();
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     setData({
