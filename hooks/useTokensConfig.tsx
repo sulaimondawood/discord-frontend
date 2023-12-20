@@ -1,13 +1,10 @@
 import { useAuth } from "@/context/AuthContext";
-import { axiosInstance, axiosInstancePrivate, baseURL } from "@/utils/axios";
-import { TokeneExpired } from "@/utils/token-expired";
-import { jwtDecode } from "jwt-decode";
+import { axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import useRefresh from "./useRefresh";
 
 export const useTokens = () => {
-  const router = useRouter();
   const { auth, setAuth } = useAuth();
   const refresh = useRefresh();
 

@@ -74,7 +74,6 @@ export default function Home() {
           <p className="text-white-3 text-sm ">
             We're so excited to see you again!
           </p>
-          <button onClick={() => refresh()}>Refresh</button>
         </div>
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">

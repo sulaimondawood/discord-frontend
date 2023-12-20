@@ -2,12 +2,14 @@
 
 import { useAuth } from "@/context/AuthContext";
 import { axiosInstance } from "@/utils/axios";
-import axios from "axios";
-import { useContext } from "react";
+import { useEffect } from "react";
 
 export default function useRefresh() {
   const { auth, setAuth } = useAuth();
-  const refresh = localStorage?.getItem("token");
+  let refresh: string;
+  useEffect(() => {
+    refresh = localStorage?.getItem("token")!;
+  }, []);
   const refreshToken = async () => {
     const res = await axiosInstance.post(
       "token/refresh/",

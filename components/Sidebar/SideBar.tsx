@@ -2,7 +2,7 @@
 // import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { IconType } from "react-icons";
 import navList from "@/utils/nav";
 import { useModalState } from "@/context/StateContext";
@@ -33,6 +33,11 @@ const SideBar = () => {
     getRoomLists();
   }, []);
 
+  const router = useRouter();
+  const handleRoomNavigation = (id: number) => {
+    router.push(`room/${id}`);
+  };
+
   return (
     <div className=" h-screen fixed flex ">
       <div className="w-[80px] h-screen bg-room-deep-black py-4 px-2">
@@ -41,7 +46,7 @@ const SideBar = () => {
             ? "Loading..."
             : data.map((item: RoomList, index) => {
                 return (
-                  <Link key={item.id} href={"/"}>
+                  <Link key={item.id} href={`/rooms/${index}`}>
                     <p className="text-white text-xs">{item.name}</p>
                     {/* <img src={item.avatar} alt="" /> */}
                   </Link>

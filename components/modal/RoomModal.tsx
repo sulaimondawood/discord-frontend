@@ -40,18 +40,17 @@ const RoomModal = () => {
   async function handlePostReq(e: FormEvent) {
     e.preventDefault();
     const res = await axiosInstancePrivate.post(
-      "/room/all-rooms/",
+      "room/create-room/",
       {
         topic: data.topic,
         name: data.name,
-        avatar: null,
         description: data.description,
-        is_new_topic: true,
       },
       {
         withCredentials: true,
       }
     );
+    console.log(res);
   }
 
   return (
@@ -61,57 +60,66 @@ const RoomModal = () => {
         className="bg-black/30 z-50 fixed inset-0"
       ></div>
 
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 bg-white/10 text-white-1 backdrop-blur-md z-[999]   w-[600px] h-[400px] rounded-md">
-        <form onSubmit={handlePostReq} className="">
-          <div className="">
-            <input type="text" hidden />
-          </div>
-          <div className="">
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5  bg-white/10 text-white-1 backdrop-blur-md z-[999]   w-[600px] h-fit rounded-md">
+        <h1 className="text-center text-xl font-semibold text-white-1">
+          Create a server
+        </h1>
+        <p className="text-white-3 w-[400px] mx-auto text-center">
+          Your server is where you and your friends hangout. Make yours and
+          start talking
+        </p>
+        <form onSubmit={handlePostReq} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
             <label htmlFor="topic">Topic</label>
             <input
               onChange={handleData}
               id="topic"
               name="topic"
               value={data.topic}
-              className="bg-room-black py-4 px-3 rounded w-full focus:outline-none"
+              className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
               type="text"
             />
           </div>
-          <div className="">
+          <div className="flex flex-col gap-2">
             <label htmlFor="name">Name</label>
             <input
               onChange={handleData}
               id="name"
               name="name"
               value={data.name}
-              className="bg-room-black py-4 px-3 rounded w-full focus:outline-none"
+              className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
               type="text"
             />
           </div>
-          <div className="">
+          <div className="flex flex-col gap-2">
             <label htmlFor="desc">Description</label>
             <input
               onChange={handleData}
               id="desc"
               name="description"
               value={data.description}
-              className="bg-room-black py-4 px-3 rounded w-full focus:outline-none"
+              className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
               type="text"
             />
           </div>
-          <div className="">
-            <label htmlFor="img">Room Image</label>
+          <div className="flex flex-col gap-2 border-dashed border border-white-4/40 py-4 text-center">
+            <label htmlFor="img">Upload Sever Image</label>
             <input
               onChange={handleFile}
               id="img"
               name="description"
               value={data.avatar}
-              className="bg-room-black py-4 px-3 rounded w-full focus:outline-none"
+              className="hidden"
+              // className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
               type="file"
             />
           </div>
-          <button onClick={handlePostReq}>Create Server</button>
-          {/* <input type="progress" /> */}
+          <button
+            className="pl-2 rounded bg-room-deep-black w-full  py-3 text-center text-white-4"
+            onClick={handlePostReq}
+          >
+            Create Server
+          </button>
         </form>
       </div>
     </>
