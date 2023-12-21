@@ -5,13 +5,14 @@ import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { IconType } from "react-icons";
 import navList from "@/utils/nav";
-import { useModalState } from "@/context/StateContext";
+import { useModalState } from "@/app/context/StateContext";
 import { useTokens } from "@/hooks/useTokensConfig";
 import useRefresh from "@/hooks/useRefresh";
+import { CreateServerBtn } from "../buttons/CreateServerBtn";
 
 const SideBar = () => {
   const path = usePathname();
-  console.log(path);
+  // console.log(path);
   const axiosInstancePrivate = useTokens();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,12 +56,13 @@ const SideBar = () => {
         </div>
       </div>
       <div className="bg-room-black h-screen w-[250px] px-3 py-4">
-        <button
+        {/* <button
           onClick={() => setModalOpen(true)}
           className="text-left text-xs pl-2 rounded bg-room-deep-black w-full h-7  text-white-4"
         >
           Find or start a room
-        </button>
+        </button> */}
+        <CreateServerBtn>Find or start a room</CreateServerBtn>
         <div className="mt-4">
           <div className=" flex flex-col gap-2">
             {navList.map((item) => {

@@ -1,6 +1,6 @@
-import SideBar from "@/components/Sidebar/SideBar";
-import Modal from "@/components/modal/Modal";
-import { useModalState } from "@/context/StateContext";
+import { useModalState } from "@/app/context/StateContext";
+import Modal from "../components/modal/Modal";
+import SideBar from "../components/Sidebar/SideBar";
 
 export default function DefaultLayout({
   children,

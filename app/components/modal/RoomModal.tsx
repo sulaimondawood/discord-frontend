@@ -1,6 +1,7 @@
-import { useModalState } from "@/context/StateContext";
+"use client";
+
+import { useModalState } from "@/app/context/StateContext";
 import { useTokens } from "@/hooks/useTokensConfig";
-// import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 const RoomModal = () => {

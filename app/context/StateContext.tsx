@@ -28,10 +28,10 @@ export function StateProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const useModalState = () => {
+export function useModalState() {
   const context = useContext(StateContext);
   if (!context) {
     throw new Error("state contexxt must be used with provider");
   }
   return context;
-};
+}

@@ -6,7 +6,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/utils/axios";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/app/context/AuthContext";
 import useRefresh from "@/hooks/useRefresh";
 
 export default function Home() {

@@ -1,4 +1,4 @@
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/app/context/AuthContext";
 import { axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -35,9 +35,9 @@ export const useTokens = () => {
           error.response.statusText === "Unauthorized"
         ) {
           const newAccessToken = await refresh();
-          originalRequest.headers[
-            "Authorization"
-          ] = `Bearer ${newAccessToken.data.access}`;
+          originalRequest.headers["Authorization"] = `Bearer ${
+            newAccessToken!.data.access
+          }`;
           return axiosInstancePrivate(originalRequest);
         }
         // if (refreshToken) {
