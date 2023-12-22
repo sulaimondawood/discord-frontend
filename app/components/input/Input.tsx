@@ -20,6 +20,8 @@ const Input = ({ params }: IInputProps) => {
       message: msg,
     });
 
+    if (res.status == 201) setMsg("");
+
     console.log(res);
   }
   return (
