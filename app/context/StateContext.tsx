@@ -5,23 +5,45 @@ import {
   SetStateAction,
   createContext,
   useContext,
+  useRef,
   useState,
 } from "react";
 
 interface ModalState {
   isModalOpen: boolean;
   roomModalOpen: boolean;
+  openParticipants: boolean;
+  latestInputRef: any;
+  inputRef: any;
+  focus: boolean;
   setRoomModalOpen: Dispatch<SetStateAction<boolean>>;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
+  setFocus: Dispatch<SetStateAction<boolean>>;
+  setParticipants: Dispatch<SetStateAction<boolean>>;
 }
 
 const StateContext = createContext<ModalState | null>(null);
 export function StateProvider({ children }: { children: React.ReactNode }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [roomModalOpen, setRoomModalOpen] = useState(false);
+  const [openParticipants, setParticipants] = useState(false);
+  const [focus, setFocus] = useState(false);
+  const latestInputRef = useRef(null);
+  const inputRef = useRef(null);
   return (
     <StateContext.Provider
-      value={{ isModalOpen, setModalOpen, roomModalOpen, setRoomModalOpen }}
+      value={{
+        isModalOpen,
+        setModalOpen,
+        roomModalOpen,
+        setRoomModalOpen,
+        openParticipants,
+        setParticipants,
+        latestInputRef,
+        inputRef,
+        focus,
+        setFocus,
+      }}
     >
       {children}
     </StateContext.Provider>

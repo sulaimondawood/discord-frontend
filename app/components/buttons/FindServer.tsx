@@ -1,7 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
 import { useModalState } from "@/app/context/StateContext";
-import { axiosInstance } from "@/utils/axios";
 
 export const FindServerButton = ({
   children,

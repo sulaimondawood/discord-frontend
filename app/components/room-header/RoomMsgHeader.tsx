@@ -1,8 +1,12 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { IoPeopleSharp } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
+import { useModalState } from "@/app/context/StateContext";
 
 const RoomMsgHeader = () => {
+  const { setParticipants } = useModalState();
   return (
     <div className="flex justify-between z-50 bg-gray-ish px-4 py-2 fixed w-[calc(100vw-330px)] shadow-md ">
       <div>
@@ -17,7 +21,10 @@ const RoomMsgHeader = () => {
         </h1>
       </div>
       <div className="flex gap-4 items-center">
-        <button className="text-2xl hover:text-white-1 text-white-3">
+        <button
+          onClick={() => setParticipants(true)}
+          className="text-2xl hover:text-white-1 text-white-3"
+        >
           <IoPeopleSharp />
         </button>
         <button className="text-2xl hover:text-white-1 text-white-3">
