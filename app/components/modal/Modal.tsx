@@ -1,9 +1,31 @@
 "use client";
-
 import { useModalState } from "@/app/context/StateContext";
+import { useEffect, useState } from "react";
 
+import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
 const Modal = () => {
   const { setModalOpen } = useModalState();
+  const [isLoading, setLoading] = useState(true);
+  const [rooms, setRooms] = useState([]);
+
+  async function querySelection() {
+    const res = await axiosInstance.get("room/search-rooms/");
+    // const data = res.
+  }
+
+  useEffect(() => {
+    async function getRooms() {
+      const res = await axiosInstancePrivate.get("room/all-rooms/");
+      const data = res.data;
+
+      if (res.status === 200) {
+        setLoading(false);
+        setRooms(data);
+      }
+    }
+
+    getRooms();
+  }, []);
 
   return (
     <>
@@ -21,7 +43,11 @@ const Modal = () => {
           />
         </form>
         <div className="overflow-auto h-[300px] mt-5">
-          <p className="py-4 ">dawood Sulaimon</p>
+          {isLoading
+            ? "loading..."
+            : rooms.map((room: RoomList) => {
+                return <p className="py-4">{room.name}</p>;
+              })}
         </div>
       </div>
     </>

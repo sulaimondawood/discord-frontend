@@ -1,3 +1,4 @@
+import { CreateServerBtn } from "@/app/components/buttons/CreateServerBtn";
 import Modal from "@/app/components/modal/Modal";
 import RoomModal from "@/app/components/modal/RoomModal";
 import { useModalState } from "@/app/context/StateContext";
@@ -5,8 +6,6 @@ import { FaUserFriends } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 
 const page = () => {
-  // const { isModalOpen, roomModalOpen } = useModalState();
-
   return (
     // <div className="bg-gray-ish h-screen overflow-auto ml-[330px] w-[calc(100vw-330px)]">
     <main>
@@ -19,12 +18,7 @@ const page = () => {
             <p className="text-white-1 font-semibold">Friends</p>
           </div>
           <div className="flex gap-5 items-center">
-            <button
-              // onClick={() => setRoomModalOpen(true)}
-              className="text-white-2  hover:text-white-1 hover:bg-white/5 rounded  px-3 py-1 bg-white/10 backdrop-blur-md"
-            >
-              Create Server
-            </button>
+            <CreateServerBtn>Create Server</CreateServerBtn>
             <p className="text-white-2  hover:text-white-1 hover:bg-white/5 rounded  px-3 py-1 bg-white/10 backdrop-blur-md">
               All
             </p>
@@ -61,10 +55,6 @@ const page = () => {
           </div>
         </div>
       </div>
-      {/* <Modal />
-      <RoomModal /> */}
-      {/* {isModalOpen && <Modal />}
-      {roomModalOpen && <RoomModal />} */}
     </main>
   );
 };

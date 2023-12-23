@@ -1,11 +1,13 @@
 "use client";
 import { axiosInstancePrivate } from "@/utils/axios";
+import { useRouter } from "next/navigation";
 import React, { Dispatch, FormEvent, SetStateAction, useState } from "react";
 
 interface IInputProps {
   params: any;
 }
 const Input = ({ params }: IInputProps) => {
+  const router = useRouter();
   const [msg, setMsg] = useState("");
 
   function handleMsg(value: string) {
@@ -21,7 +23,7 @@ const Input = ({ params }: IInputProps) => {
     });
 
     if (res.status == 201) setMsg("");
-
+    router.refresh();
     console.log(res);
   }
   return (

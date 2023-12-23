@@ -9,6 +9,7 @@ import { useModalState } from "@/app/context/StateContext";
 import { useTokens } from "@/hooks/useTokensConfig";
 import useRefresh from "@/hooks/useRefresh";
 import { CreateServerBtn } from "../buttons/CreateServerBtn";
+import { FindServerButton } from "../buttons/FindServer";
 
 const SideBar = () => {
   const path = usePathname();
@@ -48,21 +49,17 @@ const SideBar = () => {
             : data.map((item: RoomList, index) => {
                 return (
                   <Link key={item.id} href={`/rooms/${index}`}>
-                    <p className="text-white text-xs">{item.name}</p>
-                    {/* <img src={item.avatar} alt="" /> */}
+                    {/* <p className="text-white text-xs">{item.name}</p> */}
+                    <img src={item.avatar} alt="" />
+                    {/* <img src={item.avatar_url} alt="" /> */}
                   </Link>
                 );
               })}
         </div>
       </div>
       <div className="bg-room-black h-screen w-[250px] px-3 py-4">
-        {/* <button
-          onClick={() => setModalOpen(true)}
-          className="text-left text-xs pl-2 rounded bg-room-deep-black w-full h-7  text-white-4"
-        >
-          Find or start a room
-        </button> */}
-        <CreateServerBtn>Find or start a room</CreateServerBtn>
+        <FindServerButton>Find or start a room</FindServerButton>
+        {/* <CreateServerBtn>Find or start a room</CreateServerBtn> */}
         <div className="mt-4">
           <div className=" flex flex-col gap-2">
             {navList.map((item) => {

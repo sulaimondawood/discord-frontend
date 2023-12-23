@@ -1,6 +1,7 @@
 interface RoomList {
   id: number;
   avatar: string;
+  avatar_url: string;
   created: string;
   description: string;
   host: number;

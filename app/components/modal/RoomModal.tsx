@@ -2,28 +2,20 @@
 
 import { useModalState } from "@/app/context/StateContext";
 import { useTokens } from "@/hooks/useTokensConfig";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 const RoomModal = () => {
   const { setRoomModalOpen } = useModalState();
   const [data, setData] = useState({
-    avatar: "",
     topic: "",
     name: "",
     description: "",
   });
 
+  const [file, setFile] = useState<null | any>(null);
+  const router = useRouter();
   const axiosInstancePrivate = useTokens();
-
-  const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
-    setData({
-      ...data,
-      [e.target.name]: "file",
-    });
-    console.log(e.target.files![0]);
-
-    console.log(data.avatar);
-  };
 
   const handleData = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -35,22 +27,34 @@ const RoomModal = () => {
     console.log(data.description);
     console.log(data.name);
     console.log(data.topic);
-    console.log(data.avatar);
   };
+
+  function handleFile(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files![0].name;
+    setFile(file);
+    console.log(file);
+  }
 
   async function handlePostReq(e: FormEvent) {
     e.preventDefault();
     const res = await axiosInstancePrivate.post(
       "room/create-room/",
+      // formData,
       {
         topic: data.topic,
         name: data.name,
         description: data.description,
+        avatar: file,
       },
       {
         withCredentials: true,
       }
     );
+
+    if (res.status === 201) {
+      setRoomModalOpen(false);
+      router.refresh();
+    }
     console.log(res);
   }
 
@@ -108,8 +112,8 @@ const RoomModal = () => {
             <input
               onChange={handleFile}
               id="img"
-              name="description"
-              value={data.avatar}
+              // name="avatar"
+              // value={file}
               className="hidden"
               // className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
               type="file"
