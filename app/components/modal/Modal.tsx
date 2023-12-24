@@ -1,15 +1,23 @@
 "use client";
 import { useModalState } from "@/app/context/StateContext";
 import { useEffect, useState } from "react";
+import { axiosInstancePrivate } from "@/utils/axios";
+import { useRouter } from "next/navigation";
 
-import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
 const Modal = () => {
   const { setModalOpen } = useModalState();
   const [isLoading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
-
+  const [searchInput, setSearchInput] = useState("");
+  const router = useRouter();
   async function querySelection() {
-    const res = await axiosInstance.get("room/search-rooms/");
+    const res = await axiosInstancePrivate.get(
+      "room/all-rooms/?search=" + searchInput
+    );
+
+    setRooms(res.data);
+    console.log(res);
+
     // const data = res.
   }
 
@@ -21,11 +29,17 @@ const Modal = () => {
       if (res.status === 200) {
         setLoading(false);
         setRooms(data);
+        console.log(rooms);
       }
     }
 
     getRooms();
-  }, []);
+  }, [searchInput]);
+
+  function handleNavigate(id: number) {
+    router.push(`/rooms/${id}`);
+    setModalOpen(false);
+  }
 
   return (
     <>
@@ -35,10 +49,12 @@ const Modal = () => {
       ></div>
 
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 bg-white/10 text-white-1 backdrop-blur-md z-[999]   w-[600px] h-[400px] rounded-md">
-        <form className="">
+        <form onKeyUp={querySelection} className="">
           <input
             className="bg-room-black py-4 px-3 rounded w-full focus:outline-none"
             type="text"
+            onChange={(e) => setSearchInput(e.target.value)}
+            value={searchInput}
             placeholder="Where would you like to go?"
           />
         </form>
@@ -46,7 +62,15 @@ const Modal = () => {
           {isLoading
             ? "loading..."
             : rooms.map((room: RoomList) => {
-                return <p className="py-4">{room.name}</p>;
+                return (
+                  <p
+                    key={room.id}
+                    onClick={() => handleNavigate(room.id)}
+                    className="py-4 cursor-pointer"
+                  >
+                    {room.name}
+                  </p>
+                );
               })}
         </div>
       </div>

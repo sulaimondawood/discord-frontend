@@ -1,13 +1,15 @@
 "use client";
-import { axiosInstance } from "@/utils/axios";
+import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
+import { useRouter } from "next/navigation";
 import React, { FormEvent, useEffect, useState } from "react";
 import { IoIosSettings } from "react-icons/io";
 
 const SearchFriendsInput = () => {
   const [users, setUsers] = useState<any>([]);
+  const [topics, setTopics] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
   const [searchInput, setSearchInput] = useState("");
-
+  const router = useRouter();
   useEffect(() => {
     async function handleGetUsers() {
       try {
@@ -29,6 +31,19 @@ const SearchFriendsInput = () => {
       }
     }
 
+    async function getTopics() {
+      const res = await axiosInstancePrivate.get("room/topics/");
+      const data = res.data.slice(0, 10);
+      console.log(data.slice(0, 6));
+      if (res.status === 200) {
+        setLoading(false);
+
+        setTopics(data);
+        console.log(topics);
+      }
+    }
+
+    getTopics();
     handleGetUsers();
   }, []);
 
@@ -81,7 +96,10 @@ const SearchFriendsInput = () => {
                         {item.display_name}
                       </p>
                     </div>
-                    <button className="text-white-3 hover:text-white-1 text-2xl hover:scale-110 transition-all duration-75">
+                    <button
+                      onClick={() => router.push("/account/" + item.id)}
+                      className="text-white-3 hover:text-white-1 text-2xl hover:scale-110 transition-all duration-75"
+                    >
                       <IoIosSettings />
                     </button>
                   </div>
@@ -93,6 +111,13 @@ const SearchFriendsInput = () => {
         <h1 className="capitalize py-6 px-4 text-xl font-semibold text-white-2 ">
           Popular Topics
         </h1>
+        <div className="px-4">
+          {isLoading
+            ? "loadding.."
+            : topics.map((item: any, index: number) => {
+                return <p key={index}>{item.title}</p>;
+              })}
+        </div>
       </div>
     </div>
   );

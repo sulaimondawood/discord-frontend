@@ -5,6 +5,7 @@ import { icon, icon2, icon3 } from "@/utils/svgs";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { axiosInstance } from "@/utils/axios";
 import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 export default function Register() {
   const [isDisabled, setIsDisabled] = useState(true);
   const data = Object.freeze({
@@ -14,7 +15,7 @@ export default function Register() {
     password: "",
   });
   const [credentials, setCredentials] = useState(data);
-
+  const router = useRouter();
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setCredentials({
@@ -41,7 +42,7 @@ export default function Register() {
     });
 
     if (res.statusText == "Created") {
-      redirect("/");
+      router.push("/");
     }
     console.log(res);
 

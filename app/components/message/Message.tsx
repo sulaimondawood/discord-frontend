@@ -6,6 +6,7 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { useModalState } from "@/app/context/StateContext";
 import { axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
+import { colors, getRandom } from "@/utils/themes/colors/color";
 
 const Message = ({ msg }: { msg: any }) => {
   const [setting, setSettings] = useState(true);
@@ -23,19 +24,23 @@ const Message = ({ msg }: { msg: any }) => {
     router.refresh();
     console.log(res);
   }
-
   return (
     <div
-      className="hover:bg-room-black/50 backdrop-blur-md p-3 rounded-md flex justify-between items-center"
+      className={` hover:bg-room-black/50 backdrop-blur-md p-3 rounded-sm flex justify-between items-center`}
       ref={latestInputRef}
     >
       <div className="flex gap-3 items-start">
         <img className="w-10 h-10 rounded-full" src={Avatar.src} alt="" />
-        <div className="">
+        <div className="flex flex-col gap-3">
           <p className="text-white-1 capitalize font-medium">
             {msg.user.display_name}
           </p>
-          <p className="text-sm w-full max-w-lg text-white-3">{msg.message}</p>
+          <p
+            style={{ borderLeftColor: getRandom() }}
+            className="border-left pl-3 border-l-[3px] rounded-[4px] text-sm w-full max-w-lg text-white-3"
+          >
+            {msg.message}
+          </p>
         </div>
       </div>
       <button

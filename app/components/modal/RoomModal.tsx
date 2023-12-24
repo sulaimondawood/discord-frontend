@@ -4,6 +4,7 @@ import { useModalState } from "@/app/context/StateContext";
 import { useTokens } from "@/hooks/useTokensConfig";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
+import RoomModalDropDown from "./RoomModalDropDown";
 
 const RoomModal = () => {
   const { setRoomModalOpen } = useModalState();
@@ -44,7 +45,7 @@ const RoomModal = () => {
         topic: data.topic,
         name: data.name,
         description: data.description,
-        avatar: file,
+        // avatar: file,
       },
       {
         withCredentials: true,
@@ -84,6 +85,7 @@ const RoomModal = () => {
               className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
               type="text"
             />
+            {/* <RoomModalDropDown topic={data.topic} handleData={handleData} /> */}
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="name">Name</label>

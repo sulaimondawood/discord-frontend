@@ -42,7 +42,7 @@ const SideBar = () => {
 
   return (
     <div className=" h-screen fixed flex ">
-      <div className="w-[80px] h-screen bg-room-deep-black py-4 px-2">
+      <div className="w-[80px] h-screen overflow-auto bg-room-deep-black py-4 px-2">
         <div className="flex flex-col gap-4">
           {loading
             ? "Loading..."
@@ -57,7 +57,7 @@ const SideBar = () => {
               })}
         </div>
       </div>
-      <div className="bg-room-black h-screen w-[250px] px-3 py-4">
+      <div className="bg-room-black overflow-auto h-screen w-[250px] px-3 py-4">
         <FindServerButton>Find or start a room</FindServerButton>
         {/* <CreateServerBtn>Find or start a room</CreateServerBtn> */}
         <div className="mt-4">
