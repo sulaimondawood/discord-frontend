@@ -17,6 +17,8 @@ interface ModalState {
   inputRef: any;
   focus: boolean;
   isUserModalOpen: boolean;
+  isRoomInfo: boolean;
+  setRoomInfo: Dispatch<SetStateAction<boolean>>;
   setUserModalOpen: Dispatch<SetStateAction<boolean>>;
   setRoomModalOpen: Dispatch<SetStateAction<boolean>>;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -27,7 +29,8 @@ interface ModalState {
 const StateContext = createContext<ModalState | null>(null);
 export function StateProvider({ children }: { children: React.ReactNode }) {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isUserModalOpen, setUserModalOpen] = useState(true);
+  const [isUserModalOpen, setUserModalOpen] = useState(false);
+  const [isRoomInfo, setRoomInfo] = useState(false);
   const [roomModalOpen, setRoomModalOpen] = useState(false);
   const [openParticipants, setParticipants] = useState(false);
   const [focus, setFocus] = useState(false);
@@ -48,6 +51,8 @@ export function StateProvider({ children }: { children: React.ReactNode }) {
         isUserModalOpen,
         setUserModalOpen,
         setFocus,
+        isRoomInfo,
+        setRoomInfo,
       }}
     >
       {children}

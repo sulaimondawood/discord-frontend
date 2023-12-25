@@ -1,16 +1,27 @@
+"use client";
 import { axiosInstance } from "@/utils/axios";
 import Image from "@/assets/images/avatar.jpg";
 import UserSettingsModal from "@/app/components/modal/UserSettingsModal";
-async function getUniqueUser(id: number) {
-  const res = await axiosInstance.get("user/" + id);
-  console.log(res);
+import { useModalState } from "@/app/context/StateContext";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-  return res.data;
-}
+const Page = ({ params }: { params: { id: number } }) => {
+  const [user, setUser] = useState<any>([]);
+  const { isUserModalOpen, setUserModalOpen } = useModalState();
 
-const page = async ({ params }: { params: { id: number } }) => {
-  const data = await getUniqueUser(params.id);
-  const user = data[0];
+  const router = useRouter();
+  useEffect(() => {
+    async function getUniqueUser(id: number) {
+      const res = await axiosInstance.get("user/" + id);
+      console.log(res);
+      setUser(res.data[0]);
+
+      router.refresh();
+    }
+    getUniqueUser(params.id);
+  }, []);
+
   return (
     <div className="bg-gray-ish h-screen py-14 px-10 ml-[330px] w-[calc(100vw-330px)]">
       <h1 className="text-white text-xl font-semibold">My Account</h1>
@@ -26,7 +37,10 @@ const page = async ({ params }: { params: { id: number } }) => {
               />
               <p className="text-white-1 text-lg">#{user?.username}</p>
             </div>
-            <button className="bg-blue-500 py-1 px-4 text-white text-sm rounded">
+            <button
+              onClick={() => setUserModalOpen(true)}
+              className="bg-blue-500 py-1 px-4 text-white text-sm rounded"
+            >
               Edit User Profile
             </button>
           </div>
@@ -37,7 +51,10 @@ const page = async ({ params }: { params: { id: number } }) => {
                 <p className="uppercase text-white-3 text-xs">Display name</p>
                 <p className="text-white-1">{user.display_name}</p>
               </div>
-              <button className="bg-white/10 backdrop-blur-md rounded-sm py-1 px-3 text-white">
+              <button
+                onClick={() => setUserModalOpen(true)}
+                className="bg-white/10 backdrop-blur-md rounded-sm py-1 px-3 text-white"
+              >
                 Edit
               </button>
             </div>
@@ -46,7 +63,10 @@ const page = async ({ params }: { params: { id: number } }) => {
                 <p className="uppercase text-white-3 text-xs">username</p>
                 <p className="text-white-1">{user.username}</p>
               </div>
-              <button className="bg-white/10 backdrop-blur-md rounded-sm py-1 px-3 text-white">
+              <button
+                onClick={() => setUserModalOpen(true)}
+                className="bg-white/10 backdrop-blur-md rounded-sm py-1 px-3 text-white"
+              >
                 Edit
               </button>
             </div>
@@ -55,16 +75,19 @@ const page = async ({ params }: { params: { id: number } }) => {
                 <p className="uppercase text-white-3 text-xs">email</p>
                 <p className="text-white-1">{user.email}</p>
               </div>
-              <button className="bg-white/10 backdrop-blur-md rounded-sm py-1 px-3 text-white ">
+              <button
+                onClick={() => setUserModalOpen(true)}
+                className="bg-white/10 backdrop-blur-md rounded-sm py-1 px-3 text-white "
+              >
                 Edit
               </button>
             </div>
           </div>
         </div>
       </div>
-      <UserSettingsModal />
+      <UserSettingsModal params={params.id} />
     </div>
   );
 };
 
-export default page;
+export default Page;

@@ -26,6 +26,15 @@ export function middleware(req: NextRequest) {
     console.log(error);
     return NextResponse.redirect(clientBaseUrl);
   }
+
+  // if (
+  //   token &&
+  //   (req.nextUrl.pathname.startsWith("/") ||
+  //     req.nextUrl.pathname.startsWith("/register"))
+  // ) {
+  //   return NextResponse.redirect(new URL("/rooms", req.url));
+  // }
+
   return NextResponse.next();
 }
 
