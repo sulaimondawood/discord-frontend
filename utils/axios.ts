@@ -121,7 +121,20 @@ export const axiosInstance = axios.create({
 export const axiosInstancePrivate = axios.create({
   baseURL,
   headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
+    common: {
+      Accept: "application/json",
+    },
+    get: {
+      "Content-Type": "application/json",
+    },
+    post: {
+      "Content-Type": "multipart/form-data",
+    },
+    put: {
+      "Content-Type": "multipart/form-data",
+    },
+    delete: {
+      "Content-Type": "multipart/form-data",
+    },
   },
 });

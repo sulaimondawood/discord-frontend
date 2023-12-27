@@ -20,6 +20,10 @@ const RoomModal = () => {
 
   const handleData = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    // if (e.target.name === "avatar") {
+    //   setFile(e.target.files![0]);
+    // }
+
     setData({
       ...data,
       [name]: value,
@@ -28,29 +32,47 @@ const RoomModal = () => {
     console.log(data.description);
     console.log(data.name);
     console.log(data.topic);
+    // console.log(file);
   };
 
   function handleFile(e: ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files![0].name;
+    const file = e.target.files![0];
     setFile(file);
     console.log(file);
   }
 
   async function handlePostReq(e: FormEvent) {
     e.preventDefault();
-    const res = await axiosInstancePrivate.post(
-      "room/create-room/",
-      // formData,
-      {
-        topic: data.topic,
-        name: data.name,
-        description: data.description,
-        // avatar: file,
+    const formData = new FormData();
+    formData.append("topic", data.topic);
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("avatar", file);
+    console.log(formData.get("topic"));
+    console.log(formData.get("name"));
+    console.log(formData.get("description"));
+    console.log(formData.get("avatar"));
+    // axiosInstancePrivate.defaults.headers.post["Content-Type"] =
+    //   "multipart/form-data";
+    const res = await axiosInstancePrivate.post("room/create-room/", formData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
-      {
-        withCredentials: true,
-      }
-    );
+    });
+    // const res = await axiosInstancePrivate.post(
+    //   "room/create-room/",
+    //   // formData,
+    //   {
+    //     topic: data.topic,
+    //     name: data.name,
+    //     description: data.description,
+    //     // avatar: file,
+    //   },
+    //   {
+    //     withCredentials: true,
+    //   }
+    // );
 
     if (res.status === 201) {
       setRoomModalOpen(false);
@@ -114,8 +136,7 @@ const RoomModal = () => {
             <input
               onChange={handleFile}
               id="img"
-              // name="avatar"
-              // value={file}
+              name="avatar"
               className="hidden"
               // className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
               type="file"
