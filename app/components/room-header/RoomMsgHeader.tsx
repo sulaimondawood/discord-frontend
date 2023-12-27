@@ -130,7 +130,10 @@ const RoomMsgHeader = ({ data }: { data: IRoom }) => {
                     src={Image.src}
                     alt=""
                   />
-                  <p className="text-white-2 capitalize">Dawood</p>
+                  <div className="text-white-4 text-sm lowercase">
+                    <p>Dawood</p>
+                    <p className="text-xs text-white-2 ">Dawood</p>
+                  </div>
                 </div>
                 <span>
                   <FaAngleRight />

@@ -32,7 +32,7 @@ const Page = ({ params }: { params: { id: number } }) => {
             <div className="flex items-center gap-4">
               <img
                 className="w-20 h-20 rounded-full -mt-5 bg-room-deep-black p-2"
-                src={Image.src}
+                src={user.avatar}
                 alt=""
               />
               <p className="text-white-1 text-lg">#{user?.username}</p>

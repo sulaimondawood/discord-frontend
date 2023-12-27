@@ -12,6 +12,7 @@ import { formatRelative } from "date-fns";
 import { Locale } from "date-fns";
 
 const Message = ({ msg }: { msg: any }) => {
+  console.log(msg);
   const [setting, setSettings] = useState(true);
   const { latestInputRef, inputRef, setFocus, focus } = useModalState();
   const { setParticipants, setRoomInfo } = useModalState();
@@ -38,7 +39,11 @@ const Message = ({ msg }: { msg: any }) => {
       ref={latestInputRef}
     >
       <div className="flex gap-3 items-start">
-        <img className="w-10 h-10 rounded-full" src={Avatar.src} alt="" />
+        <img
+          className="w-10 h-10 rounded-full"
+          src={"http://localhost:8000" + msg?.user?.avatar}
+          alt=""
+        />
         <div className="flex flex-col gap-3">
           <div className=" flex gap-2 items-center">
             <p className="text-white-1 capitalize font-medium">

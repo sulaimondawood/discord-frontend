@@ -48,35 +48,17 @@ const RoomModal = () => {
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("avatar", file);
-    console.log(formData.get("topic"));
-    console.log(formData.get("name"));
-    console.log(formData.get("description"));
-    console.log(formData.get("avatar"));
-    // axiosInstancePrivate.defaults.headers.post["Content-Type"] =
-    //   "multipart/form-data";
+
     const res = await axiosInstancePrivate.post("room/create-room/", formData, {
       withCredentials: true,
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    // const res = await axiosInstancePrivate.post(
-    //   "room/create-room/",
-    //   // formData,
-    //   {
-    //     topic: data.topic,
-    //     name: data.name,
-    //     description: data.description,
-    //     // avatar: file,
-    //   },
-    //   {
-    //     withCredentials: true,
-    //   }
-    // );
-
     if (res.status === 201) {
       setRoomModalOpen(false);
       router.refresh();
+      window.location.reload();
     }
     console.log(res);
   }

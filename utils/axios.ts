@@ -129,6 +129,7 @@ export const axiosInstancePrivate = axios.create({
     },
     post: {
       "Content-Type": "multipart/form-data",
+      // "Content-Type": "application/json",
     },
     put: {
       "Content-Type": "multipart/form-data",
