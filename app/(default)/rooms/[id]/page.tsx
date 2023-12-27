@@ -54,7 +54,7 @@ const page = async ({ params }: { params: { id: number } }) => {
   // }, [params.id, msg]);
   return (
     <main className="bg-gray-ish h-screen ml-[330px] w-[calc(100vw-330px)] ">
-      <RoomMsgHeader data={room} />
+      <RoomMsgHeader params={params.id} data={room} />
       {/* <div className="overflow-y-auto flex flex-col gap-3 h-full py-20 px-4">
         {data.length > 0
           ? data.map((msg: any, index: any) => {

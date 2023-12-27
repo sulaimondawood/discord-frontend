@@ -18,7 +18,7 @@ import Image from "@/assets/images/avatar.jpg";
 
 const SideBar = () => {
   const path = usePathname();
-  // console.log(path);
+  console.log(path);
   const axiosInstancePrivate = useTokens();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,7 +40,7 @@ const SideBar = () => {
       console.log(data);
 
       const userResponse = await axiosInstance.get("user/");
-      const userData = res.data;
+      const userData = userResponse.data;
 
       if (userData) {
         setUserData(userData);
@@ -107,22 +107,31 @@ const SideBar = () => {
                 ? "loading.."
                 : userData.map((user: any, index: number) => {
                     return (
-                      <div className="flex justify-between items-center hover:bg-white/5 hover:backdrop-blur-md p-2 rounded">
+                      <Link
+                        href={
+                          path !== "/account"
+                            ? `account/${user.id}`
+                            : `${user.id}`
+                        }
+                        className="flex justify-between items-center hover:bg-white/5 hover:backdrop-blur-md p-2 rounded"
+                      >
                         <div className="flex gap-3 items-center">
                           <img
                             className="w-10 h-10 rounded-full"
-                            src={Image.src}
+                            src={user.avatar}
                             alt=""
                           />
                           <div className="text-white-4 text-sm lowercase">
-                            <p>Dawood</p>
-                            <p className="text-xs text-white-2 ">Dawood</p>
+                            <p>{user.username}</p>
+                            <p className="text-xs text-white-2 ">
+                              {user.display_name}
+                            </p>
                           </div>
                         </div>
                         <span className="text-white-2">
                           <FaAngleRight />
                         </span>
-                      </div>
+                      </Link>
                     );
                   })}
             </div>
