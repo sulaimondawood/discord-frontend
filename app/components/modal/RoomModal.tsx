@@ -120,7 +120,6 @@ const RoomModal = () => {
               id="img"
               name="avatar"
               className="hidden"
-              // className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
               type="file"
             />
           </div>

@@ -1,22 +1,32 @@
 "use client";
 import { useModalState } from "@/app/context/StateContext";
 import { axiosInstancePrivate } from "@/utils/axios";
+import { useRouter } from "next/navigation";
 import React, { FormEvent, useEffect, useState } from "react";
 
 const UserSettingsModal = ({ params }: { params: number }) => {
   const { isUserModalOpen, setUserModalOpen } = useModalState();
   const [username, setUsername] = useState("");
   const [display_name, setDisplayName] = useState("");
+  const [file, setFile] = useState<any>(null);
+
+  const router = useRouter();
   async function handleUpdateUser(e: FormEvent) {
     e.preventDefault();
-    const res = await axiosInstancePrivate.put("user/" + params + "/", {
-      username,
-      display_name,
-    });
+
+    const formdata = new FormData();
+    formdata.append("username", username);
+    formdata.append("display_name", display_name);
+    formdata.append("avatar", file);
+    const res = await axiosInstancePrivate.put(
+      "user/" + params + "/",
+      formdata
+    );
     if (res.status == 200) {
       console.log(res);
       setUserModalOpen(false);
-      window.location.reload();
+      router.refresh();
+      // window.location.reload();
     }
   }
 
@@ -70,6 +80,17 @@ const UserSettingsModal = ({ params }: { params: number }) => {
               id="displayname"
               className="w-full focus:outline-none bg-room-deep-black px-4 py-2 rounded text-white-1"
               type="text"
+            />
+          </div>
+
+          <div className="flex flex-col text-white-2 gap-2 border-dashed border border-white-4/40 py-4 text-center">
+            <label htmlFor="img">Upload Sever Image</label>
+            <input
+              onChange={(e) => setFile(e.target.files![0])}
+              id="img"
+              name="avatar"
+              className="hidden"
+              type="file"
             />
           </div>
 

@@ -45,6 +45,7 @@ export default function Home() {
       );
       console.log(res);
       if (res.status === 200 && res.statusText === "OK") {
+        localStorage?.setItem("user", JSON.stringify(res.data.user));
         localStorage?.setItem("token", res.data.data.refresh);
         setAuth(res.data.data.access);
         console.log("auth");

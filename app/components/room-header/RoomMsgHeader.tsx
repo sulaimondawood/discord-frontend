@@ -17,6 +17,8 @@ interface IRoom {
   members: any[];
 }
 
+export const dynamic = "force-dynamic";
+
 const RoomMsgHeader = ({ data, params }: { data: IRoom; params: number }) => {
   const { setParticipants, isRoomInfo, setRoomInfo, openParticipants } =
     useModalState();
@@ -148,31 +150,37 @@ const RoomMsgHeader = ({ data, params }: { data: IRoom; params: number }) => {
         >
           <IoPeopleSharp />
           {openParticipants && (
-            <div className=" p-4 flex flex-col gap-4 rounded text-base absolute top-9 right-0 w-[300px] bg-white/5 backdrop-blur-md">
-              {loading
-                ? "loading.."
-                : loadParticipants.map((participants: any) => {
-                    return (
-                      <div className="flex justify-between items-center">
-                        <div className="flex gap-3 items-center">
-                          <img
-                            className="w-10 h-10 rounded-full"
-                            src={Image.src}
-                            alt=""
-                          />
-                          <div className="text-white-4 text-left text-sm lowercase">
-                            <p>{participants.username}</p>
-                            <p className="text-xs text-white-2 ">
-                              {participants.display_name}
-                            </p>
-                          </div>
+            <div className=" p-4 flex hover:text-white-3 flex-col gap-4 rounded text-base absolute top-9 right-0 w-[300px] bg-white/5 backdrop-blur-md">
+              {loading ? (
+                "loading.."
+              ) : loadParticipants.length >= 1 ? (
+                loadParticipants.map((participants: any) => {
+                  return (
+                    <div className="flex justify-between items-center">
+                      <div className="flex gap-3 items-center">
+                        <img
+                          className="w-10 h-10 rounded-full"
+                          src={"http://localhost" + participants.avatar}
+                          alt=""
+                        />
+                        <div className="text-white-4 text-left text-sm lowercase">
+                          <p>{participants.username}</p>
+                          <p className="text-xs text-white-2 ">
+                            {participants.display_name}
+                          </p>
                         </div>
-                        <span>
-                          <FaAngleRight />
-                        </span>
                       </div>
-                    );
-                  })}
+                      <span>
+                        <FaAngleRight />
+                      </span>
+                    </div>
+                  );
+                })
+              ) : (
+                <p className="text-sm text-white-3">
+                  No participants yet! Engage to join as participant
+                </p>
+              )}
             </div>
           )}
         </button>

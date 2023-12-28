@@ -2,7 +2,7 @@
 // import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import { IconType } from "react-icons";
 import navList from "@/utils/nav";
 import { useModalState } from "@/app/context/StateContext";
@@ -18,15 +18,18 @@ import Image from "@/assets/images/avatar.jpg";
 
 const SideBar = () => {
   const path = usePathname();
-  console.log(path);
+  // console.log(path);
   const axiosInstancePrivate = useTokens();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<any[]>([]);
   const [userList, setUserList] = useState(true);
+  const [activeUser, setActiveUser] = useState<any[]>([]);
+  const [userActive, setActive] = useState(true);
   const { setModalOpen } = useModalState();
 
   useEffect(() => {
+    const activeUser = JSON.parse(localStorage?.getItem("user")!);
     async function getRoomLists() {
       const res = await axiosInstancePrivate.get("room/all-rooms/", {
         withCredentials: true,
@@ -37,7 +40,7 @@ const SideBar = () => {
         setData(data);
         setLoading(false);
       }
-      console.log(data);
+      // console.log(data);
 
       const userResponse = await axiosInstance.get("user/");
       const userData = userResponse.data;
@@ -48,30 +51,51 @@ const SideBar = () => {
       }
     }
 
+    async function getSingleUser() {
+      const res = await axiosInstance.get("user/" + activeUser.id + "/");
+      if (res.status == 200) {
+        setActiveUser(res.data);
+        setActive(false);
+      }
+      // console.log(res);
+    }
+
+    getSingleUser();
+
     getRoomLists();
   }, []);
 
   const router = useRouter();
-  const handleRoomNavigation = (id: number) => {
-    router.push(`room/${id}`);
+  const handleNavigation = (id: number) => {
+    if (path.includes("/account")) {
+      // console.log("redirect");
+
+      redirect(`account/${id}`);
+      // router.replace(`account/${id}`);
+    } else {
+      router.push(`account/${id}`);
+    }
   };
 
   return (
     <div className=" h-screen fixed flex ">
       <div className="w-[80px] h-screen overflow-auto bg-room-deep-black py-4 px-2">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col items-center gap-4">
           {loading
             ? "Loading..."
             : data.map((item: RoomList, index) => {
                 return (
-                  <Link key={item.id} href={`/rooms/${item.id}`}>
-                    {/* <p className="text-white text-xs">{item.name}</p> */}
+                  <Link
+                    className="relative group"
+                    key={item.id}
+                    href={`/rooms/${item.id}`}
+                  >
+                    <div className="bg-white rounded-full h-2 absolute -left-4 top-1/2 -translate-y-1/2 w-[6px] group-hover:h-6 duration-200 transition-all"></div>
                     <img
-                      className="w-14 h-14 rounded-full"
+                      className="w-[50px] h-[50px] rounded-full group-hover:rounded-2xl transition-all duration-150 ease-linear object-cover"
                       src={item.avatar}
                       alt=""
                     />
-                    {/* <img src={item.avatar_url} alt="" /> */}
                   </Link>
                 );
               })}
@@ -85,6 +109,7 @@ const SideBar = () => {
             {navList.map((item) => {
               return (
                 <Link
+                  key={item.id}
                   href={item.url}
                   className={`${
                     path === item.url
@@ -99,7 +124,7 @@ const SideBar = () => {
             })}
           </div>
           <div className="mt-5">
-            <p className="text-white-4 font-semibold text-xs uppercase">
+            <p className="text-white-4 font-semibold text-[10px] uppercase">
               Popular Users
             </p>
             <div className="h-[370px] flex flex-col gap-4 mt-5 w-[225px] overflow-auto">
@@ -108,22 +133,19 @@ const SideBar = () => {
                 : userData.map((user: any, index: number) => {
                     return (
                       <Link
-                        href={
-                          path !== "/account"
-                            ? `account/${user.id}`
-                            : `${user.id}`
-                        }
+                        key={index}
+                        href={`account/${user.id}`}
                         className="flex justify-between items-center hover:bg-white/5 hover:backdrop-blur-md p-2 rounded"
                       >
                         <div className="flex gap-3 items-center">
                           <img
-                            className="w-10 h-10 rounded-full"
+                            className="w-8 h-8 object-cover rounded-full"
                             src={user.avatar}
                             alt=""
                           />
-                          <div className="text-white-4 text-sm lowercase">
+                          <div className="text-white-4 text-left text-sm lowercase">
                             <p>{user.username}</p>
-                            <p className="text-xs text-white-2 ">
+                            <p className="text-xs  text-white-2 ">
                               {user.display_name}
                             </p>
                           </div>
@@ -136,8 +158,10 @@ const SideBar = () => {
                   })}
             </div>
           </div>
-
-          <SideBarProfileLink />
+          {activeUser.map((user) => {
+            return <SideBarProfileLink key={user.id} user={user} />;
+          })}
+          {/* <SideBarProfileLink /> */}
         </div>
       </div>
     </div>
