@@ -6,6 +6,7 @@ import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
 import { useModalState } from "@/app/context/StateContext";
 import Message from "@/app/components/message/Message";
 import { useEffect, useState } from "react";
+import Spinner from "@/app/components/loader/Spinner";
 
 export const revalidate = 1;
 
@@ -48,13 +49,15 @@ const page = ({ params }: { params: { id: number } }) => {
     <main className="bg-gray-ish h-screen ml-[330px] w-[calc(100vw-330px)] ">
       <RoomMsgHeader params={params.id} data={room} />
       <div className="overflow-y-auto flex flex-col gap-3 h-full py-20 px-4">
-        {loading
-          ? "loading.."
-          : data.length > 0
-          ? data.map((msg: any, index: any) => {
-              return <Message key={index} msg={msg} />;
-            })
-          : "No messages yet!"}
+        {loading ? (
+          <Spinner showText={true} />
+        ) : data.length > 0 ? (
+          data.map((msg: any, index: any) => {
+            return <Message key={index} msg={msg} />;
+          })
+        ) : (
+          "No messages yet!"
+        )}
       </div>
       {/* <div className="overflow-y-auto flex flex-col gap-3 h-full py-20 px-4">
         {data.length > 0

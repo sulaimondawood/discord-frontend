@@ -15,6 +15,7 @@ import { axiosInstance } from "@/utils/axios";
 import { FaAngleRight } from "react-icons/fa";
 
 import Image from "@/assets/images/avatar.jpg";
+import Spinner from "../loader/Spinner";
 
 const SideBar = () => {
   const path = usePathname();
@@ -81,24 +82,26 @@ const SideBar = () => {
     <div className=" h-screen fixed flex ">
       <div className="w-[80px] h-screen overflow-auto bg-room-deep-black py-4 px-2">
         <div className="flex flex-col items-center gap-4">
-          {loading
-            ? "Loading..."
-            : data.map((item: RoomList, index) => {
-                return (
-                  <Link
-                    className="relative group"
-                    key={item.id}
-                    href={`/rooms/${item.id}`}
-                  >
-                    <div className="bg-white rounded-full h-2 absolute -left-4 top-1/2 -translate-y-1/2 w-[6px] group-hover:h-6 duration-200 transition-all"></div>
-                    <img
-                      className="w-[50px] h-[50px] rounded-full group-hover:rounded-2xl transition-all duration-150 ease-linear object-cover"
-                      src={item.avatar}
-                      alt=""
-                    />
-                  </Link>
-                );
-              })}
+          {loading ? (
+            <Spinner showText={false} />
+          ) : (
+            data.map((item: RoomList, index) => {
+              return (
+                <Link
+                  className="relative group"
+                  key={item.id}
+                  href={`/rooms/${item.id}`}
+                >
+                  <div className="bg-white rounded-full h-2 absolute -left-4 top-1/2 -translate-y-1/2 w-[6px] group-hover:h-6 duration-200 transition-all"></div>
+                  <img
+                    className="w-[50px] h-[50px] rounded-full group-hover:rounded-2xl transition-all duration-150 ease-linear object-cover"
+                    src={item.avatar}
+                    alt=""
+                  />
+                </Link>
+              );
+            })
+          )}
         </div>
       </div>
       <div className="bg-room-black overflow-auto h-screen w-[250px] px-3 py-4">
@@ -128,40 +131,41 @@ const SideBar = () => {
               Popular Users
             </p>
             <div className="h-[370px] flex flex-col gap-4 mt-5 w-[225px] overflow-auto">
-              {userList
-                ? "loading.."
-                : userData.map((user: any, index: number) => {
-                    return (
-                      <Link
-                        key={index}
-                        href={`account/${user.id}`}
-                        className="flex justify-between items-center hover:bg-white/5 hover:backdrop-blur-md p-2 rounded"
-                      >
-                        <div className="flex gap-3 items-center">
-                          <img
-                            className="w-8 h-8 object-cover rounded-full"
-                            src={user.avatar}
-                            alt=""
-                          />
-                          <div className="text-white-4 text-left text-sm lowercase">
-                            <p>{user.username}</p>
-                            <p className="text-xs  text-white-2 ">
-                              {user.display_name}
-                            </p>
-                          </div>
+              {userList ? (
+                <Spinner showText={true} />
+              ) : (
+                userData.map((user: any, index: number) => {
+                  return (
+                    <Link
+                      key={index}
+                      href={`account/${user.id}`}
+                      className="flex justify-between items-center hover:bg-white/5 hover:backdrop-blur-md p-2 rounded"
+                    >
+                      <div className="flex gap-3 items-center">
+                        <img
+                          className="w-8 h-8 object-cover rounded-full"
+                          src={user.avatar}
+                          alt=""
+                        />
+                        <div className="text-white-4 text-left text-sm lowercase">
+                          <p>{user.username}</p>
+                          <p className="text-xs  text-white-2 ">
+                            {user.display_name}
+                          </p>
                         </div>
-                        <span className="text-white-2">
-                          <FaAngleRight />
-                        </span>
-                      </Link>
-                    );
-                  })}
+                      </div>
+                      <span className="text-white-2">
+                        <FaAngleRight />
+                      </span>
+                    </Link>
+                  );
+                })
+              )}
             </div>
           </div>
           {activeUser.map((user) => {
             return <SideBarProfileLink key={user.id} user={user} />;
           })}
-          {/* <SideBarProfileLink /> */}
         </div>
       </div>
     </div>

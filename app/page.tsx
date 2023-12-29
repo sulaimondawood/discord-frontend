@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { icon, icon2, icon3 } from "@/utils/svgs";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/utils/axios";
@@ -18,6 +18,9 @@ export default function Home() {
   });
   const { auth, setAuth } = useAuth();
   const [logCredentials, setCredentials] = useState(data);
+  const [isLoading, setLoading] = useState(false);
+  const [isError, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -30,8 +33,6 @@ export default function Home() {
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
-    // console.log(logCredentials);
-
     try {
       const res = await axiosInstance.post(
         "user/login/",
@@ -48,14 +49,27 @@ export default function Home() {
         localStorage?.setItem("user", JSON.stringify(res.data.user));
         localStorage?.setItem("token", res.data.data.refresh);
         setAuth(res.data.data.access);
+        setLoading(true);
         console.log("auth");
         console.log(auth);
         router.push("/rooms");
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      setError(true);
+      console.log(error);
+      setErrorMsg(error.response.data.Invalid);
+      console.log(errorMsg);
     }
   };
+  useEffect(() => {
+    console.log("hello");
+
+    const timeOut = setTimeout(() => {
+      setError(false);
+    }, 3000);
+
+    () => clearTimeout(timeOut);
+  }, [isError]);
 
   const refresh = useRefresh();
 
@@ -75,6 +89,12 @@ export default function Home() {
           <p className="text-white-3 text-sm ">
             We're so excited to see you again!
           </p>
+
+          {isError && (
+            <p className="text-xs mt-4 bg-red-400 text-red-50 py-1 px-3 rounded-md">
+              {errorMsg}
+            </p>
+          )}
         </div>
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
@@ -117,13 +137,22 @@ export default function Home() {
           >
             Forgot your password?
           </Link>
-          <button
-            onClick={handleLogin}
-            className="bg-blue-ish hover:bg-blue-800 duration-200 transition-all text-white py-3 font-Noto-sans text-sm rounded "
-            type="submit"
-          >
-            Log In
-          </button>
+          {isLoading ? (
+            <button
+              className="bg-blue-ish hover:bg-blue-800 duration-200 transition-all text-white py-3 font-Noto-sans text-sm rounded "
+              type="button"
+            >
+              Please wait...
+            </button>
+          ) : (
+            <button
+              onClick={handleLogin}
+              className="bg-blue-ish hover:bg-blue-800 duration-200 transition-all text-white py-3 font-Noto-sans text-sm rounded "
+              type="submit"
+            >
+              Log In
+            </button>
+          )}
         </form>
         <p className="pt-3 text-sm font-Noto-sans">
           <span className="text-white-4">Need an account?</span>{" "}

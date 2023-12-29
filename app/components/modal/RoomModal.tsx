@@ -3,7 +3,7 @@
 import { useModalState } from "@/app/context/StateContext";
 import { useTokens } from "@/hooks/useTokensConfig";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import RoomModalDropDown from "./RoomModalDropDown";
 
 const RoomModal = () => {
@@ -13,6 +13,10 @@ const RoomModal = () => {
     name: "",
     description: "",
   });
+  const [progress, setProgress] = useState(0);
+  const [isLoading, setLoading] = useState(false);
+  const [isError, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const [file, setFile] = useState<null | any>(null);
   const router = useRouter();
@@ -49,19 +53,59 @@ const RoomModal = () => {
     formData.append("description", data.description);
     formData.append("avatar", file);
 
-    const res = await axiosInstancePrivate.post("room/create-room/", formData, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    if (res.status === 201) {
-      setRoomModalOpen(false);
-      router.refresh();
-      window.location.reload();
+    try {
+      const res = await axiosInstancePrivate.post(
+        "room/create-room/",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: (progressEvent) => {
+            console.log(progressEvent.loaded);
+            const progressState =
+              (progressEvent.loaded * 100) / progressEvent.total!;
+
+            setProgress(progressState);
+          },
+        }
+      );
+
+      console.log(res);
+      if (res.status === 201) {
+        setRoomModalOpen(false);
+        setLoading(true);
+        router.refresh();
+        // window.location.reload();
+      }
+    } catch (error: any) {
+      setError(true);
+      setLoading(false);
+      console.log(error);
+      setProgress(0);
+
+      if (error.response?.data?.topic) {
+        setErrorMsg(error.response?.data?.topic[0] + " - topic");
+      } else if (error.response?.data?.name) {
+        setErrorMsg(error.response?.data?.name[0] + " - name");
+      } else {
+        setErrorMsg("No avatar selected for room profile");
+      }
+
+      console.log(errorMsg);
     }
-    console.log(res);
   }
+
+  useEffect(() => {
+    console.log("hello");
+
+    const timeOut = setTimeout(() => {
+      setError(false);
+    }, 3000);
+
+    () => clearTimeout(timeOut);
+  }, [isError]);
 
   return (
     <>
@@ -78,6 +122,12 @@ const RoomModal = () => {
           Your server is where you and your friends hangout. Make yours and
           start talking
         </p>
+
+        {isError && (
+          <p className="text-xs mt-4 bg-red-400 text-red-50 py-1 px-3 rounded-md">
+            {errorMsg}
+          </p>
+        )}
         <form onSubmit={handlePostReq} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <label htmlFor="topic">Topic</label>
@@ -86,6 +136,7 @@ const RoomModal = () => {
               id="topic"
               name="topic"
               value={data.topic}
+              required
               className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
               type="text"
             />
@@ -98,6 +149,7 @@ const RoomModal = () => {
               id="name"
               name="name"
               value={data.name}
+              required
               className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
               type="text"
             />
@@ -111,6 +163,7 @@ const RoomModal = () => {
               value={data.description}
               className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
               type="text"
+              required
             />
           </div>
           <div className="flex flex-col gap-2 border-dashed border border-white-4/40 py-4 text-center">
@@ -121,14 +174,42 @@ const RoomModal = () => {
               name="avatar"
               className="hidden"
               type="file"
+              required
             />
           </div>
-          <button
-            className="pl-2 rounded bg-room-deep-black w-full  py-3 text-center text-white-4"
-            onClick={handlePostReq}
-          >
-            Create Server
-          </button>
+          <div className="">
+            {progress > 0 && (
+              <div className="relative pt-1">
+                <div className="flex mb-2 items-center justify-between">
+                  <div>
+                    <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
+                      {progress}%
+                    </span>
+                  </div>
+                </div>
+                <div className="flex h-2 mb-4 overflow-hidden text-xs bg-blue-200 rounded">
+                  <div
+                    style={{ width: `${progress}%` }}
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
+                  ></div>
+                </div>
+              </div>
+            )}
+
+            <p>{file?.name && "File " + file.name + " staged"}</p>
+          </div>
+          {isLoading ? (
+            <button className="pl-2 rounded bg-room-deep-black w-full  py-3 text-center text-white-4">
+              Please wait...
+            </button>
+          ) : (
+            <button
+              className="pl-2 rounded bg-room-deep-black w-full  py-3 text-center text-white-4"
+              onClick={handlePostReq}
+            >
+              Create Server
+            </button>
+          )}
         </form>
       </div>
     </>

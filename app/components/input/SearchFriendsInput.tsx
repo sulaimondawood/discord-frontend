@@ -3,6 +3,7 @@ import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useEffect, useState } from "react";
 import { IoIosSettings } from "react-icons/io";
+import Spinner from "../loader/Spinner";
 
 const SearchFriendsInput = () => {
   const [users, setUsers] = useState<any>([]);
@@ -82,38 +83,38 @@ const SearchFriendsInput = () => {
           </p>
         </form>
         <div className="pt-24 flex flex-col  overflow-auto h-[calc(100vh-80px)]">
-          {isLoading
-            ? "loading"
-            : users.map((item: any, index: number) => {
-                return (
-                  <div
-                    key={index}
-                    className="flex justify-between items-center border-t py-3 border-room-black-2/40 hover:text-white-1 hover:bg-white/5 hover:border-none hover:rounded-lg px-3"
-                  >
-                    <div className="flex items-start gap-4">
-                      <img
-                        className="h-9 w-9 object-cover rounded-full"
-                        src={item.avatar}
-                        alt=""
-                      />
-                      <div>
-                        <p className="text-white-1 capitalize">
-                          {item.username}
-                        </p>
-                        <p className="text-white-4 text-sm">
-                          {item.display_name}
-                        </p>
-                      </div>
+          {isLoading ? (
+            <Spinner showText={true} />
+          ) : (
+            users.map((item: any, index: number) => {
+              return (
+                <div
+                  key={index}
+                  className="flex justify-between items-center border-t py-3 border-room-black-2/40 hover:text-white-1 hover:bg-white/5 hover:border-none hover:rounded-lg px-3"
+                >
+                  <div className="flex items-start gap-4">
+                    <img
+                      className="h-9 w-9 object-cover rounded-full"
+                      src={item.avatar}
+                      alt=""
+                    />
+                    <div>
+                      <p className="text-white-1 capitalize">{item.username}</p>
+                      <p className="text-white-4 text-sm">
+                        {item.display_name}
+                      </p>
                     </div>
-                    <button
-                      onClick={() => router.push("/account/" + item.id)}
-                      className="text-white-3 hover:text-white-1 text-2xl hover:scale-110 transition-all duration-75"
-                    >
-                      <IoIosSettings />
-                    </button>
                   </div>
-                );
-              })}
+                  <button
+                    onClick={() => router.push("/account/" + item.id)}
+                    className="text-white-3 hover:text-white-1 text-2xl hover:scale-110 transition-all duration-75"
+                  >
+                    <IoIosSettings />
+                  </button>
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
       <div className="border-l h-screen overflow-auto border-room-black-2">
@@ -121,18 +122,20 @@ const SearchFriendsInput = () => {
           Popular Topics
         </h1>
         <div className="px-4 flex flex-col gap-4">
-          {isLoading
-            ? "loading.."
-            : topics.map((item: any, index: number) => {
-                return (
-                  <p
-                    className="rounded text-white-2 px-4 py-2 bg-white/5 backdrop-blur-md"
-                    key={index}
-                  >
-                    {item.title}
-                  </p>
-                );
-              })}
+          {isLoading ? (
+            <Spinner showText={true} />
+          ) : (
+            topics.map((item: any, index: number) => {
+              return (
+                <p
+                  className="rounded text-white-2 px-4 py-2 bg-white/5 backdrop-blur-md"
+                  key={index}
+                >
+                  {item.title}
+                </p>
+              );
+            })
+          )}
         </div>
       </div>
     </div>

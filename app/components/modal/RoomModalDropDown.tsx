@@ -3,6 +3,7 @@ import { useModalState } from "@/app/context/StateContext";
 import { ChangeEvent, useEffect, useState } from "react";
 import { axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
+import Spinner from "../loader/Spinner";
 
 const RoomModalDropDown = ({
   topic,
@@ -62,15 +63,17 @@ const RoomModalDropDown = ({
             isActive ? "opacity-100" : "opacity-0"
           }`}
         >
-          {isLoading
-            ? "loading..."
-            : topics.map((room: RoomList) => {
-                return (
-                  <p key={room.id} className="py-2 cursor-pointer">
-                    {room.name}
-                  </p>
-                );
-              })}
+          {isLoading ? (
+            <Spinner showText={true} />
+          ) : (
+            topics.map((room: RoomList) => {
+              return (
+                <p key={room.id} className="py-2 cursor-pointer">
+                  {room.name}
+                </p>
+              );
+            })
+          )}
         </div>
       </div>
     </>

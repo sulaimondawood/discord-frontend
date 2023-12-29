@@ -9,27 +9,54 @@ const UserSettingsModal = ({ params }: { params: number }) => {
   const [username, setUsername] = useState("");
   const [display_name, setDisplayName] = useState("");
   const [file, setFile] = useState<any>(null);
+  const [isLoading, setLoading] = useState(false);
+  const [isError, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const router = useRouter();
+
   async function handleUpdateUser(e: FormEvent) {
     e.preventDefault();
-
     const formdata = new FormData();
     formdata.append("username", username);
     formdata.append("display_name", display_name);
     formdata.append("avatar", file);
-    const res = await axiosInstancePrivate.put(
-      "user/" + params + "/",
-      formdata
-    );
-    if (res.status == 200) {
-      console.log(res);
-      setUserModalOpen(false);
-      router.refresh();
-      // window.location.reload();
+
+    try {
+      const res = await axiosInstancePrivate.put(
+        "user/" + params + "/",
+        formdata
+      );
+      if (res.status == 200) {
+        console.log(res);
+        setLoading(true);
+        setUserModalOpen(false);
+        router.refresh();
+      }
+    } catch (error: any) {
+      setError(true);
+      setLoading(false);
+      console.log(error);
+      if (error.response.data?.username) {
+        setErrorMsg(error.response?.data?.username[0]);
+      } else if (error.response?.data?.display_name) {
+        setErrorMsg(error.response?.data?.display_name[0]);
+      } else {
+        setErrorMsg("Updating avatar is required");
+      }
+      console.log(errorMsg);
     }
   }
 
+  useEffect(() => {
+    console.log("hello");
+
+    const timeOut = setTimeout(() => {
+      setError(false);
+    }, 3000);
+
+    () => clearTimeout(timeOut);
+  }, [isError]);
   return (
     <div>
       <div
@@ -50,6 +77,11 @@ const UserSettingsModal = ({ params }: { params: number }) => {
           <p className=" w-full max-w-md text-sm">
             Enter new username, display name for an update to your account
           </p>
+          {isError && (
+            <p className="text-xs mt-3 bg-red-400 text-red-50 py-1 px-3 rounded-md">
+              {errorMsg}
+            </p>
+          )}
         </div>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
@@ -98,12 +130,18 @@ const UserSettingsModal = ({ params }: { params: number }) => {
             <button type="button" onClick={() => setUserModalOpen(false)}>
               Cancel
             </button>
-            <button
-              onClick={handleUpdateUser}
-              className="bg-blue-600 hover:bg-blue-800 px-5 py-2 rounded-sm"
-            >
-              Update
-            </button>
+            {isLoading ? (
+              <button className="bg-blue-600 hover:bg-blue-800 px-5 py-2 rounded-sm">
+                please wait...
+              </button>
+            ) : (
+              <button
+                onClick={handleUpdateUser}
+                className="bg-blue-600 hover:bg-blue-800 px-5 py-2 rounded-sm"
+              >
+                Update
+              </button>
+            )}
           </div>
         </div>
       </form>

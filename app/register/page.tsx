@@ -2,12 +2,15 @@
 import Link from "next/link";
 
 import { icon, icon2, icon3 } from "@/utils/svgs";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { axiosInstance } from "@/utils/axios";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 export default function Register() {
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isLoading, setLoading] = useState(false);
+  const [isError, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const data = Object.freeze({
     email: "",
     displayName: "",
@@ -32,21 +35,46 @@ export default function Register() {
     }
   }
 
+  useEffect(() => {
+    console.log("hello");
+
+    const timeOut = setTimeout(() => {
+      setError(false);
+    }, 3000);
+
+    () => clearTimeout(timeOut);
+  }, [isError]);
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const res = await axiosInstance.post("user/register/", {
-      email: credentials.email,
-      display_name: credentials.displayName,
-      username: credentials.username,
-      password: credentials.password,
-    });
+    try {
+      const res = await axiosInstance.post("user/register/", {
+        email: credentials.email,
+        display_name: credentials.displayName,
+        username: credentials.username,
+        password: credentials.password,
+      });
 
-    if (res.statusText == "Created") {
-      router.push("/");
+      if (res.statusText == "Created") {
+        router.push("/");
+      }
+      console.log(res);
+
+      console.log(credentials);
+    } catch (error: any) {
+      setError(true);
+      console.log(error);
+      if (error.response.data?.email) {
+        setErrorMsg(error.response?.data?.email[0]);
+      } else if (error.response?.data?.username) {
+        setErrorMsg(error.response?.data?.username[0]);
+      } else if (error.response?.data?.display_name) {
+        setErrorMsg(error.response?.data?.display_name[0]);
+      } else if (error.response?.data?.password) {
+        setErrorMsg(error.response?.data?.password[0]);
+      }
+      console.log(errorMsg);
     }
-    console.log(res);
-
-    console.log(credentials);
   }
   return (
     <>
@@ -64,7 +92,13 @@ export default function Register() {
             <h2 className="text-white-2 text-2xl pb-2 font-medium font-sans">
               Create an account
             </h2>
+            {isError && (
+              <p className="text-xs mt-4 bg-red-400 text-red-50 py-1 px-3 rounded-md">
+                {errorMsg}
+              </p>
+            )}
           </div>
+
           <form className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <label
