@@ -44,7 +44,7 @@ const RoomModalDropDown = ({
 
   return (
     <>
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5  text-white-1  z-[999]   w-[600px] h-[400px] rounded-md">
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5  text-white-1  z-[999]  md:w-[600px] h-[400px] rounded-md">
         <label htmlFor="topic">Topic</label>
         <input
           id="topic"

@@ -1,11 +1,12 @@
 import { CreateServerBtn } from "@/app/components/buttons/CreateServerBtn";
+import FriendsMobile from "@/app/components/friends-mobile-view/FriendsMobile";
 import SearchFriendsInput from "@/app/components/input/SearchFriendsInput";
 import { FaUserFriends } from "react-icons/fa";
 
 const page = async () => {
   return (
     <main>
-      <div className="bg-gray-ish h-screen overflow-hidden ml-[330px] w-[calc(100vw-330px)]">
+      <div className="hidden md:block bg-gray-ish h-screen overflow-hidden ml-[330px] w-[calc(100vw-330px)]">
         <div className="flex justify-between fixed top-0 w-[calc(100vw-360px)] py-2 px-4 border-b-2 border-room-black bg-gray-ish">
           <div className="flex gap-4 items-center">
             <span className="text-white-1 text-2xl">
@@ -22,6 +23,9 @@ const page = async () => {
         </div>
         <SearchFriendsInput />
       </div>
+
+      {/* mobile */}
+      <FriendsMobile />
     </main>
   );
 };

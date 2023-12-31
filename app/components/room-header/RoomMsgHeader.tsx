@@ -64,14 +64,14 @@ const RoomMsgHeader = ({ data, params }: { data: IRoom; params: number }) => {
         "room/room-server/" + params + "/"
       );
 
-      console.log(res.data.data);
+      // console.log(res.data.data);
 
       setLoadParticipants(res.data.data.members);
-      console.log("particiapnst");
-      console.log(loadParticipants);
+      // console.log("particiapnst");
+      // console.log(loadParticipants);
 
       setLoading(false);
-      console.log(loading);
+      // console.log(loading);
     };
 
     getParticipants();
@@ -84,28 +84,28 @@ const RoomMsgHeader = ({ data, params }: { data: IRoom; params: number }) => {
   return (
     <div
       onClick={handleOverallState}
-      className="flex justify-between z-50 bg-gray-ish px-4 py-2 fixed w-[calc(100vw-330px)] shadow-md "
+      className="flex justify-between z-50 bg-gray-ish px-2 md:px-4 py-2 fixed w-[calc(100vw-58px)] md:w-[calc(100vw-330px)] shadow-md "
     >
       <div>
-        <h1 className="flex gap-4 items-center">
+        <h1 className="flex gap-2 md:gap-4 items-center">
           <button>
-            <span className="text-2xl italic text-white-4">#</span>
+            <span className="text-sm md:text-2xl italic text-white-4">#</span>
           </button>
           <div className="">
             <span className="text-white-1">|</span>
-            <span className="text-white-1 text-sm"> Welcome</span>
+            <span className="text-white-1 text-xs md:text-sm"> Welcome</span>
           </div>
         </h1>
       </div>
       <div className="flex gap-4 items-center">
         <button
           onClick={handleRoomState}
-          className="text-2xl hover:text-white-1 text-white-3 relative"
+          className="text-lg md:text-2xl hover:text-white-1 text-white-3 relative"
         >
           <BsFillInfoCircleFill />
           {isRoomInfo && (
             <div
-              className={` p-3 rounded absolute  top-9 right-0 w-[300px] bg-white/5 backdrop-blur-md`}
+              className={` p-3 rounded absolute top-8 md:top-9 -right-10 md:right-0 w-[220px] md:w-[300px] bg-white/5 backdrop-blur-xl md:backdrop-blur-md`}
             >
               <div className="flex justify-center">
                 <img
@@ -146,11 +146,11 @@ const RoomMsgHeader = ({ data, params }: { data: IRoom; params: number }) => {
         <button
           onClick={handleOpenedState}
           // onClick={() => setParticipants(!openParticipants)}
-          className="text-2xl hover:text-white-1 text-white-3 relative"
+          className="text-lg md:text-2xl hover:text-white-1 text-white-3 relative"
         >
           <IoPeopleSharp />
           {openParticipants && (
-            <div className=" p-4 flex hover:text-white-3 flex-col gap-4 rounded text-base absolute top-9 right-0 w-[300px] bg-white/5 backdrop-blur-md">
+            <div className=" p-3 md:p-4 flex hover:text-white-3 flex-col gap-3 md:gap-4 rounded text-base absolute top-8 md:top-9 -right-10 md:right-0 w-[250px] md:w-[300px] bg-white/5 backdrop-blur-md">
               {loading ? (
                 "loading.."
               ) : loadParticipants.length >= 1 ? (
@@ -184,7 +184,7 @@ const RoomMsgHeader = ({ data, params }: { data: IRoom; params: number }) => {
             </div>
           )}
         </button>
-        <button className="text-2xl hover:text-white-1 text-white-3 relative">
+        <button className="text-lg md:text-2xl hover:text-white-1 text-white-3 relative">
           <IoMdSettings />
           {/* <div className="">
             <button>Delete</button>

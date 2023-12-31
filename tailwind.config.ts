@@ -34,6 +34,11 @@ const config: Config = {
       flex: {
         "flex-1-1": "3 1 auto",
       },
+      screens: {
+        "s-custom": "500px",
+        "m-screen": "800px",
+        "l-screen": "1200px",
+      },
     },
   },
   plugins: [],

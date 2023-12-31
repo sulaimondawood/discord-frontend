@@ -70,15 +70,17 @@ const UserSettingsModal = ({ params }: { params: number }) => {
       <form
         className={`${
           isUserModalOpen ? "scale-100 delay-300" : "delay-0 scale-0"
-        } z-[999] bg-gray-ish w-[450px] mx-auto ease-in-out p-5 transition-all duration-300 fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2`}
+        } z-[999] bg-gray-ish w-[calc(100vw-120px)] rounded md:w-[450px] mx-auto ease-in-out py-5 md:py-0 px-2 md:p-5 transition-all duration-300 fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2`}
       >
         <div className="pb-6 text-white-2  text-center">
-          <h1 className="text-2xl text-white ">Update your account</h1>
-          <p className=" w-full max-w-md text-sm">
+          <h1 className="text-lg md:text-2xl text-white ">
+            Update your account
+          </h1>
+          <p className=" w-full max-w-md text-[10px] md:text-sm">
             Enter new username, display name for an update to your account
           </p>
           {isError && (
-            <p className="text-xs mt-3 bg-red-400 text-red-50 py-1 px-3 rounded-md">
+            <p className="text-[9px] md:text-xs mt-3 bg-red-400 text-red-50 py-1 px-3 rounded-md">
               {errorMsg}
             </p>
           )}
@@ -87,7 +89,7 @@ const UserSettingsModal = ({ params }: { params: number }) => {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="username"
-              className="text-xs font-semibold uppercase text-white-3"
+              className="text-[10px] md:text-xs uppercase text-white-3"
             >
               Username
             </label>
@@ -95,14 +97,14 @@ const UserSettingsModal = ({ params }: { params: number }) => {
               id="username"
               onChange={(e) => setUsername(e.target.value)}
               value={username}
-              className="w-full focus:outline-none bg-room-deep-black px-4 py-2 rounded text-white-1"
+              className="w-full focus:outline-none bg-room-deep-black px-2 md:px-4 py-1 md:py-2 rounded text-white-1"
               type="text"
             />
           </div>
           <div className="flex flex-col gap-2">
             <label
               htmlFor="displayname"
-              className="text-xs uppercase text-white-3"
+              className="text-[10px] md:text-xs uppercase text-white-3"
             >
               Display name
             </label>
@@ -110,13 +112,18 @@ const UserSettingsModal = ({ params }: { params: number }) => {
               onChange={(e) => setDisplayName(e.target.value)}
               value={display_name}
               id="displayname"
-              className="w-full focus:outline-none bg-room-deep-black px-4 py-2 rounded text-white-1"
+              className="w-full focus:outline-none bg-room-deep-black px-2 md:px-4 py-1 md:py-2 rounded text-white-1"
               type="text"
             />
           </div>
 
-          <div className="flex flex-col text-white-2 gap-2 border-dashed border border-white-4/40 py-4 text-center">
-            <label htmlFor="img">Upload Sever Image</label>
+          <div className="flex flex-col text-white-2 gap-2 border-dashed border border-white-4/40 py-6 rounded md:py-4 text-center">
+            <label
+              className=" text-xs md:text-base  text-white-3"
+              htmlFor="img"
+            >
+              Upload Sever Image
+            </label>
             <input
               onChange={(e) => setFile(e.target.files![0])}
               id="img"

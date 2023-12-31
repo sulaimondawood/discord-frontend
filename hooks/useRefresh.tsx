@@ -50,9 +50,9 @@ export default function useRefresh() {
       );
 
       setAuth(res.data.access);
-      console.log(res);
-      console.log(auth);
-      console.log("auth");
+      // console.log(res);
+      // console.log(auth);
+      // console.log("auth");
       return res;
     } catch (error) {
       console.error("Error refreshing token:", error);

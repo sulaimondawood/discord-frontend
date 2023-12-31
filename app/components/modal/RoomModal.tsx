@@ -114,21 +114,24 @@ const RoomModal = () => {
         className="bg-black/30 z-50 fixed inset-0"
       ></div>
 
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5  bg-white/10 text-white-1 backdrop-blur-md z-[999]   w-[600px] h-fit rounded-md">
-        <h1 className="text-center text-xl font-semibold text-white-1">
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5  bg-white/10 text-white-1 backdrop-blur-md z-[999]  w-[calc(100vw-30px)]  md:w-[600px] h-fit rounded-md">
+        <h1 className="text-center text-lg md:text-xl font-semibold text-white-1">
           Create a server
         </h1>
-        <p className="text-white-3 w-[400px] mx-auto text-center">
+        <p className="text-white-3 w-full md:w-[400px] mx-auto text-xs md:text-base text-center">
           Your server is where you and your friends hangout. Make yours and
           start talking
         </p>
 
         {isError && (
-          <p className="text-xs mt-4 bg-red-400 text-red-50 py-1 px-3 rounded-md">
+          <p className="text-[10px] md:text-xs mt-4 bg-red-400 text-red-50 py-1 px-3 rounded-md">
             {errorMsg}
           </p>
         )}
-        <form onSubmit={handlePostReq} className="flex flex-col gap-4">
+        <form
+          onSubmit={handlePostReq}
+          className=" mt-3 md:mt-0 flex flex-col gap-4"
+        >
           <div className="flex flex-col gap-2">
             <label htmlFor="topic">Topic</label>
             <input
@@ -137,7 +140,7 @@ const RoomModal = () => {
               name="topic"
               value={data.topic}
               required
-              className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
+              className="bg-transparent border-white-4/40 border py-2 md:py-4 px-3 rounded w-full focus:outline-none"
               type="text"
             />
             {/* <RoomModalDropDown topic={data.topic} handleData={handleData} /> */}
@@ -150,7 +153,7 @@ const RoomModal = () => {
               name="name"
               value={data.name}
               required
-              className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
+              className="bg-transparent border-white-4/40 border py-2 md:py-4 px-3 rounded w-full focus:outline-none"
               type="text"
             />
           </div>
@@ -161,12 +164,12 @@ const RoomModal = () => {
               id="desc"
               name="description"
               value={data.description}
-              className="bg-transparent border-white-4/40 border py-4 px-3 rounded w-full focus:outline-none"
+              className="bg-transparent border-white-4/40 border py-2 md:py-4 px-3 rounded w-full focus:outline-none"
               type="text"
               required
             />
           </div>
-          <div className="flex flex-col gap-2 border-dashed border border-white-4/40 py-4 text-center">
+          <div className="flex flex-col gap-2 rounded border-dashed border border-white-4/40 py-4 text-center">
             <label htmlFor="img">Upload Sever Image</label>
             <input
               onChange={handleFile}

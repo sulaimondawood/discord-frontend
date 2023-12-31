@@ -18,6 +18,14 @@ interface ModalState {
   focus: boolean;
   isUserModalOpen: boolean;
   isRoomInfo: boolean;
+  checker: boolean;
+  showAccount: boolean;
+  showFriends: boolean;
+  showRoom: boolean;
+  setShowRoom: Dispatch<SetStateAction<boolean>>;
+  setShowFriends: Dispatch<SetStateAction<boolean>>;
+  setShowAccount: Dispatch<SetStateAction<boolean>>;
+  setChecker: Dispatch<SetStateAction<boolean>>;
   setRoomInfo: Dispatch<SetStateAction<boolean>>;
   setUserModalOpen: Dispatch<SetStateAction<boolean>>;
   setRoomModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -33,6 +41,10 @@ export function StateProvider({ children }: { children: React.ReactNode }) {
   const [isRoomInfo, setRoomInfo] = useState(false);
   const [roomModalOpen, setRoomModalOpen] = useState(false);
   const [openParticipants, setParticipants] = useState(false);
+  const [showAccount, setShowAccount] = useState(false);
+  const [showFriends, setShowFriends] = useState(false);
+  const [showRoom, setShowRoom] = useState(false);
+  const [checker, setChecker] = useState(false);
   const [focus, setFocus] = useState(false);
   const latestInputRef = useRef(null);
   const inputRef = useRef(null);
@@ -53,6 +65,14 @@ export function StateProvider({ children }: { children: React.ReactNode }) {
         setFocus,
         isRoomInfo,
         setRoomInfo,
+        checker,
+        setChecker,
+        showAccount,
+        setShowAccount,
+        showFriends,
+        setShowFriends,
+        showRoom,
+        setShowRoom,
       }}
     >
       {children}

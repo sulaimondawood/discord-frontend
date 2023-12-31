@@ -26,12 +26,6 @@ const Message = ({ msg }: { msg: any }) => {
     router.refresh();
     console.log(res);
   }
-  async function handleEditMsg(id: number) {
-    inputRef.current.focus();
-    const res = await axiosInstancePrivate.delete("room/delete-edit-msg/" + id);
-    router.refresh();
-    console.log(res);
-  }
 
   const date = new Date(msg.updated);
   const relativeDate = formatRelative(date, new Date(), {});
@@ -53,18 +47,20 @@ const Message = ({ msg }: { msg: any }) => {
       onMouseLeave={() => setHover(false)}
       // onClick={() => setSettings(!setting)}
       className={`  ${
-        active ? "flex-row-reverse" : "flex-row"
-      }  hover:bg-room-black/50 backdrop-blur-md p-3 rounded-sm flex justify-between items-center`}
+        active ? "flex-row-reverse " : "flex-row"
+      }  hover:bg-room-black/50 backdrop-blur-md py-3 px-1 md:p-3 rounded-sm flex justify-between items-center`}
       ref={latestInputRef}
     >
       <div
         className={`flex gap-3 items-start ${
-          active ? "flex-row-reverse" : "flex-row"
+          active
+            ? "flex-row-reverse duration-100 opacity-100 delay-100"
+            : "flex-row"
         }`}
       >
-        <Link href={`account/${msg.user.id}`}>
+        <Link href={`/account/${msg.user.id}`}>
           <img
-            className="w-10 h-10 rounded-full"
+            className="w-8 h-8 s-custom:w-10 s-custom:h-10 rounded-full object-cover"
             src={"http://localhost:8000" + msg?.user?.avatar}
             alt=""
           />
@@ -75,14 +71,14 @@ const Message = ({ msg }: { msg: any }) => {
               active ? "flex-row-reverse" : "flex-row"
             } flex gap-2 items-center`}
           >
-            <Link href={`account/${msg.user.id}`}>
-              <p className="text-white-1 capitalize font-medium text-sm">
+            <Link href={`/account/${msg.user.id}`}>
+              <p className="text-white-1 capitalize font-medium text-xs md:text-sm">
                 {msg.user.display_name}
               </p>
             </Link>
             <p
-              className="
-            text-xs text-white-4
+              className=" text-[9px]
+            md:text-xs text-white-4
             "
             >
               {relativeDate}
@@ -100,33 +96,32 @@ const Message = ({ msg }: { msg: any }) => {
           </p>
         </div>
       </div>
-      {isHover && (
-        <button
-          onClick={() => setSettings(!setting)}
-          className="hover:text-white-1 text-white-4 text-2xl relative"
-        >
-          <HiOutlineDotsHorizontal />
 
-          <div
-            className={`${setting ? "opacity-0 hidden " : "opacity-100 flex"}
+      {active
+        ? isHover && (
+            <button
+              onClick={() => setSettings(!setting)}
+              className="hover:text-white-1 text-white-4 text-lg md:text-2xl relative"
+            >
+              <HiOutlineDotsHorizontal />
+
+              <div
+                className={`${
+                  setting ? "opacity-0 hidden " : "opacity-100 flex"
+                }
             ${active ? "-right-32" : "-left-32"}
             p-3 transition-all duration-100 flex-col text-white-1  gap-2 items-start bg-faded-black rounded-md absolute -top-10 z-[9999]   text-xs`}
-          >
-            <button
-              className="hover:text-white-3"
-              onClick={() => handleDeleteMsg(msg.id)}
-            >
-              Delete Message
+              >
+                <button
+                  className="hover:text-white-3"
+                  onClick={() => handleDeleteMsg(msg.id)}
+                >
+                  Delete Message
+                </button>
+              </div>
             </button>
-            <button
-              className="hover:text-white-3"
-              onClick={() => handleEditMsg(msg.id)}
-            >
-              Edit Message
-            </button>
-          </div>
-        </button>
-      )}
+          )
+        : ""}
     </div>
   );
 };
