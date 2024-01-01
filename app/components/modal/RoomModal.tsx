@@ -4,7 +4,6 @@ import { useModalState } from "@/app/context/StateContext";
 import { useTokens } from "@/hooks/useTokensConfig";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import RoomModalDropDown from "./RoomModalDropDown";
 
 const RoomModal = () => {
   const { setRoomModalOpen } = useModalState();
@@ -24,9 +23,6 @@ const RoomModal = () => {
 
   const handleData = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    // if (e.target.name === "avatar") {
-    //   setFile(e.target.files![0]);
-    // }
 
     setData({
       ...data,
