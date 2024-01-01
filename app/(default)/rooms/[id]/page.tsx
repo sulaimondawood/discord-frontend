@@ -11,7 +11,7 @@ import Spinner from "@/app/components/loader/Spinner";
 import Image from "@/assets/images/no msg.webp";
 import { usePathname } from "next/navigation";
 
-export const revalidate = 1;
+// export const revalidate = 1;
 
 async function getMsg(params: number) {
   const res = await axiosInstance.get(`room/room-server/${params}/`);
@@ -21,7 +21,7 @@ async function getRoomDetail(params: number) {
   const res = await axiosInstance.get(`room/room-server/${params}/`);
   return res.data.data;
 }
-const page = ({ params }: { params: { id: number } }) => {
+const SingleRoom = ({ params }: { params: { id: number } }) => {
   const [room, setRoom] = useState<any>(null);
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -84,10 +84,10 @@ const page = ({ params }: { params: { id: number } }) => {
       <main
         className={`${
           showRoom ? "translate-x-0" : " translate-x-full "
-        }  bg-gray-ish h-screen left-14 bottom-0 absolute duration-300 ease-in-out  transition-all  w-[calc(100vw-60px)] z-[999] block overflow-hidden md:hidden `}
+        }  bg-gray-ish h-screen left-14 bottom-0 absolute duration-300 ease-in-out  transition-all  w-[calc(100vw-60px)] z-[999] block overflow-hidden md:hidden`}
       >
         <RoomMsgHeader params={params.id} data={room} msg={msg} />
-        <div className="overflow-y-auto  flex flex-col gap-3 h-full py-20 px-2 md:px-4">
+        <div className="overflow-y-auto  flex flex-col gap-3 h-[calc(100vh-110px)] py-3 px-2 mt-12">
           {loading ? (
             <Spinner showText={true} />
           ) : data.length > 0 ? (
@@ -108,4 +108,4 @@ const page = ({ params }: { params: { id: number } }) => {
   );
 };
 
-export default page;
+export default SingleRoom;

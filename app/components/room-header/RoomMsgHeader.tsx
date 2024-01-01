@@ -83,7 +83,7 @@ const RoomMsgHeader = ({
   return (
     <div
       onClick={handleOverallState}
-      className="flex justify-between z-50 bg-gray-ish px-2 md:px-4 py-2 fixed w-[calc(100vw-58px)] md:w-[calc(100vw-330px)] shadow-md "
+      className="flex justify-between z-50 bg-gray-ish px-2 md:px-4 py-2 fixed w-[calc(100vw-58px)] md:w-[calc(100vw-330px)] shadow-md"
     >
       <div>
         <h1 className="flex gap-2 md:gap-4 items-center">

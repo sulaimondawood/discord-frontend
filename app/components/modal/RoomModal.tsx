@@ -110,7 +110,7 @@ const RoomModal = () => {
     <>
       <div
         onClick={() => setRoomModalOpen(false)}
-        className="bg-black/30 z-50 fixed inset-0"
+        className="bg-black/30 z-[999] fixed inset-0"
       ></div>
 
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5  bg-white/10 text-white-1 backdrop-blur-md z-[999]  w-[calc(100vw-30px)]  md:w-[600px] h-fit rounded-md">
@@ -129,7 +129,7 @@ const RoomModal = () => {
         )}
         <form
           onSubmit={handlePostReq}
-          className=" mt-3 md:mt-0 flex flex-col gap-4"
+          className=" mt-3 md:mt-0 flex flex-col gap-4 z-[9999]"
         >
           <div className="flex flex-col gap-2">
             <label htmlFor="topic">Topic</label>

@@ -2,13 +2,7 @@
 import { useModalState } from "@/app/context/StateContext";
 import { axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
-import React, {
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import React, { Dispatch, FormEvent, SetStateAction } from "react";
 
 interface IInputProps {
   params: number;
@@ -47,7 +41,7 @@ const Input = ({ params, msg, setMsg }: IInputProps) => {
   return (
     <form
       onSubmit={sendMsgs}
-      className="bg-gray-ish fixed bottom-0 p-2 md:p-4 w-[calc(100vw-60px)] md:w-[calc(100vw-330px)] "
+      className="bg-gray-ish absolute bottom-0 p-2 md:p-4 w-[calc(100vw-60px)] md:w-[calc(100vw-330px)] "
     >
       <input
         className="focus:outline-none focus:border-white-1 focus:border rounded-md p-4 backdrop-blur-md bg-white/5 text-white-4 text-sm w-full"

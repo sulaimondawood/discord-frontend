@@ -157,7 +157,7 @@ const SideBar = () => {
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-4 fixed bottom-4">
+          <div className="flex flex-col items-center justify-center gap-4 absolute bottom-4">
             <button
               onClick={() => setRoomModalOpen(true)}
               className="text-green-500 hover:bg-green-500 hover:rounded-2xl hover:scale-100 hover:text-green-50 text-2xl bg-white/10 backdrop-blur-md p-3 md:p-4 rounded-full transition-all duration-50000 ease-linear"
@@ -228,12 +228,75 @@ const SideBar = () => {
                     );
                   })
                 )}
+                {userList ? (
+                  <Spinner showText={true} />
+                ) : (
+                  userData.map((user: any, index: number) => {
+                    return (
+                      <Link
+                        key={index}
+                        href={`/account/${user.id}`}
+                        className="flex justify-between items-center hover:bg-white/5 hover:backdrop-blur-md p-2 rounded"
+                      >
+                        <div className="flex gap-3 items-center">
+                          <img
+                            className="w-8 h-8 object-cover rounded-full"
+                            src={user.avatar}
+                            alt=""
+                          />
+                          <div className="text-white-4 text-left text-sm lowercase">
+                            <p>{sliceText(user.username)}</p>
+                            <p className="text-xs  text-white-2 ">
+                              {sliceText(user.display_name)}
+                            </p>
+                          </div>
+                        </div>
+                        <span className="text-white-2">
+                          <FaAngleRight />
+                        </span>
+                      </Link>
+                    );
+                  })
+                )}
+                {userList ? (
+                  <Spinner showText={true} />
+                ) : (
+                  userData.map((user: any, index: number) => {
+                    return (
+                      <Link
+                        key={index}
+                        href={`/account/${user.id}`}
+                        className="flex justify-between items-center hover:bg-white/5 hover:backdrop-blur-md p-2 rounded"
+                      >
+                        <div className="flex gap-3 items-center">
+                          <img
+                            className="w-8 h-8 object-cover rounded-full"
+                            src={user.avatar}
+                            alt=""
+                          />
+                          <div className="text-white-4 text-left text-sm lowercase">
+                            <p>{sliceText(user.username)}</p>
+                            <p className="text-xs  text-white-2 ">
+                              {sliceText(user.display_name)}
+                            </p>
+                          </div>
+                        </div>
+                        <span className="text-white-2">
+                          <FaAngleRight />
+                        </span>
+                      </Link>
+                    );
+                  })
+                )}
               </div>
             </div>
-            {activeUser.map((user) => {
+            {/* {activeUser.map((user) => {
               return <SideBarProfileLink key={user.id} user={user} />;
-            })}
+            })} */}
           </div>
+          {activeUser.map((user) => {
+            return <SideBarProfileLink key={user.id} user={user} />;
+          })}
         </div>
       </div>
     </>

@@ -112,7 +112,10 @@ const SearchFriendsInput = () => {
         </div>
       </div>
       <div className="hidden s-custom:block  border-l h-screen overflow-auto border-room-black-2">
-        <h1 className="text-xl capitalize py-6 px-2 md:px-4  font-semibold text-white-2 ">
+        <h1
+          className="text-xl md:text-lg lg:text-xl
+         capitalize py-6 px-2 m-screen:px-4  font-semibold text-white-2 "
+        >
           Popular Topics
         </h1>
         <div className="px-2 lg:px-4  flex flex-col gap-4">
@@ -122,7 +125,7 @@ const SearchFriendsInput = () => {
             topics.map((item: any, index: number) => {
               return (
                 <p
-                  className="text-xs lg:text-base rounded text-white-2  px-4 py-2 m-screen:px-2 lg:px-4 bg-white/5 backdrop-blur-md"
+                  className="text-xs lg:text-base rounded text-white-2  px-4 py-2 md:text-[10px] md:px-2 m-screen:text-xs lg:px-4 bg-white/5 backdrop-blur-md"
                   key={index}
                 >
                   {item.title}
