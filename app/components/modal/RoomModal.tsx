@@ -76,8 +76,7 @@ const RoomModal = () => {
       if (res.status === 201) {
         setRoomModalOpen(false);
         setLoading(true);
-        router.refresh();
-        // window.location.reload();
+        window.location.reload();
       }
     } catch (error: any) {
       setError(true);
@@ -199,7 +198,9 @@ const RoomModal = () => {
               </div>
             )}
 
-            <p>{file?.name && "File " + file.name + " staged"}</p>
+            <p className="text-xs md:text-base">
+              {file?.name && "File " + file.name + " staged"}
+            </p>
           </div>
           {isLoading ? (
             <button className="pl-2 rounded bg-room-deep-black w-full  py-3 text-center text-white-4">

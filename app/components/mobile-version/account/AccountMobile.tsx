@@ -6,9 +6,7 @@ import { usePathname } from "next/navigation";
 import { useModalState } from "@/app/context/StateContext";
 
 const AccountMobile = ({ user, params }: { user: any; params: any }) => {
-  // const [showAccount, setShowAccount] = useState(false);
   const { showAccount, setShowAccount } = useModalState();
-  const [checker, setChecker] = useState(false);
   const path = usePathname();
 
   useEffect(() => {
@@ -21,13 +19,13 @@ const AccountMobile = ({ user, params }: { user: any; params: any }) => {
     }
 
     handleIsTrue();
-  }, [checker]);
+  }, []);
 
   return (
     <div
-      className={`block md:hidden z-[999] fixed left-24 ${
+      className={`block md:hidden z-[999] fixed left-14 ${
         showAccount ? "translate-x-0" : " translate-x-full "
-      } bg-gray-ish transition-all duration-300 ease-in-out h-screen  py-8 px-2 w-[calc(100vw-100px)]`}
+      } bg-gray-ish transition-all duration-300 ease-in-out h-screen  py-8 px-2 w-[calc(100vw-55px)]`}
     >
       <h1 className="text-white text-lg font-semibold">My Account</h1>
       <div className="bg-room-deep-black w-full rounded-md mt-6 pb-5 h-fit">

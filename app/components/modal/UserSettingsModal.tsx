@@ -12,6 +12,7 @@ const UserSettingsModal = ({ params }: { params: number }) => {
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [progress, setProgress] = useState(0);
 
   const router = useRouter();
 
@@ -25,10 +26,17 @@ const UserSettingsModal = ({ params }: { params: number }) => {
     try {
       const res = await axiosInstancePrivate.put(
         "user/" + params + "/",
-        formdata
+        formdata,
+        {
+          onUploadProgress: (progressEvent) => {
+            const progressState =
+              (progressEvent.loaded * 100) / progressEvent.total!;
+
+            setProgress(progressState);
+          },
+        }
       );
       if (res.status == 200) {
-        console.log(res);
         setLoading(true);
         setUserModalOpen(false);
         router.refresh();
@@ -36,6 +44,7 @@ const UserSettingsModal = ({ params }: { params: number }) => {
     } catch (error: any) {
       setError(true);
       setLoading(false);
+      setProgress(0);
       console.log(error);
       if (error.response.data?.username) {
         setErrorMsg(error.response?.data?.username[0]);
@@ -49,8 +58,6 @@ const UserSettingsModal = ({ params }: { params: number }) => {
   }
 
   useEffect(() => {
-    console.log("hello");
-
     const timeOut = setTimeout(() => {
       setError(false);
     }, 3000);
@@ -70,7 +77,7 @@ const UserSettingsModal = ({ params }: { params: number }) => {
       <form
         className={`${
           isUserModalOpen ? "scale-100 delay-300" : "delay-0 scale-0"
-        } z-[999] bg-gray-ish w-[calc(100vw-120px)] rounded md:w-[450px] mx-auto ease-in-out py-5 md:py-0 px-2 md:p-5 transition-all duration-300 fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2`}
+        } z-[999] bg-gray-ish w-[calc(100vw-100px)] rounded md:w-[450px] mx-auto ease-in-out py-5 px-2 md:p-5 transition-all duration-300 fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2`}
       >
         <div className="pb-6 text-white-2  text-center">
           <h1 className="text-lg md:text-2xl text-white ">
@@ -131,6 +138,30 @@ const UserSettingsModal = ({ params }: { params: number }) => {
               className="hidden"
               type="file"
             />
+          </div>
+
+          <div className="">
+            {progress > 0 && (
+              <div className="relative pt-1">
+                <div className="flex mb-2 items-center justify-between">
+                  <div>
+                    <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
+                      {progress}%
+                    </span>
+                  </div>
+                </div>
+                <div className="flex h-2 mb-4 overflow-hidden text-xs bg-blue-200 rounded">
+                  <div
+                    style={{ width: `${progress}%` }}
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
+                  ></div>
+                </div>
+              </div>
+            )}
+
+            <p className="text-xs md:text-base text-white-1">
+              {file?.name && "File " + file.name + " staged"}
+            </p>
           </div>
 
           <div className="text-white-1 text-xs flex gap-6 items-center justify-end">

@@ -6,8 +6,7 @@ import Link from "next/link";
 
 const SideBarProfileLink = ({ user }: { user: any }) => {
   return (
-    <div className="rounded-sm flex items-center justify-between bg-room-deep-black p-2 w-[calc(100vw-76px)] sm:w-[calc(100vw-196px)] md:w-[250px] fixed left-14 md:left-[80px] bottom-0">
-      {/* <div className="rounded-sm flex items-center justify-between bg-room-deep-black p-2 w-[250px] fixed left-14 md:left-[80px] bottom-0"> */}
+    <div className="rounded-sm flex items-center justify-between bg-room-deep-black p-2 w-[calc(100vw-70px)] sm:w-[calc(100vw-180px)] md:w-[250px] fixed left-14 md:left-[80px] bottom-0">
       <div className="flex items-center gap-4">
         <img
           className="w-9 h-9 rounded-full object-cover"

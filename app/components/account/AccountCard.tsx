@@ -16,7 +16,7 @@ const AccountCard = ({ user }: { user: any }) => {
     } else {
       setActive(false);
     }
-    router.refresh();
+    // router.refresh();
   }, []);
 
   return (
@@ -28,14 +28,18 @@ const AccountCard = ({ user }: { user: any }) => {
             src={user.avatar}
             alt=""
           />
-          <p className="text-white-1 text-sm">#{sliceText(user?.username)}</p>
+          <p className="text-white-1 text-sm md:text-base">
+            #{sliceText(user?.username)}
+          </p>
         </div>
       </div>
       <div className="bg-white/5 rounded-md p-4 mt-4 backdrop-blur-sm flex flex-col gap-6">
         <div className="flex justify-between items-center">
           <div>
-            <p className="uppercase text-white-3 text-[10px]">Display name</p>
-            <p className="text-white-1 text-xs">
+            <p className="uppercase text-white-3 text-[10px] md:text-base">
+              Display name
+            </p>
+            <p className="text-white-1 text-xs md:text-base">
               {sliceText(user?.display_name)}
             </p>
           </div>
@@ -43,35 +47,43 @@ const AccountCard = ({ user }: { user: any }) => {
             onClick={() => setUserModalOpen(true)}
             className={`${
               active ? "" : "hidden"
-            } bg-white/10 backdrop-blur-md text-sm rounded-sm py-1 px-3 text-white`}
+            } bg-white/10 backdrop-blur-md text-sm md:text-base rounded-sm py-1 px-3 text-white`}
           >
             Edit
           </button>
         </div>
         <div className="flex justify-between items-center">
           <div>
-            <p className="uppercase text-white-3 text-[10px]">username</p>
-            <p className="text-white-1 text-xs">{sliceText(user.username)}</p>
+            <p className="uppercase text-white-3 text-[10px] md:text-base ">
+              username
+            </p>
+            <p className="text-white-1 text-xs md:text-base">
+              {sliceText(user.username)}
+            </p>
           </div>
           <button
             onClick={() => setUserModalOpen(true)}
             className={`${
               active ? "" : "hidden"
-            } bg-white/10 backdrop-blur-md text-sm rounded-sm py-1 px-3 text-white`}
+            } bg-white/10 backdrop-blur-md text-sm md:text-base rounded-sm py-1 px-3 text-white`}
           >
             Edit
           </button>
         </div>
         <div className="flex justify-between items-center">
           <div>
-            <p className="uppercase text-white-3 text-[10px]">email</p>
-            <p className="text-white-1">{sliceText(user?.email)}</p>
+            <p className="uppercase text-white-3 text-[10px] md:text-base">
+              email
+            </p>
+            <p className="text-white-1 text-xs md:text-base">
+              {sliceText(user?.email)}
+            </p>
           </div>
           <button
             onClick={() => setUserModalOpen(true)}
             className={`${
               active ? "" : "hidden"
-            } bg-white/10 backdrop-blur-md text-sm rounded-sm py-1 px-3 text-white`}
+            } bg-white/10 backdrop-blur-md text-sm md:text-base rounded-sm py-1 px-3 text-white`}
           >
             Edit
           </button>

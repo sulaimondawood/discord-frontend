@@ -26,17 +26,15 @@ const page = ({ params }: { params: { id: number } }) => {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const { showRoom, setShowRoom } = useModalState();
-  const [checker, setChecker] = useState(false);
+  const [msg, setMsg] = useState("");
   const path = usePathname();
   useEffect(() => {
     const fetchData = async () => {
       const fetchedData = await getMsg(params.id);
       const fetchedRoom = await getRoomDetail(params.id);
-
       setLoading(false);
       setData(fetchedData);
       setRoom(fetchedRoom);
-      console.log(data);
     };
     fetchData();
     // Set up interval for repeated requests
@@ -57,11 +55,12 @@ const page = ({ params }: { params: { id: number } }) => {
     }
 
     handleIsTrue();
-  }, [checker]);
+  }, []);
   return (
     <>
       <main className="hidden md:block bg-gray-ish h-screen ml-[330px] w-[calc(100vw-330px)] ">
-        <RoomMsgHeader params={params.id} data={room} />
+        {/* <RoomMsgHeader params={params.id} data={room} /> */}
+        <RoomMsgHeader params={params.id} data={room} msg={msg} />
         <div className="overflow-y-auto flex flex-col gap-3 h-full py-20 px-4">
           {loading ? (
             <Spinner showText={true} />
@@ -77,17 +76,18 @@ const page = ({ params }: { params: { id: number } }) => {
           )}
         </div>
 
-        <Input params={params.id} />
+        <Input msg={msg} setMsg={setMsg} params={params.id} />
+        {/* <Input params={params.id} /> */}
       </main>
 
       {/* mobile */}
       <main
         className={`${
           showRoom ? "translate-x-0" : " translate-x-full "
-        }  bg-gray-ish h-screen left-14 absolute duration-300 ease-in-out  transition-all  w-[calc(100vw-60px)] z-[999] block md:hidden `}
+        }  bg-gray-ish h-screen left-14 bottom-0 absolute duration-300 ease-in-out  transition-all  w-[calc(100vw-60px)] z-[999] block overflow-hidden md:hidden `}
       >
-        <RoomMsgHeader params={params.id} data={room} />
-        <div className="overflow-y-auto flex flex-col gap-3 h-full py-20 px-2 md:px-4">
+        <RoomMsgHeader params={params.id} data={room} msg={msg} />
+        <div className="overflow-y-auto  flex flex-col gap-3 h-full py-20 px-2 md:px-4">
           {loading ? (
             <Spinner showText={true} />
           ) : data.length > 0 ? (
@@ -102,7 +102,7 @@ const page = ({ params }: { params: { id: number } }) => {
           )}
         </div>
 
-        <Input params={params.id} />
+        <Input msg={msg} setMsg={setMsg} params={params.id} />
       </main>
     </>
   );

@@ -6,8 +6,8 @@ import { IoMdSettings } from "react-icons/io";
 import { useModalState } from "@/app/context/StateContext";
 import { FaAngleRight } from "react-icons/fa";
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import Image from "@/assets/images/avatar.jpg";
 import { axiosInstancePrivate } from "@/utils/axios";
+import { useRouter } from "next/navigation";
 interface IRoom {
   host: any;
   name: string;
@@ -19,7 +19,15 @@ interface IRoom {
 
 export const dynamic = "force-dynamic";
 
-const RoomMsgHeader = ({ data, params }: { data: IRoom; params: number }) => {
+const RoomMsgHeader = ({
+  data,
+  params,
+  msg,
+}: {
+  data: IRoom;
+  params: number;
+  msg: string;
+}) => {
   const { setParticipants, isRoomInfo, setRoomInfo, openParticipants } =
     useModalState();
   const [loadParticipants, setLoadParticipants] = useState<any[]>([]);
@@ -35,6 +43,7 @@ const RoomMsgHeader = ({ data, params }: { data: IRoom; params: number }) => {
     hour12: true,
   });
 
+  const router = useRouter();
   function handleOpenedState() {
     setParticipants((prev) => {
       setRoomInfo(false);
@@ -63,23 +72,13 @@ const RoomMsgHeader = ({ data, params }: { data: IRoom; params: number }) => {
       const res = await axiosInstancePrivate.get(
         "room/room-server/" + params + "/"
       );
-
-      // console.log(res.data.data);
-
-      setLoadParticipants(res.data.data.members);
-      // console.log("particiapnst");
-      // console.log(loadParticipants);
-
+      const data = await res.data.data;
+      setLoadParticipants(data.members);
       setLoading(false);
-      // console.log(loading);
     };
 
     getParticipants();
-
-    const intervaal: any = setInterval(getParticipants, 2000);
-
-    return () => clearInterval(intervaal);
-  }, []);
+  }, [msg]);
 
   return (
     <div
@@ -154,19 +153,23 @@ const RoomMsgHeader = ({ data, params }: { data: IRoom; params: number }) => {
               {loading ? (
                 "loading.."
               ) : loadParticipants.length >= 1 ? (
-                loadParticipants.map((participants: any) => {
+                loadParticipants.map((participant: any, index: number) => {
                   return (
-                    <div className="flex justify-between items-center">
+                    <div
+                      onClick={() => router.push(`/account/` + participant.id)}
+                      key={index}
+                      className="flex justify-between items-center cursor-pointer"
+                    >
                       <div className="flex gap-3 items-center">
                         <img
                           className="w-10 h-10 rounded-full"
-                          src={"http://localhost" + participants.avatar}
+                          src={"http://localhost:8000" + participant.avatar}
                           alt=""
                         />
                         <div className="text-white-4 text-left text-sm lowercase">
-                          <p>{participants.username}</p>
+                          <p>{participant.username}</p>
                           <p className="text-xs text-white-2 ">
-                            {participants.display_name}
+                            {participant.display_name}
                           </p>
                         </div>
                       </div>

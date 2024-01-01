@@ -40,3 +40,11 @@ scrollbar-track {
 scrollbar-thumb {
   background-color: #4e5058;
 }
+
+.side-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.side-bar {
+  scrollbar-width: none;
+}

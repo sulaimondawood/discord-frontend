@@ -13,24 +13,19 @@ const SearchFriendsInput = () => {
   const [isLoading, setLoading] = useState(true);
   const [searchInput, setSearchInput] = useState("");
   const router = useRouter();
+
   useEffect(() => {
     async function handleGetUsers() {
       try {
         const res = await axiosInstance.get("user/");
         if (res.status === 200) {
-          // console.log(res.data);
-
           setUsers(res.data);
           setLoading(false);
-          // console.log(users);
-          // console.log(isLoading);
         } else {
           console.error("Failed to fetch users:", res.statusText);
-          // Handle error (e.g., display user-friendly message)
         }
       } catch (error) {
         console.error("Error fetching users:", error);
-        // Handle error (e.g., display user-friendly message)
       }
     }
 
@@ -42,7 +37,6 @@ const SearchFriendsInput = () => {
         setTopics(data);
       }
     }
-
     getTopics();
     handleGetUsers();
   }, []);
@@ -61,10 +55,10 @@ const SearchFriendsInput = () => {
 
   return (
     <div className="flex mt-12 ">
-      <div className="md:mx-4 pt-4  w-full md:w-[650px] ">
+      <div className="md:mx-4 pt-4 w-full md:w-[650px] ">
         <form
           onKeyUp={handleFilteredUser}
-          className="fixed pl-2 md:pl-3 h-20 bg-gray-ish w-full s-custom:w-[277px] md:w-[310px] m-screen:w-[350px]  l-screen:w-[620px]"
+          className="fixed pl-2 pr-2 md:pr-0 md:pl-3 h-20 bg-gray-ish w-full s-custom:w-[320px]  m-screen:w-[350px] l-screen:w-[620px]"
         >
           <input
             className="text-white-1 h-8 rounded placeholder:text-sm placeholder:text-white-3 px-3 focus:outline-none bg-room-deep-black w-full"
@@ -73,7 +67,7 @@ const SearchFriendsInput = () => {
             onChange={(e) => setSearchInput(e.target.value)}
             value={searchInput}
           />
-          <p className="text-left text-[10px] rounded h-7  text-white-2 uppercase  mt-5">
+          <p className="text-left text-[10px] rounded h-7 text-white-2 uppercase  mt-5">
             <span>All Friends</span> <span>({users.length})</span>
           </p>
         </form>
@@ -85,7 +79,7 @@ const SearchFriendsInput = () => {
               return (
                 <div
                   key={index}
-                  className="flex justify-between items-center border-t py-2 md:py-3 border-room-black-2/40 hover:text-white-1 hover:bg-white/5 hover:border-none hover:rounded-lg px-2 md:px-3"
+                  className="flex justify-between items-center border-t py-3 border-room-black-2/40 hover:text-white-1 hover:bg-white/5 hover:border-none hover:rounded-lg px-2 md:px-3"
                 >
                   <Link
                     href={`/account/${item.id}`}
