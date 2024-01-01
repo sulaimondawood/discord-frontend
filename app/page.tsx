@@ -87,7 +87,7 @@ export default function Home() {
             Welcome back!
           </h2>
           <p className="text-white-3 text-sm ">
-            We're so excited to see you again!
+            We&apos;re so excited to see you again!
           </p>
 
           {isError && (
