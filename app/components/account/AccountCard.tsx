@@ -32,6 +32,9 @@ const AccountCard = ({ user }: { user: any }) => {
             #{sliceText(user?.username)}
           </p>
         </div>
+        <div className="cursor-pointer bg-blue-500 text-white text-xs md:text-sm px-4 py-1 rounded-sm hover:bg-blue-600">
+          Logout
+        </div>
       </div>
       <div className="bg-white/5 rounded-md p-4 mt-4 backdrop-blur-sm flex flex-col gap-6">
         <div className="flex justify-between items-center">
