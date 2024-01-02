@@ -27,11 +27,13 @@ export default function Register() {
     });
 
     if (
-      credentials.email.length > 5 &&
-      credentials.username.length > 5 &&
-      credentials.password.length > 6
+      credentials.email.length >= 5 &&
+      credentials.username.length >= 5 &&
+      credentials.password.length >= 5
     ) {
       setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
     }
   }
 
@@ -47,6 +49,7 @@ export default function Register() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await axiosInstance.post("user/register/", {
         email: credentials.email,
@@ -63,6 +66,7 @@ export default function Register() {
       console.log(credentials);
     } catch (error: any) {
       setError(true);
+      setLoading(false);
       console.log(error);
       if (error.response.data?.email) {
         setErrorMsg(error.response?.data?.email[0]);
@@ -78,15 +82,17 @@ export default function Register() {
   }
   return (
     <>
-      <main className="bg-blue-ish relative w-screen h-screen flex justify-center items-center">
+      <main className="bg-blue-ish px-4 md:px-0 relative w-screen h-screen flex justify-center items-center">
         <div className="">
-          <span className="top-0  left-0 absolute w-full">{icon}</span>
+          <span className="top-0  left-0 absolute w-full hidden md:block">
+            {icon}
+          </span>
           <span className="left-0 absolute  bottom-0 w-full">{icon2}</span>
-          <span className="bottom-0 right-0 absolute ">{icon3}</span>
+          <span className="bottom-0 right-0 absolute  ">{icon3}</span>
         </div>
         <div
           className="bg-black-ish rounded-md
-         py-5 z-50 px-8 w-[500px]"
+         py-5 z-50 px-4 md:px-8 w-full md:w-[500px]"
         >
           <div className="pb-4 text-center">
             <h2 className="text-white-2 text-2xl pb-2 font-medium font-sans">
@@ -168,15 +174,24 @@ export default function Register() {
                 className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
               />
             </div>
-
-            <button
-              className="disabled:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-40 bg-blue-ish hover:bg-blue-800 duration-200 transition-all text-white py-3 font-Noto-sans text-md rounded "
-              type="submit"
-              disabled={isDisabled}
-              onClick={handleSubmit}
-            >
-              Continue
-            </button>
+            {isLoading ? (
+              <button
+                className="disabled:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-40 bg-blue-ish hover:bg-blue-800 duration-200 transition-all text-white py-3 font-Noto-sans text-md rounded "
+                type="submit"
+                disabled={isDisabled}
+              >
+                Loading...
+              </button>
+            ) : (
+              <button
+                className="disabled:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-40 bg-blue-ish hover:bg-blue-800 duration-200 transition-all text-white py-3 font-Noto-sans text-md rounded "
+                type="submit"
+                disabled={isDisabled}
+                onClick={handleSubmit}
+              >
+                Continue
+              </button>
+            )}
           </form>
           <p className="pt-3 text-sm font-Noto-sans">
             <span className="text-white-4">Already have an account?</span>{" "}

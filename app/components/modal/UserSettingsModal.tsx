@@ -18,6 +18,7 @@ const UserSettingsModal = ({ params }: { params: number }) => {
 
   async function handleUpdateUser(e: FormEvent) {
     e.preventDefault();
+    setLoading(true);
     const formdata = new FormData();
     formdata.append("username", username);
     formdata.append("display_name", display_name);
@@ -37,7 +38,6 @@ const UserSettingsModal = ({ params }: { params: number }) => {
         }
       );
       if (res.status == 200) {
-        setLoading(true);
         setUserModalOpen(false);
         router.refresh();
       }

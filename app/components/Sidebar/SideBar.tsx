@@ -107,47 +107,7 @@ const SideBar = () => {
                       <div className="bg-white rounded-full h-2 absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 w-[6px] group-hover:h-6 duration-200 transition-all"></div>
                       <img
                         className="w-11 h-11 md:w-[50px] md:h-[50px] rounded-full group-hover:rounded-2xl transition-all duration-150 ease-linear object-cover"
-                        src={item.avatar}
-                        alt=""
-                      />
-                    </Link>
-                  );
-                })
-              )}
-              {loading ? (
-                <Spinner showText={false} />
-              ) : (
-                data.map((item: RoomList, index) => {
-                  return (
-                    <Link
-                      className="relative group"
-                      key={item.id}
-                      href={`/rooms/${item.id}`}
-                    >
-                      <div className="bg-white rounded-full h-2 absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 w-[6px] group-hover:h-6 duration-200 transition-all"></div>
-                      <img
-                        className="w-11 h-11 md:w-[50px] md:h-[50px] rounded-full group-hover:rounded-2xl transition-all duration-150 ease-linear object-cover"
-                        src={item.avatar}
-                        alt=""
-                      />
-                    </Link>
-                  );
-                })
-              )}
-              {loading ? (
-                <Spinner showText={false} />
-              ) : (
-                data.map((item: RoomList, index) => {
-                  return (
-                    <Link
-                      className="relative group"
-                      key={item.id}
-                      href={`/rooms/${item.id}`}
-                    >
-                      <div className="bg-white rounded-full h-2 absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 w-[6px] group-hover:h-6 duration-200 transition-all"></div>
-                      <img
-                        className="w-11 h-11 md:w-[50px] md:h-[50px] rounded-full group-hover:rounded-2xl transition-all duration-150 ease-linear object-cover"
-                        src={item.avatar}
+                        src={item.avatar_url}
                         alt=""
                       />
                     </Link>
@@ -198,66 +158,6 @@ const SideBar = () => {
                 Popular Users
               </p>
               <div className="h-[calc(100vh-300px)] flex flex-col gap-4 mt-5 w-[calc(100vw-80px)] sm:w-[calc(100vw-196px)] md:w-[225px] pr-4 overflow-auto">
-                {userList ? (
-                  <Spinner showText={true} />
-                ) : (
-                  userData.map((user: any, index: number) => {
-                    return (
-                      <Link
-                        key={index}
-                        href={`/account/${user.id}`}
-                        className="flex justify-between items-center hover:bg-white/5 hover:backdrop-blur-md p-2 rounded"
-                      >
-                        <div className="flex gap-3 items-center">
-                          <img
-                            className="w-8 h-8 object-cover rounded-full"
-                            src={user.avatar}
-                            alt=""
-                          />
-                          <div className="text-white-4 text-left text-sm lowercase">
-                            <p>{sliceText(user.username)}</p>
-                            <p className="text-xs  text-white-2 ">
-                              {sliceText(user.display_name)}
-                            </p>
-                          </div>
-                        </div>
-                        <span className="text-white-2">
-                          <FaAngleRight />
-                        </span>
-                      </Link>
-                    );
-                  })
-                )}
-                {userList ? (
-                  <Spinner showText={true} />
-                ) : (
-                  userData.map((user: any, index: number) => {
-                    return (
-                      <Link
-                        key={index}
-                        href={`/account/${user.id}`}
-                        className="flex justify-between items-center hover:bg-white/5 hover:backdrop-blur-md p-2 rounded"
-                      >
-                        <div className="flex gap-3 items-center">
-                          <img
-                            className="w-8 h-8 object-cover rounded-full"
-                            src={user.avatar}
-                            alt=""
-                          />
-                          <div className="text-white-4 text-left text-sm lowercase">
-                            <p>{sliceText(user.username)}</p>
-                            <p className="text-xs  text-white-2 ">
-                              {sliceText(user.display_name)}
-                            </p>
-                          </div>
-                        </div>
-                        <span className="text-white-2">
-                          <FaAngleRight />
-                        </span>
-                      </Link>
-                    );
-                  })
-                )}
                 {userList ? (
                   <Spinner showText={true} />
                 ) : (

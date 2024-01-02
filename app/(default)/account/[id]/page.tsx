@@ -2,8 +2,6 @@ import { axiosInstance } from "@/utils/axios";
 import Image from "@/assets/images/avatar.jpg";
 import UserSettingsModal from "@/app/components/modal/UserSettingsModal";
 import { useModalState } from "@/app/context/StateContext";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import AccountCard from "@/app/components/account/AccountCard";
 import AccountMobile from "@/app/components/mobile-version/account/AccountMobile";
 

@@ -43,6 +43,7 @@ const RoomModal = () => {
 
   async function handlePostReq(e: FormEvent) {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append("topic", data.topic);
     formData.append("name", data.name);
@@ -71,7 +72,6 @@ const RoomModal = () => {
       console.log(res);
       if (res.status === 201) {
         setRoomModalOpen(false);
-        setLoading(true);
         window.location.reload();
       }
     } catch (error: any) {

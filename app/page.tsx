@@ -33,6 +33,8 @@ export default function Home() {
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
       const res = await axiosInstance.post(
         "user/login/",
@@ -44,18 +46,17 @@ export default function Home() {
           withCredentials: true,
         }
       );
-      console.log(res);
       if (res.status === 200 && res.statusText === "OK") {
         localStorage?.setItem("user", JSON.stringify(res.data.user));
         localStorage?.setItem("token", res.data.data.refresh);
         setAuth(res.data.data.access);
-        setLoading(true);
         console.log("auth");
         console.log(auth);
         router.push("/rooms");
       }
     } catch (error: any) {
       setError(true);
+      setLoading(false);
       console.log(error);
       setErrorMsg(error.response.data.Invalid);
       console.log(errorMsg);
@@ -74,14 +75,17 @@ export default function Home() {
   const refresh = useRefresh();
 
   return (
-    <main className="relative bg-blue-ish w-screen h-screen flex justify-center items-center">
+    <main className="relative px-4 md:px-0 bg-blue-ish w-screen h-screen flex justify-center items-center">
       <div className="">
-        <span className="top-0  left-0 absolute w-full">{icon}</span>
+        <span className="top-0  left-0 absolute w-full hidden md:block">
+          {icon}
+        </span>
+
         <span className="left-0 absolute bottom-0 w-full">{icon2}</span>
         <span className="bottom-0 right-0 absolute ">{icon3}</span>
       </div>
 
-      <div className="bg-black-ish rounded-md py-4 px-8 w-[500px] z-50">
+      <div className="bg-black-ish rounded-md py-4 px-4 md:px-8 w-[500px] z-50">
         <div className="pb-4 text-center">
           <h2 className="text-white-1 text-2xl pb-2 font-medium font-sans">
             Welcome back!
@@ -131,12 +135,9 @@ export default function Home() {
               className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
             />
           </div>
-          <Link
-            className="text-l-blue text-sm -mt-3 font-Noto-sans"
-            href={"/forgot-password"}
-          >
+          <p className="text-l-blue text-sm -mt-3 font-Noto-sans">
             Forgot your password?
-          </Link>
+          </p>
           {isLoading ? (
             <button
               className="bg-blue-ish hover:bg-blue-800 duration-200 transition-all text-white py-3 font-Noto-sans text-sm rounded "
