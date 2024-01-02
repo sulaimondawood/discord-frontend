@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/utils/axios";
 import { useAuth } from "@/app/context/AuthContext";
 import useRefresh from "@/hooks/useRefresh";
+import { isTokeneExpired } from "@/utils/token-expired";
+import { jwtDecode } from "jwt-decode";
 
 export default function Home() {
   const router = useRouter();
@@ -72,7 +74,17 @@ export default function Home() {
     () => clearTimeout(timeOut);
   }, [isError]);
 
-  const refresh = useRefresh();
+  // const refresh = useRefresh();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const decodedToken = jwtDecode(token!);
+    console.log(decodedToken);
+
+    if (!isTokeneExpired(decodedToken)) {
+      router.replace("/rooms");
+    }
+  });
 
   return (
     <main className="relative px-4 md:px-0 bg-blue-ish w-screen h-screen flex justify-center items-center">
