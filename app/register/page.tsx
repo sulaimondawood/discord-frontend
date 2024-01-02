@@ -58,7 +58,7 @@ export default function Register() {
         password: credentials.password,
       });
 
-      if (res.statusText == "Created") {
+      if (res.status === 201) {
         router.push("/");
       }
       console.log(res);
