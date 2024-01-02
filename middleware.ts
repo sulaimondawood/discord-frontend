@@ -7,7 +7,7 @@
 // export function middleware(req: NextRequest) {
 //   const token = req.cookies.get("refresh_token");
 //   const decodedToken = token ? jwtDecode(token.value) : null;
-//   if (isTokeneExpired(decodedToken) || !token) {
+//   if (!token || isTokeneExpired(decodedToken)) {
 //     return NextResponse.redirect(clientBaseUrl);
 //   }
 
@@ -25,10 +25,9 @@ import { jwtDecode } from "jwt-decode";
 import { clientBaseUrl } from "./utils/axios";
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("refresh_token");
-  const token2 = req.headers.get("Authorization")?.split(" ")[1];
   console.log("middleware");
   console.log(token);
-  console.log(token2);
+
   if (!token) {
     return NextResponse.redirect(clientBaseUrl);
   }

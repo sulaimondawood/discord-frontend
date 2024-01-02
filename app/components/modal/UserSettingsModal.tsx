@@ -2,7 +2,7 @@
 import { useModalState } from "@/app/context/StateContext";
 import { axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 const UserSettingsModal = ({ params }: { params: number }) => {
   const { isUserModalOpen, setUserModalOpen } = useModalState();
@@ -57,6 +57,11 @@ const UserSettingsModal = ({ params }: { params: number }) => {
     }
   }
 
+  function handleFile(e: ChangeEvent<HTMLInputElement>) {
+    console.log(e.target.files![0]);
+    setFile(e.target.files![0]);
+    console.log(file);
+  }
   useEffect(() => {
     const timeOut = setTimeout(() => {
       setError(false);
@@ -132,7 +137,8 @@ const UserSettingsModal = ({ params }: { params: number }) => {
               Upload Sever Image
             </label>
             <input
-              onChange={(e) => setFile(e.target.files![0])}
+              onChange={handleFile}
+              // onChange={(e) => setFile(e.target.files![0])}
               id="img"
               name="avatar"
               className="hidden"
@@ -160,7 +166,7 @@ const UserSettingsModal = ({ params }: { params: number }) => {
             )}
 
             <p className="text-xs md:text-base text-white-1">
-              {file?.name && "File " + file.name + " staged"}
+              {file && "File " + file.name + " staged"}
             </p>
           </div>
 

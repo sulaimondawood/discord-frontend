@@ -53,7 +53,8 @@ export default function Home() {
         localStorage?.setItem("token", res.data.data.refresh);
         setAuth(res.data.data.access);
         console.log("auth");
-        console.log(auth);
+        // console.log(auth);
+        console.log(res);
         router.push("/rooms");
       }
     } catch (error: any) {
