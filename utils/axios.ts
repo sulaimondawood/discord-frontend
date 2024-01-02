@@ -107,9 +107,9 @@
 
 import axios from "axios";
 
-// export const baseURL = "https://django-discord-server.onrender.com/api/";
+export const baseURL = "https://django-discord-server.onrender.com/api/";
 // export const clientBaseUrl = "https://dawood-discord.vercel.app";
-export const baseURL = "http://localhost:8000/api/";
+// export const baseURL = "http://localhost:8000/api/";
 export const clientBaseUrl = "http://localhost:3000/";
 
 export const axiosInstance = axios.create({
