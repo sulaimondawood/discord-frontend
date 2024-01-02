@@ -48,7 +48,7 @@ export default function Home() {
           withCredentials: true,
         }
       );
-      if (res.status === 200 && res.statusText === "OK") {
+      if (res.status === 200) {
         localStorage?.setItem("user", JSON.stringify(res.data.user));
         localStorage?.setItem("token", res.data.data.refresh);
         setAuth(res.data.data.access);
