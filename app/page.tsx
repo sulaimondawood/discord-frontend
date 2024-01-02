@@ -76,15 +76,15 @@ export default function Home() {
 
   // const refresh = useRefresh();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const decodedToken = jwtDecode(token!);
-    console.log(decodedToken);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   const decodedToken = jwtDecode(token!);
+  //   console.log(decodedToken);
 
-    if (!isTokeneExpired(decodedToken)) {
-      router.replace("/rooms");
-    }
-  });
+  //   if (!isTokeneExpired(decodedToken)) {
+  //     router.replace("/rooms");
+  //   }
+  // });
 
   return (
     <main className="relative px-4 md:px-0 bg-blue-ish w-screen h-screen flex justify-center items-center">
