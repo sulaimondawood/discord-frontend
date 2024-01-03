@@ -61,7 +61,7 @@ export default function Home() {
       setError(true);
       setLoading(false);
       console.log(error);
-      setErrorMsg(error.response.data.Invalid);
+      setErrorMsg(error?.response?.data?.Invalid);
       console.log(errorMsg);
     }
   };
