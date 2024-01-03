@@ -17,6 +17,7 @@ const UserSettingsModal = ({ params }: { params: number }) => {
 
   const router = useRouter();
 
+  const axiosInstancePrivate = useTokens();
   async function handleUpdateUser(e: FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -24,7 +25,6 @@ const UserSettingsModal = ({ params }: { params: number }) => {
     formdata.append("username", username);
     formdata.append("display_name", display_name);
     formdata.append("avatar", file);
-    const axiosInstancePrivate = useTokens();
 
     try {
       const res = await axiosInstancePrivate.put(
