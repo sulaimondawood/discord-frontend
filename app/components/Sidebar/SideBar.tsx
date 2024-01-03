@@ -5,7 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 
 import navList from "@/utils/nav";
 import { useModalState } from "@/app/context/StateContext";
-import { useTokens } from "@/hooks/useTokensConfig";
+// import { useTokens } from "@/hooks/useTokensConfig";
+
 import { FindServerButton } from "../buttons/FindServer";
 import SideBarProfileLink from "../profile-setting/SideBarProfileLink";
 import { axiosInstance } from "@/utils/axios";
@@ -15,10 +16,11 @@ import Spinner from "../loader/Spinner";
 import { IoMdArrowBack } from "react-icons/io";
 import { IoAdd } from "react-icons/io5";
 import { sliceText } from "@/utils/slicer";
+import { useTokens } from "@/hooks/useTokensConfig";
 
 const SideBar = () => {
   const path = usePathname();
-  const axiosInstancePrivate = useTokens();
+  // const axiosInstancePrivate = useTokens();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<any[]>([]);
@@ -36,7 +38,7 @@ const SideBar = () => {
   } = useModalState();
 
   setRoomModalOpen;
-
+  const axiosInstancePrivate = useTokens();
   const router = useRouter();
   useEffect(() => {
     const activeUser = JSON.parse(localStorage?.getItem("user")!);

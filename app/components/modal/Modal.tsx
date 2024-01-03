@@ -1,8 +1,9 @@
 "use client";
 import { useModalState } from "@/app/context/StateContext";
 import { useEffect, useState } from "react";
-import { axiosInstancePrivate } from "@/utils/axios";
+// import { axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
+import { useTokens } from "@/hooks/useTokensConfig";
 
 const Modal = () => {
   const { setModalOpen } = useModalState();
@@ -10,6 +11,7 @@ const Modal = () => {
   const [rooms, setRooms] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const router = useRouter();
+  const axiosInstancePrivate = useTokens();
   async function querySelection() {
     const res = await axiosInstancePrivate.get(
       "room/all-rooms/?search=" + searchInput

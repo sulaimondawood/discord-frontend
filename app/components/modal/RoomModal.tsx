@@ -2,6 +2,7 @@
 
 import { useModalState } from "@/app/context/StateContext";
 import { useTokens } from "@/hooks/useTokensConfig";
+import { axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
@@ -19,7 +20,7 @@ const RoomModal = () => {
 
   const [file, setFile] = useState<null | any>(null);
   const router = useRouter();
-  const axiosInstancePrivate = useTokens();
+  // const axiosInstancePrivate = useTokens();
 
   const handleData = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

@@ -1,6 +1,7 @@
 "use client";
 import { useModalState } from "@/app/context/StateContext";
-import { axiosInstancePrivate } from "@/utils/axios";
+import { useTokens } from "@/hooks/useTokensConfig";
+// import { axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
@@ -23,6 +24,7 @@ const UserSettingsModal = ({ params }: { params: number }) => {
     formdata.append("username", username);
     formdata.append("display_name", display_name);
     formdata.append("avatar", file);
+    const axiosInstancePrivate = useTokens();
 
     try {
       const res = await axiosInstancePrivate.put(

@@ -12,6 +12,8 @@ import { formatRelative } from "date-fns";
 import Link from "next/link";
 
 const Message = ({ msg }: { msg: any }) => {
+  console.log(msg);
+
   const [user, setUser] = useState(() => {
     const storedState = localStorage?.getItem("user");
     return storedState ? JSON.parse(storedState) : "";
@@ -46,7 +48,7 @@ const Message = ({ msg }: { msg: any }) => {
         <Link href={`/account/${msg.user.id}`}>
           <img
             className="w-8 h-8 s-custom:w-10 s-custom:h-10 rounded-full object-cover"
-            src={"http://localhost:8000" + msg?.user?.avatar}
+            src={msg?.user?.avatar}
             alt=""
           />
         </Link>

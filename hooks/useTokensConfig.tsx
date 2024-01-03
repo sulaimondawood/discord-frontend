@@ -1,3 +1,4 @@
+"use client";
 import { useAuth } from "@/app/context/AuthContext";
 import { axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
@@ -12,7 +13,12 @@ export const useTokens = () => {
     const requestIntercept = axiosInstancePrivate.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {
-          config.headers["Authorization"] = `Bearer ${auth}`;
+          console.log(auth);
+          console.log("from axios config");
+
+          config.headers["Authorization"] =
+            "Bearer " + localStorage.getItem("access_token");
+          // config.headers["Authorization"] = `Bearer ${auth}`;
         }
         return config;
       },

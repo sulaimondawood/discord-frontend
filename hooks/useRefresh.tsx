@@ -31,14 +31,15 @@ export default function useRefresh() {
 
   const refresh =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  console.log(refresh);
 
   const refreshToken = async () => {
     try {
       if (!refresh) {
-        // Handle the case where refresh token is not available
+        console.log("heloow my people");
+
         return null;
       }
-
       const res = await axiosInstance.post(
         "token/refresh/",
         {
@@ -48,22 +49,23 @@ export default function useRefresh() {
           withCredentials: true,
         }
       );
-
-      setAuth(res.data.access);
-      // console.log(res);
-      // console.log(auth);
-      // console.log("auth");
-      return res;
+      const data = await res.data;
+      if (data) {
+        setAuth(data.access);
+        localStorage.setItem("access_token", data.access);
+        // console.log(auth);
+        console.log("omo railse to power 50");
+      }
+      return res.data.access;
     } catch (error) {
       console.error("Error refreshing token:", error);
-      // Handle error, possibly logout or redirect to login page
-      return null;
     }
   };
 
   useEffect(() => {
-    console.log(auth);
-  }, [auth]);
+    console.log("Updated auth state:", auth);
+    // You can perform additional actions here after the state is updated
+  }, [auth]); // Dependency array ensures this effect runs whenever auth changes
 
   return refreshToken;
 }

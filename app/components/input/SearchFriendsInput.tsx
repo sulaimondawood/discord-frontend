@@ -1,39 +1,42 @@
 "use client";
-import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
+import { axiosInstance } from "@/utils/axios";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useEffect, useState } from "react";
 import { IoIosSettings } from "react-icons/io";
 import Spinner from "../loader/Spinner";
 import Link from "next/link";
 import { sliceText } from "@/utils/slicer";
+import { useTokens } from "@/hooks/useTokensConfig";
 
 const SearchFriendsInput = () => {
   const [users, setUsers] = useState<any>([]);
   const [topics, setTopics] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
+  const [isLoadingTopics, setLoadingTopics] = useState(true);
   const [searchInput, setSearchInput] = useState("");
   const router = useRouter();
-
+  const axiosInstancePrivate = useTokens();
   useEffect(() => {
     async function handleGetUsers() {
       try {
         const res = await axiosInstance.get("user/");
-        if (res.status === 200) {
-          setUsers(res.data);
+
+        if (res?.data) {
+          setUsers(res?.data);
           setLoading(false);
-        } else {
-          console.error("Failed to fetch users:", res.statusText);
         }
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching users:", error);
       }
     }
 
     async function getTopics() {
       const res = await axiosInstancePrivate.get("room/topics/");
-      const data = res.data.slice(0, 8);
-      if (res.status === 200) {
-        setLoading(false);
+      console.log(res);
+      const data = res?.data.slice(0, 8);
+      if (data) {
+        setLoadingTopics(false);
         setTopics(data);
       }
     }
@@ -41,15 +44,11 @@ const SearchFriendsInput = () => {
     handleGetUsers();
   }, []);
 
-  useEffect(() => {
-    // console.log("Users state updated:", users);
-    // console.log("Data state updated:", isLoading);
-    // Perform additional actions based on the updated state
-  }, [users]);
+  useEffect(() => {}, [users]);
 
   async function handleFilteredUser(e: FormEvent) {
     e.preventDefault();
-    const res = await axiosInstance.get("user/?search=" + searchInput);
+    const res = await axiosInstancePrivate.get("user/?search=" + searchInput);
     setUsers(res.data);
   }
 
@@ -119,7 +118,7 @@ const SearchFriendsInput = () => {
           Popular Topics
         </h1>
         <div className="px-2 lg:px-4  flex flex-col gap-4">
-          {isLoading ? (
+          {isLoadingTopics ? (
             <Spinner showText={true} />
           ) : (
             topics.map((item: any, index: number) => {

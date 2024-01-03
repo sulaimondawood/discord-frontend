@@ -6,13 +6,15 @@ import { IoMdSettings } from "react-icons/io";
 import { useModalState } from "@/app/context/StateContext";
 import { FaAngleRight } from "react-icons/fa";
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import { axiosInstancePrivate } from "@/utils/axios";
+
 import { useRouter } from "next/navigation";
+import { useTokens } from "@/hooks/useTokensConfig";
 interface IRoom {
   host: any;
   name: string;
   description: string;
   avatar: string;
+  avatar_url: string;
   created: string;
   members: any[];
 }
@@ -33,6 +35,9 @@ const RoomMsgHeader = ({
   const [loadParticipants, setLoadParticipants] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const date = new Date(data?.created);
+
+  const axiosInstancePrivate = useTokens();
+
   const formattedDate = date.toLocaleString("en-US", {
     timeZone: "UTC", // Adjust time zone if needed
     year: "numeric",
@@ -72,9 +77,12 @@ const RoomMsgHeader = ({
       const res = await axiosInstancePrivate.get(
         "room/room-server/" + params + "/"
       );
-      const data = await res.data.data;
-      setLoadParticipants(data.members);
-      setLoading(false);
+      const data = await res?.data?.data;
+      if (data) {
+        setLoadParticipants(data.members);
+        console.log(loadParticipants);
+        setLoading(false);
+      }
     };
 
     getParticipants();
@@ -109,7 +117,7 @@ const RoomMsgHeader = ({
               <div className="flex justify-center">
                 <img
                   className="w-20 h-20 text-center rounded-full bg-room-black p-2"
-                  src={"http://localhost:8000" + data.avatar}
+                  src={data.avatar_url}
                   alt=""
                 />
               </div>
@@ -163,7 +171,7 @@ const RoomMsgHeader = ({
                       <div className="flex gap-3 items-center">
                         <img
                           className="w-10 h-10 rounded-full"
-                          src={"http://localhost:8000" + participant.avatar}
+                          src={participant.avatar}
                           alt=""
                         />
                         <div className="text-white-4 text-left text-sm lowercase">

@@ -5,7 +5,7 @@ import { icon, icon2, icon3 } from "@/utils/svgs";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
-import { axiosInstance } from "@/utils/axios";
+import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
 import { useAuth } from "@/app/context/AuthContext";
 import useRefresh from "@/hooks/useRefresh";
 import { isTokeneExpired } from "@/utils/token-expired";
@@ -51,9 +51,15 @@ export default function Home() {
       if (res.status === 200) {
         localStorage?.setItem("user", JSON.stringify(res.data.user));
         localStorage?.setItem("token", res.data.data.refresh);
+
+        // edited
+        localStorage?.setItem("access_token", res.data.data.access);
+        // axiosInstancePrivate.defaults.headers["Authorization"] =
+        //   "Bearer " + localStorage.getItem("access_token");
+        // edited
         setAuth(res.data.data.access);
         console.log("auth");
-        // console.log(auth);
+        console.log(auth);
         console.log(res);
         router.push("/rooms");
       }
@@ -74,8 +80,6 @@ export default function Home() {
 
     () => clearTimeout(timeOut);
   }, [isError]);
-
-  // const refresh = useRefresh();
 
   // useEffect(() => {
   //   const token = localStorage.getItem("token");

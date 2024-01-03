@@ -106,10 +106,10 @@
 // );
 
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 export const baseURL = "https://django-discord-server.onrender.com/api/";
 // export const baseURL = "http://localhost:8000/api/";
-
 export const axiosInstance = axios.create({
   baseURL,
   headers: {
@@ -123,6 +123,11 @@ export const axiosInstancePrivate = axios.create({
   headers: {
     common: {
       Accept: "application/json",
+      // 'edited'
+      // Authorization: localStorage.getItem("access_token")
+      //   ? "Bearer " + localStorage.getItem("access_token")
+      //   : null,
+      // 'edited'
     },
     get: {
       "Content-Type": "application/json",
@@ -139,3 +144,102 @@ export const axiosInstancePrivate = axios.create({
     },
   },
 });
+
+// edited?
+// axiosInstancePrivate.interceptors.request.use(
+//   (config) => {
+//     if (!config.headers["Authorization"]) {
+//       config.headers["Authorization"] = `Bearer ${localStorage.getItem(
+//         "access_token"
+//       )} `;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
+
+// axiosInstancePrivate.interceptors.response.use(
+//   (res) => {
+//     return res;
+//   },
+//   async (error) => {
+//     const orignalReq = error.config;
+
+//     if (typeof error.response === "undefined") {
+//       alert(
+//         "A server or Network error occured, we will get this fixed shortly"
+//       );
+//       return Promise.reject(error);
+//     }
+
+//     if (
+//       error.response.status === 401 &&
+//       orignalReq.url === baseURL + "token/refresh/"
+//     ) {
+//       // window.location.href = "/";
+//       // router.push("/");
+//       return Promise.reject(error);
+//     }
+
+//     if (
+//       // edited
+//       error.response.data.code === "token_not_valid" &&
+//       // edited
+//       error.response.status === 401 &&
+//       error.response.statusText === "Unauthorized"
+//     ) {
+//       const refreshToken = localStorage.getItem("token");
+//       console.log(refreshToken);
+//       console.log("usetoken config");
+
+//       if (refreshToken) {
+//         // edited
+//         const refreshTokenValidity = JSON.parse(
+//           atob(refreshToken.split(".")[1])
+//         );
+//         console.log(refreshTokenValidity);
+
+//         // edited
+//         // const refreshTokenValidity = jwtDecode(refreshToken);
+
+//         const dateNow = Math.ceil(Date.now() / 1000);
+
+//         // edited
+//         // if (TokeneExpired(refreshTokenValidity) > dateNow) {
+//         // edited
+//         if (refreshTokenValidity.exp > dateNow) {
+//           return axiosInstance
+//             .post("token/refresh/", {
+//               refresh: refreshToken,
+//             })
+//             .then((res) => {
+//               localStorage.setItem("access_token", res.data.access);
+//               localStorage.setItem("refresh_token", res.data.refresh);
+//               axiosInstance.defaults.headers["Authorization"] =
+//                 "Bearer " + res.data.access;
+//               orignalReq.headers["Authorization"] = "Bearer " + res.data.access;
+
+//               return axiosInstance(orignalReq);
+//             })
+//             .catch((error) => {
+//               console.log(error);
+//               // return Promise.reject(error);
+//             });
+//         } else {
+//           console.log("Refresh token expired");
+//           // router.push("/");
+//           window.location.href = "/";
+//         }
+//       } else {
+//         console.log("No refresh token found");
+//         // router.push("/");
+//         window.location.href = "/";
+//       }
+//     }
+//     return Promise.reject(error);
+//   }
+// );
+
+// edited
