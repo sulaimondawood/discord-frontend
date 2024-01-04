@@ -23,6 +23,7 @@ const AccountCard = ({ user }: { user: any }) => {
   function handleLogout() {
     Cookies.remove("token");
     router.refresh();
+    router.push("/");
   }
 
   return (
