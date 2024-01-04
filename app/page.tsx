@@ -55,7 +55,7 @@ function Home() {
       );
       if (res.status === 200) {
         localStorage?.setItem("user", JSON.stringify(res.data.user));
-        localStorage?.setItem("token", res.data.data.refresh);
+        // localStorage?.setItem("token", res.data.data.refresh);
 
         // edited
         // localStorage?.setItem("access_token", res.data.data.access);
@@ -86,12 +86,14 @@ function Home() {
     }
   };
 
-  // useLayoutEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (!isTokeneExpired(token)) {
-  //     redirect("/rooms");
-  //   }
-  // }, []);
+  useLayoutEffect(() => {
+    const token = Cookies.get("token");
+    console.log(token);
+
+    if (token) {
+      redirect("/rooms");
+    }
+  }, []);
 
   useEffect(() => {
     console.log("hello");

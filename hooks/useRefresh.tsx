@@ -2,6 +2,7 @@
 import { useAuth } from "@/app/context/AuthContext";
 import { axiosInstance } from "@/utils/axios";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 // export default function useRefresh() {
 //   const { auth, setAuth } = useAuth();
 //   const refresh = localStorage?.getItem("token");
@@ -29,9 +30,10 @@ import { useEffect, useState } from "react";
 export default function useRefresh() {
   const { auth, setAuth } = useAuth();
 
-  const refresh =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  // console.log(refresh);
+  // const refresh =
+  //   typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const refresh = Cookies.get("token");
+  console.log(refresh);
 
   const refreshToken = async () => {
     try {

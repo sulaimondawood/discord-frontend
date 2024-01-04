@@ -40,14 +40,6 @@ export function middleware(req: NextRequest) {
     if (isTokeneExpired(decodedToken)) {
       return NextResponse.redirect(new URL("/", req.url));
     }
-    if (
-      !isTokeneExpired(decodedToken) &&
-      onAuth.includes(req.nextUrl.pathname)
-    ) {
-      // console.log(req.nextUrl.pathname);
-
-      return NextResponse.redirect(new URL("/rooms", req.url));
-    }
   } catch (error) {
     console.log(error);
     return NextResponse.redirect(new URL("/", req.url));
@@ -57,5 +49,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/rooms/:path*", "/", "/friends", "/account/:path*"],
+  matcher: ["/rooms/:path*", "/friends", "/account/:path*"],
 };
