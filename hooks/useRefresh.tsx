@@ -31,7 +31,7 @@ export default function useRefresh() {
 
   const refresh =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  console.log(refresh);
+  // console.log(refresh);
 
   const refreshToken = async () => {
     try {
@@ -50,12 +50,12 @@ export default function useRefresh() {
         }
       );
       const data = await res.data;
-      if (data) {
-        setAuth(data.access);
-        localStorage.setItem("access_token", data.access);
-        // console.log(auth);
-        console.log("omo railse to power 50");
-      }
+      // if (data) {
+      setAuth(res.data.access);
+      // localStorage.setItem("access_token", data.access);
+      console.log(data);
+      console.log("omo railse to power 50");
+      // }
       return res.data.access;
     } catch (error) {
       console.error("Error refreshing token:", error);

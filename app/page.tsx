@@ -1,17 +1,22 @@
 "use client";
-
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { icon, icon2, icon3 } from "@/utils/svgs";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 
-import { useRouter } from "next/navigation";
-import { axiosInstance, axiosInstancePrivate } from "@/utils/axios";
+import { redirect, useRouter } from "next/navigation";
+import { axiosInstance } from "@/utils/axios";
 import { useAuth } from "@/app/context/AuthContext";
-import useRefresh from "@/hooks/useRefresh";
 import { isTokeneExpired } from "@/utils/token-expired";
-import { jwtDecode } from "jwt-decode";
+import withAuth from "@/utils/withAuth";
 
-export default function Home() {
+function Home() {
   const router = useRouter();
 
   const data = Object.freeze({
@@ -53,24 +58,41 @@ export default function Home() {
         localStorage?.setItem("token", res.data.data.refresh);
 
         // edited
-        localStorage?.setItem("access_token", res.data.data.access);
+        // localStorage?.setItem("access_token", res.data.data.access);
         // axiosInstancePrivate.defaults.headers["Authorization"] =
         //   "Bearer " + localStorage.getItem("access_token");
         // edited
+        const data = await res.data;
         setAuth(res.data.data.access);
+        Cookies.set("token", res.data.data.refresh, {
+          expires: 1,
+          secure: true,
+        });
         console.log("auth");
         console.log(auth);
-        console.log(res);
+        console.log(res.data.data.access);
         router.push("/rooms");
       }
     } catch (error: any) {
       setError(true);
       setLoading(false);
       console.log(error);
-      setErrorMsg(error?.response?.data?.Invalid);
+      if (error?.response?.data?.Invalid) {
+        setErrorMsg(error?.response?.data?.Invalid);
+      } else {
+        setErrorMsg(error.message);
+      }
       console.log(errorMsg);
     }
   };
+
+  // useLayoutEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (!isTokeneExpired(token)) {
+  //     redirect("/rooms");
+  //   }
+  // }, []);
+
   useEffect(() => {
     console.log("hello");
 
@@ -80,16 +102,6 @@ export default function Home() {
 
     () => clearTimeout(timeOut);
   }, [isError]);
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   const decodedToken = jwtDecode(token!);
-  //   console.log(decodedToken);
-
-  //   if (!isTokeneExpired(decodedToken)) {
-  //     router.replace("/rooms");
-  //   }
-  // });
 
   return (
     <main className="relative px-4 md:px-0 bg-blue-ish w-screen h-screen flex justify-center items-center">
@@ -182,3 +194,5 @@ export default function Home() {
     </main>
   );
 }
+
+export default withAuth(Home);

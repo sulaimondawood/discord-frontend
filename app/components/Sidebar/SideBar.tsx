@@ -47,14 +47,14 @@ const SideBar = () => {
         withCredentials: true,
       });
 
-      const data = res.data;
+      const data = res?.data;
       if (data) {
         setData(data);
         setLoading(false);
       }
 
       const userResponse = await axiosInstance.get("user/");
-      const userData = userResponse.data;
+      const userData = userResponse?.data;
 
       if (userData) {
         setUserData(userData);
@@ -64,8 +64,8 @@ const SideBar = () => {
 
     async function getSingleUser() {
       const res = await axiosInstance.get("user/" + activeUser.id + "/");
-      if (res.status == 200) {
-        setActiveUser(res.data);
+      if (res?.status == 200) {
+        setActiveUser(res?.data);
         setActive(false);
       }
     }
@@ -92,7 +92,7 @@ const SideBar = () => {
 
   return (
     <>
-      <div className="h-screen fixed flex items-start">
+      <div className="d-screen md:h-screen fixed flex items-start">
         <div className="w-14 md:w-[80px] flex flex-col items-center h-screen overflow-hidden bg-room-deep-black py-4 ">
           <div className="h-[calc(100vh-160px)] md:h-[calc(100vh-180px)] w-full px-1 md:px-2 overflow-auto side-bar">
             <div className="flex flex-col items-center gap-4">

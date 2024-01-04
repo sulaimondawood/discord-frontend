@@ -4,15 +4,15 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { useModalState } from "@/app/context/StateContext";
-import { axiosInstancePrivate } from "@/utils/axios";
+// import { axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
-import { colors, getRandom } from "@/utils/themes/colors/color";
 
 import { formatRelative } from "date-fns";
 import Link from "next/link";
-
+import { useTokens } from "@/hooks/useTokensConfig";
 const Message = ({ msg }: { msg: any }) => {
   console.log(msg);
+  const axiosInstancePrivate = useTokens();
 
   const [user, setUser] = useState(() => {
     const storedState = localStorage?.getItem("user");

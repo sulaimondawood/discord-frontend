@@ -98,7 +98,7 @@ const SingleRoom = ({ params }: { params: { id: number } }) => {
       <main
         className={`${
           showRoom ? "translate-x-0" : " translate-x-full "
-        }  bg-gray-ish h-screen left-14 bottom-0 fixed duration-300 ease-in-out  transition-all  w-[calc(100vw-60px)] z-[999] block overflow-hidden md:hidden`}
+        }  bg-gray-ish d-screen left-14 bottom-0 fixed duration-300 ease-in-out  transition-all  w-[calc(100vw-60px)] z-[999] block overflow-hidden md:hidden`}
       >
         <RoomMsgHeader params={params.id} data={room} msg={msg} />
         <div className="overflow-y-auto  flex flex-col gap-3 h-[calc(100vh-110px)] py-3 px-2 mt-12">
