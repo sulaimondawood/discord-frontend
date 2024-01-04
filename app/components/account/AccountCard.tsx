@@ -3,6 +3,7 @@ import { useModalState } from "@/app/context/StateContext";
 import { sliceText } from "@/utils/slicer";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 const AccountCard = ({ user }: { user: any }) => {
   const [active, setActive] = useState(false);
@@ -19,6 +20,11 @@ const AccountCard = ({ user }: { user: any }) => {
     // router.refresh();
   }, []);
 
+  function handleLogout() {
+    Cookies.remove("token");
+    router.refresh();
+  }
+
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -32,7 +38,12 @@ const AccountCard = ({ user }: { user: any }) => {
             #{sliceText(user?.username)}
           </p>
         </div>
-        <div className="cursor-pointer bg-blue-500 text-white text-xs md:text-sm px-4 py-1 rounded-sm hover:bg-blue-600">
+        <div
+          onClick={handleLogout}
+          className={`${
+            active ? "" : "hidden"
+          } cursor-pointer bg-blue-500 text-white text-xs md:text-sm px-4 py-1 rounded-sm hover:bg-blue-600`}
+        >
           Logout
         </div>
       </div>
