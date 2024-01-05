@@ -42,23 +42,29 @@ const SideBar = () => {
   const router = useRouter();
   useEffect(() => {
     const activeUser = JSON.parse(localStorage?.getItem("user")!);
+
     async function getRoomLists() {
-      const res = await axiosInstancePrivate.get("room/all-rooms/", {
-        withCredentials: true,
-      });
+      try {
+        const res = await axiosInstancePrivate.get("room/all-rooms/", {
+          withCredentials: true,
+        });
 
-      const data = res?.data;
-      if (data) {
-        setData(data);
+        const data = res?.data;
+        if (data) {
+          setData(data);
+          setLoading(false);
+        }
+
+        const userResponse = await axiosInstance.get("user/");
+        const userData = userResponse?.data;
+
+        if (userData) {
+          setUserData(userData);
+          setUserList(false);
+        }
+      } catch (error) {
         setLoading(false);
-      }
-
-      const userResponse = await axiosInstance.get("user/");
-      const userData = userResponse?.data;
-
-      if (userData) {
-        setUserData(userData);
-        setUserList(false);
+        setUserData([]);
       }
     }
 

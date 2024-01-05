@@ -29,17 +29,10 @@ import Cookies from "js-cookie";
 
 export default function useRefresh() {
   const { auth, setAuth } = useAuth();
-
-  // const refresh =
-  //   typeof window !== "undefined" ? localStorage.getItem("token") : null;
   const refresh = Cookies.get("token");
-  console.log(refresh);
-
   const refreshToken = async () => {
     try {
       if (!refresh) {
-        console.log("heloow my people");
-
         return null;
       }
       const res = await axiosInstance.post(
@@ -52,12 +45,7 @@ export default function useRefresh() {
         }
       );
       const data = await res.data;
-      // if (data) {
       setAuth(res.data.access);
-      // localStorage.setItem("access_token", data.access);
-      console.log(data);
-      console.log("omo railse to power 50");
-      // }
       return res.data.access;
     } catch (error) {
       console.error("Error refreshing token:", error);
@@ -65,7 +53,6 @@ export default function useRefresh() {
   };
 
   useEffect(() => {
-    console.log("Updated auth state:", auth);
     // You can perform additional actions here after the state is updated
   }, [auth]); // Dependency array ensures this effect runs whenever auth changes
 

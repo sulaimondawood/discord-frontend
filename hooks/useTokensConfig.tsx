@@ -13,11 +13,6 @@ export const useTokens = () => {
     const requestIntercept = axiosInstancePrivate.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {
-          console.log(auth);
-          console.log("from axios config");
-
-          // config.headers["Authorization"] =
-          // "Bearer " + localStorage.getItem("access_token");
           config.headers["Authorization"] = `Bearer ${auth}`;
         }
         return config;
@@ -41,8 +36,6 @@ export const useTokens = () => {
           // error.response.statusText === "Unauthorized"
         ) {
           const newAccessToken = await refresh();
-          console.log(newAccessToken);
-
           originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return axiosInstancePrivate(originalRequest);
         }

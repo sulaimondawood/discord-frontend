@@ -80,7 +80,6 @@ const RoomMsgHeader = ({
       const data = await res?.data?.data;
       if (data) {
         setLoadParticipants(data.members);
-        console.log(loadParticipants);
         setLoading(false);
       }
     };

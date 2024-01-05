@@ -20,7 +20,6 @@ const SearchFriendsInput = () => {
     async function handleGetUsers() {
       try {
         const res = await axiosInstance.get("user/");
-
         if (res?.data) {
           setUsers(res?.data);
           setLoading(false);
@@ -33,7 +32,6 @@ const SearchFriendsInput = () => {
 
     async function getTopics() {
       const res = await axiosInstancePrivate.get("room/topics/");
-      console.log(res);
       const data = res?.data.slice(0, 8);
       if (data) {
         setLoadingTopics(false);
@@ -110,7 +108,7 @@ const SearchFriendsInput = () => {
           )}
         </div>
       </div>
-      <div className="hidden s-custom:block  border-l h-screen overflow-auto border-room-black-2">
+      <div className="hidden s-custom:block  border-l d-screen md:h-screen overflow-auto border-room-black-2">
         <h1
           className="text-xl md:text-lg lg:text-xl
          capitalize py-6 px-2 m-screen:px-4  font-semibold text-white-2 "

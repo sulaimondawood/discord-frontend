@@ -42,8 +42,6 @@ const SingleRoom = ({ params }: { params: { id: number } }) => {
         setLoading(false);
         setData(result1);
         setRoom(result2);
-        console.log(result1);
-        console.log(result2);
       } catch (error) {
         setLoading(false);
         console.log(error);
@@ -53,7 +51,7 @@ const SingleRoom = ({ params }: { params: { id: number } }) => {
     fetchData();
     // Set up interval for repeated requests
 
-    const intervalId: any = setInterval(fetchData, 1000);
+    const intervalId: any = setInterval(fetchData, 2000);
 
     // Cleanup function to clear the interval
     return () => clearInterval(intervalId);
