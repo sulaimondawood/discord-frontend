@@ -144,3 +144,34 @@ export const footerPolicies = [
   "Acknowledgements",
   "Licenses",
 ];
+
+export const nav = [
+  {
+    name: "Download",
+    link: "/",
+  },
+  {
+    name: "Nitro",
+    link: "/",
+  },
+  {
+    name: "Discover",
+    link: "/",
+  },
+  {
+    name: "Safety",
+    link: "/",
+  },
+  {
+    name: "Blog",
+    link: "/",
+  },
+  {
+    name: "Careers",
+    link: "/",
+  },
+  {
+    name: "Support",
+    link: "/",
+  },
+];

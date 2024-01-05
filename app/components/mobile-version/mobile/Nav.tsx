@@ -1,10 +1,11 @@
 "use client";
-import { nav } from "@/app/login/page";
+
 import Link from "next/link";
 import React, { useState } from "react";
 import { LuDownload } from "react-icons/lu";
 import { FaBars } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
+import { nav } from "@/utils/data";
 
 const Nav = () => {
   const [toggle, setToggle] = useState(false);

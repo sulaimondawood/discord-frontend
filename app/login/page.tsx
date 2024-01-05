@@ -11,38 +11,9 @@ import {
   footerPolicies,
   footerProduct,
   footerResoures,
+  nav,
 } from "@/utils/data";
 import Nav from "../components/mobile-version/mobile/Nav";
-export const nav = [
-  {
-    name: "Download",
-    link: "/",
-  },
-  {
-    name: "Nitro",
-    link: "/",
-  },
-  {
-    name: "Discover",
-    link: "/",
-  },
-  {
-    name: "Safety",
-    link: "/",
-  },
-  {
-    name: "Blog",
-    link: "/",
-  },
-  {
-    name: "Careers",
-    link: "/",
-  },
-  {
-    name: "Support",
-    link: "/",
-  },
-];
 
 const data = [
   {
