@@ -94,8 +94,6 @@ const RoomModal = () => {
   }
 
   useEffect(() => {
-    console.log("hello");
-
     const timeOut = setTimeout(() => {
       setError(false);
     }, 3000);
@@ -126,10 +124,12 @@ const RoomModal = () => {
         )}
         <form
           onSubmit={handlePostReq}
-          className=" mt-3 md:mt-0 flex flex-col gap-4 z-[9999]"
+          className=" mt-3 md:mt-0 flex flex-col gap-2 md:gap-4 z-[9999]"
         >
           <div className="flex flex-col gap-2">
-            <label htmlFor="topic">Topic</label>
+            <label className="text-sm md:text-base" htmlFor="topic">
+              Topic
+            </label>
             <input
               onChange={handleData}
               id="topic"
@@ -142,7 +142,9 @@ const RoomModal = () => {
             {/* <RoomModalDropDown topic={data.topic} handleData={handleData} /> */}
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="name">Name</label>
+            <label className="text-sm md:text-base" htmlFor="name">
+              Name
+            </label>
             <input
               onChange={handleData}
               id="name"
@@ -154,7 +156,9 @@ const RoomModal = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="desc">Description</label>
+            <label className="text-sm md:text-base" htmlFor="desc">
+              Description
+            </label>
             <input
               onChange={handleData}
               id="desc"
@@ -166,7 +170,9 @@ const RoomModal = () => {
             />
           </div>
           <div className="flex flex-col gap-2 rounded border-dashed border border-white-4/40 py-4 text-center">
-            <label htmlFor="img">Upload Sever Image</label>
+            <label className="text-sm md:text-base" htmlFor="img">
+              Upload Sever Image
+            </label>
             <input
               onChange={handleFile}
               id="img"

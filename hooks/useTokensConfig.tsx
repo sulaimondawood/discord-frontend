@@ -3,6 +3,7 @@ import { useAuth } from "@/app/context/AuthContext";
 import { axiosInstancePrivate, baseURL } from "@/utils/axios";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Cookies from "js-cookie";
 import useRefresh from "./useRefresh";
 
 export const useTokens = () => {
@@ -28,6 +29,8 @@ export const useTokens = () => {
           alert(
             "A server or network error occurred. We will get this fixed shortly."
           );
+          Cookies.remove("token");
+          router.push("/");
           return Promise.reject(error);
         }
 

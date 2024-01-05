@@ -88,16 +88,12 @@ function Home() {
 
   useLayoutEffect(() => {
     const token = Cookies.get("token");
-    console.log(token);
-
     if (token) {
       redirect("/rooms");
     }
   }, []);
 
   useEffect(() => {
-    console.log("hello");
-
     const timeOut = setTimeout(() => {
       setError(false);
     }, 3000);

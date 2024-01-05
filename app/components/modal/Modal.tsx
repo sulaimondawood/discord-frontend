@@ -50,7 +50,7 @@ const Modal = () => {
         className="bg-black/20 z-[999] fixed inset-0"
       ></div>
 
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 bg-white/10 text-white-1 backdrop-blur-md z-[999] w-[calc(100vw-30px)]  md:w-[600px] h-[400px] rounded-md">
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 bg-white/10 text-white-1 backdrop-blur-md z-[999] w-[calc(100vw-50px)]  md:w-[600px] h-[300px] md:h-[400px] rounded-md">
         <form onKeyUp={querySelection} className="">
           <input
             className="bg-room-black py-4 px-3 rounded w-full focus:outline-none"
@@ -60,7 +60,24 @@ const Modal = () => {
             placeholder="Where would you like to go?"
           />
         </form>
-        <div className="overflow-auto h-[300px] mt-5">
+        <div className="overflow-auto h-[180px] md:h-[300px] mt-5">
+          {isLoading ? (
+            "loading..."
+          ) : rooms.length >= 1 ? (
+            rooms.map((room: RoomList) => {
+              return (
+                <p
+                  key={room.id}
+                  onClick={() => handleNavigate(room.id)}
+                  className="py-2 md:py-4 cursor-pointer text-sm md:text-base"
+                >
+                  {room.name}
+                </p>
+              );
+            })
+          ) : (
+            <p>No room found!</p>
+          )}
           {isLoading ? (
             "loading..."
           ) : rooms.length >= 1 ? (
