@@ -5,34 +5,41 @@ import { icon, icon3 } from "@/utils/svgs";
 import Image1 from "@/assets/images/landing-img-1.svg";
 import Image2 from "@/assets/images/landing-img-2.svg";
 import Image3 from "@/assets/images/landing-img-3.svg";
+import Image4 from "@/assets/images/landing-img-footer.svg";
+import {
+  footerCompany,
+  footerPolicies,
+  footerProduct,
+  footerResoures,
+} from "@/utils/data";
 const nav = [
   {
     name: "Download",
-    link: "",
+    link: "/",
   },
   {
     name: "Nitro",
-    link: "",
+    link: "/",
   },
   {
     name: "Discover",
-    link: "",
+    link: "/",
   },
   {
     name: "Safety",
-    link: "",
+    link: "/",
   },
   {
     name: "Blog",
-    link: "",
+    link: "/",
   },
   {
     name: "Careers",
-    link: "",
+    link: "/",
   },
   {
     name: "Support",
-    link: "",
+    link: "/",
   },
 ];
 
@@ -69,9 +76,9 @@ export default function Login() {
           <span className="bottom-0 -right-72 absolute z-50">{icon3}</span>
         </div>
         <nav className="flex py-4 items-center font-Open-sans text-sm container text-white justify-between">
-          <a className="text-xl" href="">
-            Dawood
-          </a>
+          <Link className="text-xl font-Archivo-Black" href="/">
+            Dawood.
+          </Link>
           <div className="flex items-center gap-10">
             {nav.map((nav: { name: string; link: string }, index: number) => {
               return (
@@ -85,7 +92,7 @@ export default function Login() {
               );
             })}
           </div>
-          <LandingBtn />
+          <LandingBtn bg={"bg-white"} />
         </nav>
         <div className="mt-32 z-impo ">
           <h1 className="text-6xl z-50 font-semibold text-center font-Archivo-Black text-white">
@@ -113,7 +120,7 @@ export default function Login() {
           </div>
         </div>
       </section>
-      <section className="overflow-hidden">
+      <section>
         {data.map((div, index) => {
           return (
             <div
@@ -132,6 +139,76 @@ export default function Login() {
           );
         })}
       </section>
+      <section className="bg-off-white py-24">
+        <h1 className="text-5xl text-center font-Archivo-Black text-dark-not-black">
+          RELIABLE TECH FOR STAYING CLOSE
+        </h1>
+        <p className="text-dark-not-black text-lg w-full max-w-5xl pt-5 text-center mx-auto">
+          Low-latency voice and video feels like youre in the same room. Wave
+          hello over video, watch friends stream their games, or gather up and
+          have a drawing session with screen share.
+        </p>
+        <img className="w-[1150px] block mx-auto" src={Image4.src} alt="" />
+        <h2 className="text-dark-not-black text-3xl pt-28 pb-10 text-center font-Noto-sans font-semibold">
+          Ready to start your journey?
+        </h2>
+        <div className="flex items-center justify-center text-lg mx-auto w-fit gap-2 text-white px-8 py-4 rounded-full hover:bg-blue-700 hover:shadow-lg hover:shadow-black/20 transition-all duration-500 ">
+          <span>
+            <LuDownload />
+          </span>
+          Download for Windows
+        </div>
+      </section>
+      <footer className="bg-room-deep-black h-[650px] p-24">
+        <div className="flex justify-between items-start text-sm text-white-1">
+          <div>
+            <Link className="text-xl font-Archivo-Black" href="/">
+              Dawood.
+            </Link>
+          </div>
+          <div className="grid grid-cols-4 gap-8">
+            <div className="text-left">
+              <h2>Product</h2>
+              <div className="flex flex-col items-start gap-4 pt-6">
+                {footerProduct.map((item) => {
+                  return <button>{item}</button>;
+                })}
+              </div>
+            </div>
+            <div className="text-left">
+              <h2>Company</h2>
+              <div className="flex flex-col items-start gap-4 pt-6">
+                {footerCompany.map((item, index) => {
+                  return (
+                    <button key={index} className="hover:underline">
+                      {item}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="text-left">
+              <h2>Resources</h2>
+              <div className="flex flex-col items-start gap-4 pt-6">
+                {footerResoures.map((item) => {
+                  return <button>{item}</button>;
+                })}
+              </div>
+            </div>
+            <div className="text-left">
+              <h2>Policies</h2>
+              <div className="flex flex-col items-start gap-4 pt-6">
+                {footerPolicies.map((item) => {
+                  return <button>{item}</button>;
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex  font-Open-sans text-sm  justify-end mt-10">
+          <LandingBtn bg={"bg-white"} />
+        </div>
+      </footer>
     </main>
   );
 }

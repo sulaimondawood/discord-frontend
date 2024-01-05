@@ -109,3 +109,41 @@ export const favNitroPerks = [
     desc: "Hype, roast, and meme with custom emoji anywhere.",
   },
 ];
+
+export const footerProduct = [
+  "Product",
+  "Download",
+  "Nitro",
+  "Status",
+  "App Directory",
+  "New Mobile Experience",
+];
+export const footerCompany = [
+  "About",
+  "Jobs",
+  "Brand",
+  "Newsroom",
+  "Fall Release",
+];
+export const footerResoures = [
+  "College",
+  "Support",
+  "Safety",
+  "Blog",
+  "Feedback",
+  "StreamKit",
+  "Creators",
+  "Community",
+  "Developers",
+  "Gaming",
+  "Official 3rd Party Merch",
+];
+export const footerPolicies = [
+  "Terms",
+  "Privacy",
+  "Cookie Settings",
+  "Guidelines",
+  "Acknowledgements",
+  "Licenses",
+  "Company Information",
+];

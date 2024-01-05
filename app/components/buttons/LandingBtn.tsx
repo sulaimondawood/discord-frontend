@@ -2,17 +2,17 @@
 import { useAuth } from "@/app/context/AuthContext";
 import React from "react";
 
-const LandingBtn = () => {
+const LandingBtn = ({ bg }: { bg: string }) => {
   const { auth } = useAuth();
 
   return (
     <div>
       {auth ? (
-        <button className="text-blue-700 bg-white py-2 px-4 rounded-lg">
+        <button className={`text-blue-700 ${bg} py-2 px-4 rounded-lg`}>
           Login
         </button>
       ) : (
-        <button className="text-blue-900 bg-white py-2 px-3 rounded-2xl ">
+        <button className={`text-blue-900 ${bg} py-2 px-3 rounded-2xl `}>
           Open Discord
         </button>
       )}
