@@ -3,7 +3,13 @@ import { useModalState } from "@/app/context/StateContext";
 import { useTokens } from "@/hooks/useTokensConfig";
 // import { axiosInstancePrivate } from "@/utils/axios";
 import { useRouter } from "next/navigation";
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 const UserSettingsModal = ({ params }: { params: number }) => {
   const { isUserModalOpen, setUserModalOpen } = useModalState();
@@ -16,7 +22,7 @@ const UserSettingsModal = ({ params }: { params: number }) => {
   const [progress, setProgress] = useState(0);
 
   const router = useRouter();
-
+  const fileRef = useRef<HTMLInputElement>(null);
   const axiosInstancePrivate = useTokens();
   async function handleUpdateUser(e: FormEvent) {
     e.preventDefault();
@@ -64,6 +70,11 @@ const UserSettingsModal = ({ params }: { params: number }) => {
     setFile(e.target.files![0]);
     console.log(file);
   }
+
+  function handleOpenFile() {
+    fileRef.current?.click();
+  }
+  // useEffect(() => {}, [file]);
   useEffect(() => {
     const timeOut = setTimeout(() => {
       setError(false);
@@ -133,19 +144,22 @@ const UserSettingsModal = ({ params }: { params: number }) => {
 
           <div className="flex flex-col text-white-2 gap-2 border-dashed border border-white-4/40 py-6 rounded md:py-4 text-center">
             <label
+              onClick={handleOpenFile}
               className=" text-xs md:text-base  text-white-3"
-              htmlFor="img"
             >
               Upload Sever Image
             </label>
             <input
+              ref={fileRef}
               onChange={handleFile}
-              // onChange={(e) => setFile(e.target.files![0])}
-              id="img"
               name="avatar"
               className="hidden"
               type="file"
             />
+
+            <p className="text-xs md:text-base text-white-1">
+              {file && "File " + file.name + " staged"}
+            </p>
           </div>
 
           <div className="">
@@ -166,10 +180,6 @@ const UserSettingsModal = ({ params }: { params: number }) => {
                 </div>
               </div>
             )}
-
-            <p className="text-xs md:text-base text-white-1">
-              {file && "File " + file.name + " staged"}
-            </p>
           </div>
 
           <div className="text-white-1 text-xs flex gap-6 items-center justify-end">
