@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      container: {
+        center: true,
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -27,9 +30,13 @@ const config: Config = {
         "white-4": "#949ba4",
         "l-blue": "#00a8fc",
         "red-ish": "#f23f42",
+        "off-white": "#f6f6f6",
+        "dark-not-black": "#2c2f33",
       },
       fontFamily: {
         "Noto-sans": ['"Noto Sans"', "sans-serif"],
+        "Archivo-Black": ['"Archivo Black"', "sans-serif"],
+        "Open-sans": ['"Open Sans"', "sans-serif"],
       },
       flex: {
         "flex-1-1": "3 1 auto",
