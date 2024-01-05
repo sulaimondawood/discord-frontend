@@ -116,7 +116,6 @@ export const footerProduct = [
   "Nitro",
   "Status",
   "App Directory",
-  "New Mobile Experience",
 ];
 export const footerCompany = [
   "About",
@@ -136,7 +135,6 @@ export const footerResoures = [
   "Community",
   "Developers",
   "Gaming",
-  "Official 3rd Party Merch",
 ];
 export const footerPolicies = [
   "Terms",
@@ -145,5 +143,4 @@ export const footerPolicies = [
   "Guidelines",
   "Acknowledgements",
   "Licenses",
-  "Company Information",
 ];

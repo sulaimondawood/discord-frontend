@@ -1,5 +1,6 @@
 export const icon: any = (
   <svg
+    className="w-96"
     width="689"
     height="352"
     viewBox="0 0 689 352"
