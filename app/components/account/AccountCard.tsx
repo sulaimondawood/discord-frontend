@@ -22,6 +22,7 @@ const AccountCard = ({ user }: { user: any }) => {
 
   function handleLogout() {
     Cookies.remove("token");
+    localStorage.removeItem("user");
     router.refresh();
     router.push("/");
   }

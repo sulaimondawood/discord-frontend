@@ -106,7 +106,7 @@ function Home() {
   }, [isError]);
 
   return (
-    <main className="relative px-4 md:px-0 bg-blue-ish w-screen h-screen flex justify-center items-center">
+    <main className="relative px-4 md:px-0 bg-blue-ish w-screen d-screen md:h-screen flex justify-center items-center">
       <div className="">
         <span className="top-0  left-0 absolute w-full hidden md:block">
           {icon}

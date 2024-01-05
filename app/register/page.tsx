@@ -82,7 +82,7 @@ export default function Register() {
   }
   return (
     <>
-      <main className="bg-blue-ish px-4 md:px-0 relative w-screen h-screen flex justify-center items-center">
+      <main className="bg-blue-ish px-4 md:px-0 relative w-screen d-screen md:h-screen flex justify-center items-center">
         <div className="">
           <span className="top-0  left-0 absolute w-full hidden md:block">
             {icon}

@@ -15,7 +15,7 @@ body {
 
 .d-screen {
   height: 100vh;
-  height: 100dvh;
+  height: 100svh;
 }
 
 ::-webkit-scrollbar {
