@@ -1,196 +1,202 @@
-"use client";
-import Cookies from "js-cookie";
 import Link from "next/link";
-import { icon, icon2, icon3 } from "@/utils/svgs";
+import { LuDownload } from "react-icons/lu";
+import { icon, icon3, landingSvg } from "@/utils/svgs";
+import Image1 from "@/assets/images/landing-img-1.svg";
+import Image2 from "@/assets/images/landing-img-2.svg";
+import Image3 from "@/assets/images/landing-img-3.svg";
+import Image4 from "@/assets/images/landing-img-footer.svg";
 import {
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from "react";
+  footerCompany,
+  footerPolicies,
+  footerProduct,
+  footerResoures,
+  nav,
+} from "@/utils/data";
+import Nav from "./components/mobile-version/mobile/Nav";
+import LandingBtn from "./components/buttons/LandingBtn";
 
-import { redirect, useRouter } from "next/navigation";
-import { axiosInstance } from "@/utils/axios";
-import { useAuth } from "@/app/context/AuthContext";
-import { isTokeneExpired } from "@/utils/token-expired";
-import withAuth from "@/utils/withAuth";
+const data = [
+  {
+    title: "Create an invite-only place where you belong",
+    desc: "Discord servers are organized into topic-based channels where you can collaborate, share, and just talk about your day without clogging up a group chat.",
+    img: Image1,
+    bg: "#fff",
+  },
+  {
+    title: "Where hanging out is easy",
+    desc: "Grab a seat in a voice channel when youre free. Friends in your server can see youre around and instantly pop in to talk without having to call.",
+    img: Image2,
+    bg: "#f6f6f6",
+  },
+  {
+    title: "From few to a fandom",
+    desc: "Get any community running with moderation tools and custom member access. Give members special powers, set up private channels, and more.",
+    img: Image3,
+    bg: "#fff",
+  },
+];
 
-function Home() {
-  const router = useRouter();
-
-  const data = Object.freeze({
-    email: "",
-    password: "",
-  });
-  const { auth, setAuth } = useAuth();
-  const [logCredentials, setCredentials] = useState(data);
-  const [isLoading, setLoading] = useState(false);
-  const [isError, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setCredentials({
-      ...logCredentials,
-      [name]: value.trim(),
-    });
-  };
-
-  const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const res = await axiosInstance.post(
-        "user/login/",
-        {
-          email: logCredentials.email,
-          password: logCredentials.password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      if (res.status === 200) {
-        localStorage?.setItem("user", JSON.stringify(res.data.user));
-        // localStorage?.setItem("token", res.data.data.refresh);
-
-        // edited
-        // localStorage?.setItem("access_token", res.data.data.access);
-        // axiosInstancePrivate.defaults.headers["Authorization"] =
-        //   "Bearer " + localStorage.getItem("access_token");
-        // edited
-        const data = await res.data;
-        setAuth(res.data.data.access);
-        Cookies.set("token", res.data.data.refresh, {
-          expires: 1,
-          secure: true,
-        });
-        console.log("auth");
-        console.log(auth);
-        console.log(res.data.data.access);
-        router.push("/rooms");
-      }
-    } catch (error: any) {
-      setError(true);
-      setLoading(false);
-      console.log(error);
-      if (error?.response?.data?.Invalid) {
-        setErrorMsg(error?.response?.data?.Invalid);
-      } else {
-        setErrorMsg(error.message);
-      }
-      console.log(errorMsg);
-    }
-  };
-
-  useLayoutEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
-      redirect("/rooms");
-    }
-  }, []);
-
-  useEffect(() => {
-    const timeOut = setTimeout(() => {
-      setError(false);
-    }, 3000);
-
-    () => clearTimeout(timeOut);
-  }, [isError]);
-
+export default function Home() {
   return (
-    <main className="relative px-4 md:px-0 bg-blue-ish w-screen d-screen md:h-screen flex justify-center items-center">
-      <div className="">
-        <span className="top-0  left-0 absolute w-full hidden md:block">
-          {icon}
-        </span>
-
-        <span className="left-0 absolute bottom-0 w-full">{icon2}</span>
-        <span className="bottom-0 right-0 absolute ">{icon3}</span>
-      </div>
-
-      <div className="bg-black-ish rounded-md py-4 px-4 md:px-8 w-[500px] z-50">
-        <div className="pb-4 text-center">
-          <h2 className="text-white-1 text-2xl pb-2 font-medium font-sans">
-            Welcome back!
-          </h2>
-          <p className="text-white-3 text-sm ">
-            We&apos;re so excited to see you again!
-          </p>
-
-          {isError && (
-            <p className="text-xs mt-4 bg-red-400 text-red-50 py-1 px-3 rounded-md">
-              {errorMsg}
-            </p>
-          )}
+    <main className="bg-white w-screen h-screen overflow-x-hidden">
+      <section className="bg-blue-700/90 h-[800px] md:h-[750px] lg:h-[620px] overflow-hidden w-screen relative">
+        <div className="">
+          <span className="-bottom-24  md:hidden lg:block md:bottom-0 -left-32 md:-left-80 absolute  md:w-full z-0 md:z-50 ">
+            {icon}
+          </span>
+          <span className="-bottom-24 md:-bottom-0 -left-32 md:-left-[500px] lg:-left-80 absolute  w-1/2 md:w-full z-0 ">
+            {landingSvg}
+          </span>
+          <span className="bottom-0 md:-right-48 lg:-right-[430px] xl:-right-72 hidden md:block absolute z-50">
+            {icon3}
+          </span>
         </div>
-        <form onSubmit={handleLogin} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <label
-              htmlFor="email"
-              className="text-xs text-white-4 font-Noto-sans font-semibold"
-            >
-              EMAIL
-            </label>
-            <input
-              type="email"
-              onChange={handleChange}
-              value={logCredentials.email}
-              required
-              name="email"
-              id="email"
-              className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label
-              className="text-xs text-white-4 font-Noto-sans font-semibold"
-              htmlFor="password"
-            >
-              PASSWORD
-            </label>
-            <input
-              type="password"
-              required
-              onChange={handleChange}
-              value={logCredentials.password}
-              name="password"
-              id="password"
-              className="bg-faded-black rounded placeholder:text-white-1 h-11 text-white indent-2"
-            />
-          </div>
-          <p className="text-l-blue text-sm -mt-3 font-Noto-sans">
-            Forgot your password?
-          </p>
-          {isLoading ? (
-            <button
-              className="bg-blue-ish hover:bg-blue-800 duration-200 transition-all text-white py-3 font-Noto-sans text-sm rounded "
-              type="button"
-            >
-              Please wait...
-            </button>
-          ) : (
-            <button
-              onClick={handleLogin}
-              className="bg-blue-ish hover:bg-blue-800 duration-200 transition-all text-white py-3 font-Noto-sans text-sm rounded "
-              type="submit"
-            >
-              Log In
-            </button>
-          )}
-        </form>
-        <p className="pt-3 text-sm font-Noto-sans">
-          <span className="text-white-4">Need an account?</span>{" "}
-          <Link className="text-l-blue" href="/register">
-            Register
+        <nav className="hidden lg:flex py-4 items-center font-Open-sans text-sm container text-white justify-between">
+          <Link className="text-xl font-Archivo-Black" href="/">
+            Dawood.
           </Link>
+          <div className="flex items-center gap-10">
+            {nav.map((nav: { name: string; link: string }, index: number) => {
+              return (
+                <p
+                  className="font-semibold hover:underline cursor-pointer"
+                  key={index}
+                >
+                  {nav.name}
+                </p>
+              );
+            })}
+          </div>
+          <LandingBtn bg={"bg-white"} />
+        </nav>
+
+        {/* mobile */}
+        <Nav />
+        <div className="mt-20 md:mt-28 lg::mt-32 px-6">
+          <h1 className="text-3xl md:text-6xl z-50 font-semibold text-left max-w-lg lg:max-w-none lg:text-center font-Archivo-Black text-white">
+            IMAGINE A PLACE...
+          </h1>
+          <p className="w-full z-50 lg:max-w-3xl text-sm text-left md:text-base mx-auto md:mx-0 md:max-w-md  lg:text-center pt-6 md:pt-10 lg:text-lg leading-6 text-white font-Noto-sans lg:mx-auto">
+            ...where you can belong to a school club, a gaming group, or a
+            worldwide art community. Where just you and a handful of friends can
+            spend time together. A place that makes it easy to talk every day
+            and hang out more often.
+          </p>
+          <div className="flex flex-col lg:flex-row md:items-start lg:justify-center pt-8 items-center text-lg gap-5 font-Noto-sans">
+            <div className="flex z-50 items-center gap-2 bg-white text-black-ish px-8 py-4 rounded-full  hover:shadow-lg hover:shadow-black/20 transition-all duration-100 ">
+              <span>
+                <LuDownload />
+              </span>
+              Download for Windows
+            </div>
+            <div
+              className="bg-black-ish px-8 z-50 py-4 text-center rounded-full text-white hover:shadow-lg hover:shadow-black/20 transition-all duration-100
+            "
+            >
+              Open Discord in your browser
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        {data.map((div, index) => {
+          return (
+            <div
+              key={index}
+              style={{ backgroundColor: div.bg }}
+              className={`px-6 md:px-12 lg:px-20 flex flex-col md:flex-row items-center h-[550px] md:h-[600px] lg:h-[650px] gap-10 lg:gap-20 xl:gap-40 justify-center md:even:flex-row-reverse even:flex-col`}
+            >
+              <img
+                className="w-[620px] md:w-[380px] lg:w-[450px] xl:w-[650px]"
+                src={div.img.src}
+                alt=""
+              />
+              <div className="font-Noto-sans text-dark-not-black">
+                <h1 className="text-xl md:text-4xl lg:text-5xl font-bold w-full max-w-md">
+                  {div.title}
+                </h1>
+                <p className="text-sm leading-6 md:text-lg w-full max-w-sm pt-6 md:pt-8">
+                  {div.desc}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </section>
+      <section className="bg-off-white py-24 px-6 md:px-0">
+        <h1 className="text-[22px] d:text-5xl text-left md:text-center font-Archivo-Black text-dark-not-black">
+          RELIABLE TECH FOR STAYING CLOSE
+        </h1>
+        <p className="text-dark-not-black text-base md:text-lg w-full max-w-5xl pt-5 text-left md:text-center mx-auto">
+          Low-latency voice and video feels like youre in the same room. Wave
+          hello over video, watch friends stream their games, or gather up and
+          have a drawing session with screen share.
         </p>
-      </div>
+        <img
+          className="w-[1150px] pt-6 md:pt-0 block mx-auto"
+          src={Image4.src}
+          alt=""
+        />
+        <h2 className="text-dark-not-black text-[27px] md:text-3xl pt-24 md:pt-28 pb-10 text-left md:text-center font-Noto-sans font-semibold">
+          Ready to start your journey?
+        </h2>
+        <div className="flex items-center justify-center text-lg mx-auto w-fit gap-2 text-white bg-blue-700 px-8 py-4 rounded-full hover:bg-blue-700 hover:shadow-lg hover:shadow-black/20 transition-all duration-500 ">
+          <span>
+            <LuDownload />
+          </span>
+          Download for Windows
+        </div>
+      </section>
+      <footer className="bg-room-deep-black h-fit  py-20 px-6 md:px-12 lg:py-24 lg:px-24">
+        <div className="flex flex-col md:flex-row justify-between items-start text-sm text-white-1">
+          <div>
+            <Link className="text-xl font-Archivo-Black" href="/">
+              Dawood.
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-10 md:pt-0">
+            <div className="text-left">
+              <h2 className="text-blue-700  text-base md:text-sm">Product</h2>
+              <div className="flex text-left flex-col items-start gap-4 pt-6">
+                {footerProduct.map((item, index) => {
+                  return <button key={index}>{item}</button>;
+                })}
+              </div>
+            </div>
+            <div className="text-left">
+              <h2 className="text-blue-700  text-base md:text-sm">Company</h2>
+              <div className="flex flex-col items-start gap-4 pt-6">
+                {footerCompany.map((item, index) => {
+                  return (
+                    <button key={index} className="hover:underline">
+                      {item}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="text-left">
+              <h2 className="text-blue-700  text-base md:text-sm">Resources</h2>
+              <div className="flex flex-col items-start gap-4 pt-6">
+                {footerResoures.map((item, index) => {
+                  return <button key={index}>{item}</button>;
+                })}
+              </div>
+            </div>
+            <div className="text-left">
+              <h2 className="text-blue-700  text-base md:text-sm">Policies</h2>
+              <div className="flex flex-col items-start gap-4 pt-6">
+                {footerPolicies.map((item, index) => {
+                  return <button key={index}>{item}</button>;
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex  font-Open-sans text-sm  justify-end mt-10">
+          <LandingBtn bg={"bg-white"} />
+        </div>
+      </footer>
     </main>
   );
 }
-
-export default withAuth(Home);

@@ -107,10 +107,10 @@ const SideBar = () => {
               ) : (
                 data.map((item: RoomList, index) => {
                   return (
-                    <Link
+                    <div
+                      onClick={() => router.push(`/rooms/${item.id}`)}
                       className="relative group"
                       key={item.id}
-                      href={`/rooms/${item.id}`}
                     >
                       <div className="bg-white rounded-full h-2 absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 w-[6px] group-hover:h-6 duration-200 transition-all"></div>
                       <img
@@ -118,7 +118,7 @@ const SideBar = () => {
                         src={item.avatar_url}
                         alt=""
                       />
-                    </Link>
+                    </div>
                   );
                 })
               )}
@@ -126,18 +126,18 @@ const SideBar = () => {
           </div>
 
           <div className="flex flex-col items-center justify-center gap-4 absolute bottom-4">
-            <button
+            <div
               onClick={() => setRoomModalOpen(true)}
               className="text-green-500 hover:bg-green-500 hover:rounded-2xl hover:scale-100 hover:text-green-50 text-2xl bg-white/10 backdrop-blur-md p-3 md:p-4 rounded-full transition-all duration-50000 ease-linear"
             >
               <IoAdd />
-            </button>
-            <button
+            </div>
+            <div
               onClick={handlePageState}
               className="text-green-500 hover:bg-green-500 hover:rounded-2xl hover:scale-100 hover:text-green-50 text-2xl bg-white/10 backdrop-blur-md p-3 md:p-4 rounded-full transition-all duration-50000 ease-linear"
             >
               <IoMdArrowBack />
-            </button>
+            </div>
           </div>
         </div>
         <div className="bg-room-black overflow-auto h-screen w-[calc(100vw-70px)] sm:w-[calc(100vw-180px)] md:w-[250px] px-2 md:px-3 py-4">
@@ -171,9 +171,9 @@ const SideBar = () => {
                 ) : (
                   userData.map((user: any, index: number) => {
                     return (
-                      <Link
+                      <div
                         key={index}
-                        href={`/account/${user.id}`}
+                        onClick={() => router.push(`/account/${user.id}`)}
                         className="flex justify-between items-center hover:bg-white/5 hover:backdrop-blur-md p-2 rounded"
                       >
                         <div className="flex gap-3 items-center">
@@ -192,7 +192,7 @@ const SideBar = () => {
                         <span className="text-white-2">
                           <FaAngleRight />
                         </span>
-                      </Link>
+                      </div>
                     );
                   })
                 )}

@@ -1,6 +1,6 @@
 export const icon: any = (
   <svg
-    className="w-96"
+    className="-bottom-24 md:bottom-0  -left-32 md:-left-80 absolute  md:w-full z-0 md:z-50 "
     width="689"
     height="352"
     viewBox="0 0 689 352"
@@ -1970,6 +1970,7 @@ export const icon3 = (
 
 export const landingSvg = (
   <svg
+    className="-bottom-24 md:-bottom-0 z-0 -left-32 md:-left-80 absolute   "
     width="2560"
     height="626"
     viewBox="0 0 2560 626"

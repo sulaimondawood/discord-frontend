@@ -59,7 +59,7 @@ export default function Register() {
       });
 
       if (res.status === 201) {
-        router.push("/");
+        router.push("/login");
       }
       console.log(res);
 
