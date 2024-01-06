@@ -78,23 +78,6 @@ const Modal = () => {
           ) : (
             <p>No room found!</p>
           )}
-          {isLoading ? (
-            "loading..."
-          ) : rooms.length >= 1 ? (
-            rooms.map((room: RoomList) => {
-              return (
-                <p
-                  key={room.id}
-                  onClick={() => handleNavigate(room.id)}
-                  className="py-2 md:py-4 cursor-pointer text-sm md:text-base"
-                >
-                  {room.name}
-                </p>
-              );
-            })
-          ) : (
-            <p>No room found!</p>
-          )}
         </div>
       </div>
     </>

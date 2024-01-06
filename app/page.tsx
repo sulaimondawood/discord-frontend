@@ -1,9 +1,6 @@
 import Link from "next/link";
 import { LuDownload } from "react-icons/lu";
 import { icon, icon3, landingSvg } from "@/utils/svgs";
-import Image1 from "@/assets/images/landing-img-1.svg";
-import Image2 from "@/assets/images/landing-img-2.svg";
-import Image3 from "@/assets/images/landing-img-3.svg";
 import Image4 from "@/assets/images/landing-img-footer.svg";
 import {
   footerCompany,
@@ -14,27 +11,7 @@ import {
 } from "@/utils/data";
 import Nav from "./components/mobile-version/mobile/Nav";
 import LandingBtn from "./components/buttons/LandingBtn";
-
-const data = [
-  {
-    title: "Create an invite-only place where you belong",
-    desc: "Discord servers are organized into topic-based channels where you can collaborate, share, and just talk about your day without clogging up a group chat.",
-    img: Image1,
-    bg: "#fff",
-  },
-  {
-    title: "Where hanging out is easy",
-    desc: "Grab a seat in a voice channel when youre free. Friends in your server can see youre around and instantly pop in to talk without having to call.",
-    img: Image2,
-    bg: "#f6f6f6",
-  },
-  {
-    title: "From few to a fandom",
-    desc: "Get any community running with moderation tools and custom member access. Give members special powers, set up private channels, and more.",
-    img: Image3,
-    bg: "#fff",
-  },
-];
+import LandingSectioon from "./components/landingSection/LandingSectioon";
 
 export default function Home() {
   return (
@@ -44,14 +21,14 @@ export default function Home() {
           <span className="-bottom-24  md:hidden lg:block md:bottom-0 -left-32 md:-left-80 absolute  md:w-full z-0 md:z-50 ">
             {icon}
           </span>
-          <span className="-bottom-24 md:-bottom-0 -left-32 md:-left-[500px] lg:-left-80 absolute  w-1/2 md:w-full z-0 ">
+          <span className="-bottom-24 md:-bottom-0 -left-32 md:-left-[500px] lg:-left-80 absolute  w-1/2 md:w-0 z-0 ">
             {landingSvg}
           </span>
           <span className="bottom-0 md:-right-48 lg:-right-[430px] xl:-right-72 hidden md:block absolute z-50">
             {icon3}
           </span>
         </div>
-        <nav className="hidden lg:flex py-4 items-center font-Open-sans text-sm container text-white justify-between">
+        <nav className="hidden lg:flex py-4 items-center z-50 font-Open-sans text-sm container text-white justify-between">
           <Link className="text-xl font-Archivo-Black" href="/">
             Dawood.
           </Link>
@@ -98,33 +75,9 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section>
-        {data.map((div, index) => {
-          return (
-            <div
-              key={index}
-              style={{ backgroundColor: div.bg }}
-              className={`px-6 md:px-12 lg:px-20 flex flex-col md:flex-row items-center h-[550px] md:h-[600px] lg:h-[650px] gap-10 lg:gap-20 xl:gap-40 justify-center md:even:flex-row-reverse even:flex-col`}
-            >
-              <img
-                className="w-[620px] md:w-[380px] lg:w-[450px] xl:w-[650px]"
-                src={div.img.src}
-                alt=""
-              />
-              <div className="font-Noto-sans text-dark-not-black">
-                <h1 className="text-xl md:text-4xl lg:text-5xl font-bold w-full max-w-md">
-                  {div.title}
-                </h1>
-                <p className="text-sm leading-6 md:text-lg w-full max-w-sm pt-6 md:pt-8">
-                  {div.desc}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </section>
+      <LandingSectioon />
       <section className="bg-off-white py-24 px-6 md:px-0">
-        <h1 className="text-[22px] d:text-5xl text-left md:text-center font-Archivo-Black text-dark-not-black">
+        <h1 className="text-[22px] md:text-5xl text-left md:text-center font-Archivo-Black text-dark-not-black">
           RELIABLE TECH FOR STAYING CLOSE
         </h1>
         <p className="text-dark-not-black text-base md:text-lg w-full max-w-5xl pt-5 text-left md:text-center mx-auto">

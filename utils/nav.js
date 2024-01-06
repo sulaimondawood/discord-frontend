@@ -12,13 +12,13 @@ const navLists = [
   {
     id: 2,
     name: "Nitro",
-    url: "/nitro",
+    url: "",
     icon: <SiBoost />,
   },
   {
     id: 3,
     name: "Shop",
-    url: "/shop",
+    url: "",
     icon: <AiFillShop />,
   },
 ];

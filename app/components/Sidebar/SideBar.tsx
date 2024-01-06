@@ -112,9 +112,9 @@ const SideBar = () => {
                       className="relative group"
                       key={item.id}
                     >
-                      <div className="bg-white rounded-full h-2 absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 w-[6px] group-hover:h-6 duration-200 transition-all"></div>
+                      <div className=" bg-white rounded-full h-2 absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 w-[6px] group-hover:h-6 duration-200 transition-all"></div>
                       <img
-                        className="w-11 h-11 md:w-[50px] md:h-[50px] rounded-full group-hover:rounded-2xl transition-all duration-150 ease-linear object-cover"
+                        className="w-11 cursor-pointer h-11 md:w-[50px] md:h-[50px] rounded-full group-hover:rounded-2xl transition-all duration-150 ease-linear object-cover"
                         src={item.avatar_url}
                         alt=""
                       />
@@ -128,13 +128,13 @@ const SideBar = () => {
           <div className="flex flex-col items-center justify-center gap-4 absolute bottom-4">
             <div
               onClick={() => setRoomModalOpen(true)}
-              className="text-green-500 hover:bg-green-500 hover:rounded-2xl hover:scale-100 hover:text-green-50 text-2xl bg-white/10 backdrop-blur-md p-3 md:p-4 rounded-full transition-all duration-50000 ease-linear"
+              className="text-green-500 cursor-pointer hover:bg-green-500 hover:rounded-2xl hover:scale-100 hover:text-green-50 text-2xl bg-white/10 backdrop-blur-md p-3 md:p-4 rounded-full transition-all duration-50000 ease-linear"
             >
               <IoAdd />
             </div>
             <div
               onClick={handlePageState}
-              className="text-green-500 hover:bg-green-500 hover:rounded-2xl hover:scale-100 hover:text-green-50 text-2xl bg-white/10 backdrop-blur-md p-3 md:p-4 rounded-full transition-all duration-50000 ease-linear"
+              className="text-green-500 cursor-pointer hover:bg-green-500 hover:rounded-2xl hover:scale-100 hover:text-green-50 text-2xl bg-white/10 backdrop-blur-md p-3 md:p-4 rounded-full transition-all duration-50000 ease-linear"
             >
               <IoMdArrowBack />
             </div>
@@ -174,7 +174,7 @@ const SideBar = () => {
                       <div
                         key={index}
                         onClick={() => router.push(`/account/${user.id}`)}
-                        className="flex justify-between items-center hover:bg-white/5 hover:backdrop-blur-md p-2 rounded"
+                        className="flex justify-between cursor-pointer items-center hover:bg-white/5 hover:backdrop-blur-md p-2 rounded"
                       >
                         <div className="flex gap-3 items-center">
                           <img

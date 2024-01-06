@@ -6,10 +6,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.icon2 {
+/* .icon2 {
   height: 100vh;
   width: 100vw;
-}
+} */
 .z-impo {
   z-index: 9999 !important;
 }

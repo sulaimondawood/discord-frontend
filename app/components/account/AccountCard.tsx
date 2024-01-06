@@ -32,8 +32,10 @@ const AccountCard = ({ user }: { user: any }) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <img
-            onClick={() => setUserModalOpen(true)}
-            className="w-16 h-16 rounded-full -mt-5 object-cover bg-room-deep-black p-2"
+            onClick={active ? () => setUserModalOpen(true) : () => ""}
+            className={`${
+              active ? "cursor-pointer" : ""
+            } w-16 h-16 rounded-full -mt-5 object-cover bg-room-deep-black p-2`}
             src={user.avatar}
             alt=""
           />

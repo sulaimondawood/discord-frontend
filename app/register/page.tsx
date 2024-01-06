@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-import { icon, icon2, icon3 } from "@/utils/svgs";
+import { icon2, icon3, iconAuth, landingSvg } from "@/utils/svgs";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { axiosInstance } from "@/utils/axios";
 import { redirect } from "next/navigation";
@@ -82,12 +82,13 @@ export default function Register() {
   }
   return (
     <>
-      <main className="bg-blue-ish px-4 md:px-0 relative w-screen d-screen md:h-screen flex justify-center items-center">
+      <main className="bg-blue-700/90 overflow-hidden px-4 md:px-0 relative w-screen d-screen md:h-screen flex justify-center items-center">
         <div className="">
-          <span className="top-0  left-0 absolute w-full hidden md:block">
-            {icon}
+          <span className="top-0 -left-20 absolute w-full hidden md:block">
+            {iconAuth}
           </span>
-          <span className="left-0 absolute  bottom-0 w-full">{icon2}</span>
+
+          <span className="-left-28 absolute  -bottom-36 ">{icon2}</span>
           <span className="bottom-0 right-0 absolute  ">{icon3}</span>
         </div>
         <div
@@ -195,7 +196,7 @@ export default function Register() {
           </form>
           <p className="pt-3 text-sm font-Noto-sans">
             <span className="text-white-4">Already have an account?</span>{" "}
-            <Link className="text-l-blue" href="/">
+            <Link className="text-l-blue" href="/login">
               Login
             </Link>
           </p>

@@ -1,7 +1,7 @@
 "use client";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import { icon, icon2, icon3 } from "@/utils/svgs";
+import { icon, icon2, icon3, iconAuth } from "@/utils/svgs";
 import {
   ChangeEvent,
   FormEvent,
@@ -102,13 +102,13 @@ function Login() {
   }, [isError]);
 
   return (
-    <main className="relative px-4 md:px-0 bg-blue-ish w-screen d-screen md:h-screen flex justify-center items-center">
+    <main className="bg-blue-700/90 overflow-hidden px-4 md:px-0 relative w-screen d-screen md:h-screen flex justify-center items-center">
       <div className="">
-        <span className="top-0  left-0 absolute w-full hidden md:block">
-          {icon}
+        <span className="top-0 -left-20 absolute w-full hidden md:block">
+          {iconAuth}
         </span>
 
-        <span className="left-0 absolute bottom-0 w-full">{icon2}</span>
+        <span className="-left-28 absolute  -bottom-36 ">{icon2}</span>
         <span className="bottom-0 right-0 absolute ">{icon3}</span>
       </div>
 

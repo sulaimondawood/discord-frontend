@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^1.6.2",
     "date-fns": "^3.0.6",
+    "framer-motion": "^10.17.9",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "moment": "^2.29.4",

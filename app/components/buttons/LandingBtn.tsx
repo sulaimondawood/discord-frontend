@@ -12,14 +12,14 @@ const LandingBtn = ({ bg }: { bg: string }) => {
       {token ? (
         <div
           onClick={() => router.push("/rooms")}
-          className={`text-blue-900 ${bg} py-2 px-3 rounded-2xl hover:shadow-lg `}
+          className={`text-blue-900 cursor-pointer ${bg} py-2 px-3 rounded-2xl hover:shadow-lg `}
         >
-          Open Discord
+          Open
         </div>
       ) : (
         <div
           onClick={() => router.push("/login")}
-          className={`text-black-ish ${bg} py-2 px-4 rounded-2xl hover:text-blue-700`}
+          className={`text-black-ish ${bg} cursor-pointer py-2 px-4 rounded-2xl hover:text-blue-700`}
         >
           Login
         </div>

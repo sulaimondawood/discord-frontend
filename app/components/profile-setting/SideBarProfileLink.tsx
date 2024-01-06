@@ -3,13 +3,16 @@ import React from "react";
 import Image from "@/assets/images/avatar.jpg";
 import { IoMdSettings } from "react-icons/io";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const SideBarProfileLink = ({ user }: { user: any }) => {
+  const router = useRouter();
   return (
     <div className="rounded-sm flex items-center justify-between bg-room-deep-black p-2 w-[calc(100vw-70px)] sm:w-[calc(100vw-180px)] md:w-[250px] absolute left-14 md:left-[80px] bottom-0">
       <div className="flex items-center gap-4">
         <img
-          className="w-9 h-9 rounded-full object-cover"
+          onClick={() => router.push(`/account/${user.id}`)}
+          className="w-9 h-9 rounded-full cursor-pointer object-cover"
           src={user.avatar}
           alt=""
         />
