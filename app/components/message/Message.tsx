@@ -74,7 +74,7 @@ const Message = ({ msg }: { msg: any }) => {
               msg.user.id == user.id
                 ? "border-right border-r-[3px] border-white text-right pr-3"
                 : "border-left text-left pl-3 border-l-[3px] border-green-300"
-            } rounded-[4px] text-sm w-full max-w-lg text-white-3`}
+            } rounded-[4px]  text-xs md:text-sm w-full max-w-[180px] md:max-w-[300px] lg:max-w-md text-white-3`}
           >
             {msg.message}
           </p>

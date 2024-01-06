@@ -51,7 +51,7 @@ const SingleRoom = ({ params }: { params: { id: number } }) => {
     fetchData();
     // Set up interval for repeated requests
 
-    const intervalId: any = setInterval(fetchData, 2000);
+    const intervalId: any = setInterval(fetchData, 1000);
 
     // Cleanup function to clear the interval
     return () => clearInterval(intervalId);
