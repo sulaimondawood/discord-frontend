@@ -10,19 +10,19 @@ const LandingBtn = ({ bg }: { bg: string }) => {
   return (
     <div>
       {token ? (
-        <div
+        <button
           onClick={() => router.push("/rooms")}
           className={`text-blue-900 cursor-pointer ${bg} py-2 px-3 rounded-2xl hover:shadow-lg `}
         >
           Open
-        </div>
+        </button>
       ) : (
-        <div
+        <button
           onClick={() => router.push("/login")}
           className={`text-black-ish ${bg} cursor-pointer py-2 px-4 rounded-2xl hover:text-blue-700`}
         >
           Login
-        </div>
+        </button>
       )}
     </div>
   );

@@ -15,6 +15,7 @@ import { axiosInstance } from "@/utils/axios";
 import { useAuth } from "@/app/context/AuthContext";
 import { getToken, isTokeneExpired } from "@/utils/token-expired";
 import withAuth from "@/utils/withAuth";
+import Toast from "../components/toast/Toast";
 
 function Login() {
   const router = useRouter();
@@ -189,6 +190,8 @@ function Login() {
           </Link>
         </p>
       </div>
+
+      <Toast />
     </main>
   );
 }
