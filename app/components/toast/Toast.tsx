@@ -4,12 +4,9 @@ import "react-toastify/dist/ReactToastify.css";
 const Toast = () => {
   useEffect(() => {
     toast.dismiss();
-    toast.info(
-      "Kindly excercise if the server is taking long top long respond",
-      {
-        autoClose: 8000,
-      }
-    );
+    toast.info("Kindly excercise if the server is taking too long respond", {
+      autoClose: 8000,
+    });
   }, []);
   return (
     <div>
