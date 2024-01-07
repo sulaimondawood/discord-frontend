@@ -25,14 +25,14 @@ export const useTokens = () => {
       (response) => response,
       async (error) => {
         const originalRequest = error.config;
-        if (!error.response) {
-          alert(
-            "A server or network error occurred. We will get this fixed shortly."
-          );
-          Cookies.remove("token");
-          router.push("/");
-          return Promise.reject(error);
-        }
+        // if (!error.response) {
+        //   alert(
+        //     "A server or network error occurred. We will get this fixed shortly."
+        //   );
+        //   Cookies.remove("token");
+        //   router.push("/");
+        //   return Promise.reject(error);
+        // }
 
         if (
           error.response.status === 401

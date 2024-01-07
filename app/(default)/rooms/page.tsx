@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import Image from "@/assets/images/room-page.webp";
-import Toast from "@/app/components/toast/Toast";
 
 const Room = () => {
   return (
@@ -13,7 +12,6 @@ const Room = () => {
           alt=""
         />
       </div>
-      <Toast />
     </>
   );
 };

@@ -6,6 +6,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { axiosInstance } from "@/utils/axios";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
+import Toast from "../components/toast/Toast";
 export default function Register() {
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setLoading] = useState(false);
@@ -202,6 +203,7 @@ export default function Register() {
           </p>
         </div>
       </main>
+      <Toast />
     </>
   );
 }
