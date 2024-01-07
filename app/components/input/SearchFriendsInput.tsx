@@ -68,7 +68,7 @@ const SearchFriendsInput = () => {
             <span>All Friends</span> <span>({users.length})</span>
           </p>
         </form>
-        <div className="pt-24 flex flex-col  overflow-auto h-[calc(100vh-80px)]">
+        <div className="mt-24 flex flex-col  overflow-auto h-[calc(100vh-180px)]">
           {isLoading ? (
             <Spinner showText={true} />
           ) : (
