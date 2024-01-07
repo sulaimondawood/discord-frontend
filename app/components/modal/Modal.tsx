@@ -36,7 +36,7 @@ const Modal = () => {
     }
 
     getRooms();
-  }, [searchInput]);
+  }, []);
 
   function handleNavigate(id: number) {
     router.push(`/rooms/${id}`);
