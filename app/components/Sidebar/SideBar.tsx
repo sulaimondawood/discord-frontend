@@ -70,7 +70,8 @@ const SideBar = () => {
 
     async function getSingleUser() {
       const res = await axiosInstance.get("user/" + activeUser.id + "/");
-      if (res?.status == 200) {
+      const data = await res.data;
+      if (data) {
         setActiveUser(res?.data);
         setActive(false);
       }
@@ -202,9 +203,13 @@ const SideBar = () => {
               return <SideBarProfileLink key={user.id} user={user} />;
             })} */}
           </div>
-          {activeUser.map((user) => {
-            return <SideBarProfileLink key={user.id} user={user} />;
-          })}
+          {userActive ? (
+            <Spinner showText={true} />
+          ) : (
+            activeUser.map((user) => {
+              return <SideBarProfileLink key={user?.id} user={user} />;
+            })
+          )}
         </div>
       </div>
     </>

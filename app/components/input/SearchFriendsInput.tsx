@@ -125,7 +125,7 @@ const SearchFriendsInput = () => {
                   className="text-xs lg:text-base rounded text-white-2  px-4 py-2 md:text-[10px] md:px-2 m-screen:text-xs lg:px-4 bg-white/5 backdrop-blur-md"
                   key={index}
                 >
-                  {item.title}
+                  {item?.title}
                 </p>
               );
             })
